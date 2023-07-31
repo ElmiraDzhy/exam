@@ -1,7 +1,6 @@
-
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Contests', {
+    return queryInterface.createTable('contests', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,14 +10,17 @@ module.exports = {
       contestType: {
         allowNull: false,
         type: Sequelize.ENUM('name', 'tagline', 'logo'),
+        field: 'contest_type'
       },
       fileName: {
         allowNull: true,
         type: Sequelize.STRING,
+        field: 'file_name'
       },
       originalFileName: {
         allowNull: true,
         type: Sequelize.STRING,
+        field: 'original_file_name'
       },
       title: {
         allowNull: true,
@@ -27,6 +29,7 @@ module.exports = {
       typeOfName: {
         allowNull: true,
         type: Sequelize.STRING,
+        field: 'type_of_name'
       },
       industry: {
         allowNull: true,
@@ -35,22 +38,27 @@ module.exports = {
       focusOfWork: {
         allowNull: true,
         type: Sequelize.TEXT,
+        field: 'focus_of_work'
       },
       targetCustomer: {
         allowNull: true,
         type: Sequelize.TEXT,
+        field: 'target_customer'
       },
       styleName: {
         allowNull: true,
         type: Sequelize.STRING,
+        field: 'style_name'
       },
       nameVenture: {
         allowNull: true,
         type: Sequelize.STRING,
+        field: 'name_venture'
       },
       typeOfTagline: {
         allowNull: true,
         type: Sequelize.STRING,
+        field: 'type_of_tagline'
       },
       status: {
         allowNull: false,
@@ -59,6 +67,7 @@ module.exports = {
       brandStyle: {
         allowNull: true,
         type: Sequelize.STRING,
+        field: 'brand_style'
       },
       prize: {
         allowNull: false,
@@ -68,6 +77,7 @@ module.exports = {
         allowNull: true,
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW,
+        field: 'created_at'
       },
       priority: {
         allowNull: false,
@@ -76,18 +86,22 @@ module.exports = {
       orderId: {
         allowNull: false,
         type: Sequelize.STRING,
+        field: 'order_id'
       },
       userId: {
         allowNull: false,
         type: Sequelize.INTEGER,
+        field: 'user_id',
         references: {
-          model: 'Users',
+          model: {
+            tableName: 'users'
+          },
           key: 'id',
         },
       },
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Contests');
+    return queryInterface.dropTable('contests');
   },
 };

@@ -1,7 +1,6 @@
-
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Offers', {
+    return queryInterface.createTable('offers', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,16 +10,18 @@ module.exports = {
       userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        field: 'user_id',
         references: {
-          model: 'Users',
+          model: {tableName: 'users'},
           key: 'id',
         },
       },
       contestId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        field: 'contest_id',
         references: {
-          model: 'Contests',
+          model:  {tableName: 'contests'},
           key: 'id',
         },
       },
@@ -31,10 +32,12 @@ module.exports = {
       fileName: {
         type: Sequelize.STRING,
         allowNull: true,
+        field: 'file_name',
       },
       originalFileName: {
         type: Sequelize.STRING,
         allowNull: true,
+        field: 'original_file_name'
       },
       status: {
         type: Sequelize.STRING,
@@ -44,6 +47,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Offers');
+    return queryInterface.dropTable('offers');
   },
 };
