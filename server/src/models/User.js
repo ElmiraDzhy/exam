@@ -1,7 +1,16 @@
-
+const {Model} = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('Users', {
+  class User extends Model {
+    static associate(models) {
+      User.hasMany(models.Offer, {foreignKey: 'userId', targetKey: 'id'});
+      User.hasMany(models.Contest, { foreignKey: 'userId', targetKey: 'id' });
+      User.hasMany(models.Rating, { foreignKey: 'userId', targetKey: 'id' });
+    }
+
+  }
+
+  User.init({
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -54,29 +63,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.FLOAT,
       allowNull: false,
       defaultValue: 0,
-    },
-  },
-  {
+    }
+  }, {
     timestamps: false,
+    sequelize,
+    modelName: 'User',
+    tableName: 'users',
+    underscored: true
   });
 
-  User.associate = function (models) {
-    User.hasMany(models.Order, { foreignKey: 'user_id', targetKey: 'id' });
-  };
-
-  User.associate = function (models) {
-    User.hasMany(models.Participant,
-      { foreignKey: 'user_id', targetKey: 'id' });
-  };
-
-  User.associate = function (models) {
-    User.hasMany(models.Offer, { foreignKey: 'user_id', targetKey: 'id' });
-  };
-
-  User.associate = function (models) {
-    User.hasMany(models.RefreshToken,
-      { foreignKey: 'user_id', targetKey: 'id' });
-  };
-
   return User;
-};
+
+}
