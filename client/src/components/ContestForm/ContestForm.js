@@ -20,11 +20,11 @@ const variableOptions = {
     typeOfName: '',
   },
   [CONSTANTS.LOGO_CONTEST]: {
-    nameVenture: '',
+    nameVenture: null,
     brandStyle: '',
   },
   [CONSTANTS.TAGLINE_CONTEST]: {
-    nameVenture: '',
+    nameVenture: null,
     typeOfTagline: '',
   },
 };
