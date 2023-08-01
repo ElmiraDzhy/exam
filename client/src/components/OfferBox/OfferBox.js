@@ -136,7 +136,7 @@ const OfferBox = (props) => {
                             <img
                               onClick={() => props.changeShowImage({ imagePath: data.fileName, isShowOnFull: true })}
                               className={styles.responseLogo}
-                              src={`${CONSTANTS.publicURL}${data.fileName}`}
+                              src={`${data.fileName}`}
                               alt="logo"
                             />
                           )

@@ -2,11 +2,11 @@ const fs = require('fs');
 const path = require('path');
 const multer = require('multer');
 const env = process.env.NODE_ENV || 'development';
-const devFilePath = path.resolve(__dirname, '..', '..', '..', 'public/images');
+const CONSTANTS = require('../constants');
 
 const filePath = env === 'production'
   ? '/var/www/html/images/'
-  : devFilePath;
+  : CONSTANTS.IMAGE_STATIC_PATH;
 
 
 const storage = multer.diskStorage({

@@ -8,18 +8,7 @@ const validators = require('../middlewares/validators');
 const chatController = require('../controllers/chatController');
 const upload = require('../utils/fileUpload');
 const { checkImage } = require('../middlewares/checkImage');
-const path = require('path');
-
-const env = process.env.NODE_ENV || 'development';
-const devFilePath = path.resolve(__dirname, '..', '..', '..', 'public/images');
-const filePath = env === 'production'
-    ? '/var/www/html/images/'
-    : devFilePath;
-
 const router = express.Router();
-
-
-router.use(express.static(filePath));
 
 router.post(
   '/registration',
