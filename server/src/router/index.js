@@ -104,6 +104,7 @@ router.patch(
   '/updateUser',
   checkToken.checkToken,
   upload.single('file'),
+  checkImage,
   userController.updateUser,
 );
 
