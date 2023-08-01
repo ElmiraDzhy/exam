@@ -7,7 +7,19 @@ const checkToken = require('../middlewares/checkToken');
 const validators = require('../middlewares/validators');
 const chatController = require('../controllers/chatController');
 const upload = require('../utils/fileUpload');
+const { checkImage } = require('../middlewares/checkImage');
+const path = require('path');
+
+const env = process.env.NODE_ENV || 'development';
+const devFilePath = path.resolve(__dirname, '..', '..', '..', 'public/images');
+const filePath = env === 'production'
+    ? '/var/www/html/images/'
+    : devFilePath;
+
 const router = express.Router();
+
+
+router.use(express.static(filePath));
 
 router.post(
   '/registration',
@@ -32,7 +44,7 @@ router.post(
   '/pay',
   checkToken.checkToken,
   basicMiddlewares.onlyForCustomer,
-  upload.uploadContestFiles,
+  upload.array('files', 3),
   basicMiddlewares.parseBody,
   validators.validateContestCreation,
   userController.payment,
@@ -72,14 +84,15 @@ router.get(
 router.post(
   '/updateContest',
   checkToken.checkToken,
-  upload.updateContestFile,
+  upload.single('file'),
   contestController.updateContest,
 );
 
 router.post(
   '/setNewOffer',
   checkToken.checkToken,
-  upload.uploadLogoFiles,
+  upload.single('offerData'),
+  checkImage,
   basicMiddlewares.canSendOffer,
   contestController.setNewOffer,
 );
@@ -101,7 +114,7 @@ router.post(
 router.patch(
   '/updateUser',
   checkToken.checkToken,
-  upload.uploadAvatar,
+  upload.single('file'),
   userController.updateUser,
 );
 

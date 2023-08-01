@@ -128,7 +128,7 @@ module.exports.updateContest = async (req, res, next) => {
 module.exports.setNewOffer = async (req, res, next) => {
   const obj = {};
   if (req.body.contestType === CONSTANTS.LOGO_CONTEST) {
-    obj.fileName = req.file.filename;
+    obj.fileName = req.body.imagePath;
     obj.originalFileName = req.file.originalname;
   } else {
     obj.text = req.body.offerData;
