@@ -37,6 +37,10 @@ class CreatorDashboard extends React.Component {
     };
 
     renderIndustryType = () => {
+        if (!this.props.dataForContest?.data) {
+            this.props.history.replace('/login');
+            return ;
+        }
       const array = [];
       const { creatorFilter } = this.props;
       const { industry } = this.props.dataForContest.data;
