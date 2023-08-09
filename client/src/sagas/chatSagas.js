@@ -26,25 +26,23 @@ export function* sendMessage(action) {
   try {
     const { data } = yield restController.newMessage(action.data);
     const { messagesPreview } = yield select((state) => state.chatStore);
-    let isNew = true;
     messagesPreview.forEach((preview) => {
-      if (isEqual(preview.participants, data.message.participants)) {
-        preview.text = data.message.body;
-        preview.sender = data.message.sender;
-        preview.createAt = data.message.createdAt;
-        isNew = false;
+      if (preview.participants.every((value) =>  data.preview.participants.includes(value))) {
+        preview.text = data.preview.text;
+        preview.sender = data.preview.sender;
+        preview.createAt = data.preview.createdAt;
       }
     });
-    if (isNew) {
-      messagesPreview.push(data.preview);
-    }
+
+
+
     yield put({
       type: ACTION.SEND_MESSAGE,
       data: {
         message: data.message,
         messagesPreview,
         chatData: {
-          _id: data.preview._id,
+          id: data.preview.id,
           participants: data.preview.participants,
           favoriteList: data.preview.favoriteList,
           blackList: data.preview.blackList,
@@ -84,7 +82,7 @@ export function* changeChatBlock(action) {
 
 export function* getCatalogListSaga(action) {
   try {
-    const { data } = yield restController.getCatalogList(action.data);
+    const { data: {data} } = yield restController.getCatalogList(action.data);
     yield put({ type: ACTION.RECEIVE_CATALOG_LIST, data });
   } catch (err) {
     yield put({ type: ACTION.RECEIVE_CATALOG_LIST_ERROR, error: err.response });
