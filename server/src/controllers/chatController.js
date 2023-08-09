@@ -207,3 +207,36 @@ module.exports.getPreview = async (req, res, next) => {
     next(err);
   }
 };
+
+module.exports.blackList = async (req, res, next) => {
+  try{
+    const { participants } = req.body;
+    const { userId } = req.tokenData;
+
+    const conversation = await db.ConversationUser.findOne({
+      attributes: ['conversation_id'],
+      where: {
+        userId: participants,
+      },
+      group: ['conversation_id'],
+      having: db.Sequelize.literal('COUNT(DISTINCT user_id) = 2'),
+      raw: true,
+    });
+
+    const [row, data] = await db.ConversationUser.update(
+      { blocked: req.body.blackListFlag },
+      {
+        where: { conversationId: conversation.conversation_id, userId },
+        returning: true,
+        raw: true,
+      },
+    );
+
+    const interlocutorId = req.body.participants.filter((participant) => participant !== req.tokenData.userId)[ 0 ];
+    controller.getChatController().emitChangeBlockStatus(interlocutorId, data);
+
+    res.status(200).send(data);
+  }catch(err){
+    next(err);
+  }
+};
