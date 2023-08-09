@@ -315,3 +315,15 @@ module.exports.addNewChatToCatalog = async (req, res, next) => {
     next(err);
   }
 };
+
+module.exports.removeChatFromCatalog = async (req, res, next) => {
+  try{
+    const catalogInstance = await db.Catalog.findByPk(req.body.catalogId);
+    const conversationToRemove = await db.Conversation.findByPk(req.body.chatId);
+    const result = await catalogInstance.removeConversation(conversationToRemove);
+
+    res.status(200).send(result);
+  }catch(err){
+    next(err);
+  }
+};
