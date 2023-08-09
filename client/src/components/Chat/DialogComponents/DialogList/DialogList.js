@@ -55,7 +55,7 @@ const DialogList = (props) => {
           changeFavorite={changeFavorite}
           changeBlackList={changeBlackList}
           chatMode={chatMode}
-          catalogOperation={chatMode === CONSTANTS.CATALOG_PREVIEW_CHAT_MODE ? removeChat : changeShowCatalogCreation}
+          catalogOperation={chatMode === CONSTANTS.CATALOG_PREVIEW_CHAT_MODE ? removeChat :  changeShowCatalogCreation}
           goToExpandedDialog={goToExpandedDialog}
         />
       );
