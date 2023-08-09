@@ -6,7 +6,8 @@
     "host": "db-dev",
     "dialect": "postgres",
     "operatorsAliases": "Op",
-    "seederStorage": "sequelize"
+    "seederStorage": "sequelize",
+    "timestamps": false
   },
   "test": {
     "username": "postgres",
