@@ -116,4 +116,51 @@ module.exports.addMessage = async (req, res, next) => {
   }
 };
 
+module.exports.getChat = async (req, res, next) => {
+  try{
+    const { query: { interlocutorId } } = req;
+    const participants = [req.tokenData.userId, Number(interlocutorId)];
+    participants.sort((participant1, participant2) => participant1 - participant2);
 
+    const conversation = await db.ConversationUser.findOne({
+      attributes: ['conversation_id'],
+      where: {
+        userId: {
+          [db.Sequelize.Op.in]: participants,
+        },
+      },
+      group: ['conversation_id'],
+      having: db.Sequelize.literal('COUNT(DISTINCT user_id) = 2'),
+    });
+
+    let messages;
+    if(conversation){
+      messages = await db.Message.findAll({
+        include: [
+          {
+            model: db.ConversationUser,
+            where: {
+              conversationId: conversation.dataValues.conversation_id,
+            },
+          },
+        ],
+      });
+    } else{
+      messages = [];
+    }
+
+    const interlocutor = await userQueries.findUser({ id: Number(interlocutorId) });
+    res.send({
+      messages,
+      interlocutor: {
+        firstName: interlocutor.firstName,
+        lastName: interlocutor.lastName,
+        displayName: interlocutor.displayName,
+        id: interlocutor.id,
+        avatar: interlocutor.avatar,
+      },
+    });
+  }catch(err){
+    next(err);
+  }
+};
