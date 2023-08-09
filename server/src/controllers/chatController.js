@@ -349,3 +349,32 @@ module.exports.deleteCatalog = async (req, res, next) => {
     next(err);
   }
 };
+
+module.exports.getCatalogs = async (req, res, next) => {
+  try{
+    const catalogs = await db.Catalog.findAll({
+      attributes: ['id', [db.Sequelize.literal('catalog_name'), 'catalogName']],
+      include: [
+        {
+          model: db.Conversation,
+          attributes: ['id'],
+          through: { attributes: [] },
+        },
+      ],
+      where: {
+        userId: req.tokenData.userId,
+      },
+      raw: true,
+    });
+
+    const result = catalogs.map(catalog => ({
+      id: catalog.id,
+      catalogName: catalog.catalogName,
+      chats: [catalog['Conversations.id']],
+    }));
+
+    res.status(200).send({ data: result });
+  }catch(err){
+    next(err);
+  }
+};
