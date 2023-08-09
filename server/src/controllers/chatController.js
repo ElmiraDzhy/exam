@@ -270,3 +270,19 @@ module.exports.favoriteChat = async (req, res, next) => {
     next(err);
   }
 };
+
+module.exports.createCatalog = async (req, res, next) => {
+  try{
+    const newCatalogInstance = await db.Catalog.create({
+      userId: req.tokenData.userId,
+      catalogName: req.body.catalogName,
+    });
+    const conversationInstance = await db.Conversation.findByPk(req.body.chatId);
+    await newCatalogInstance.addConversation(conversationInstance);
+    const chats = await newCatalogInstance.getConversations();
+
+    res.status(201).send({ newCatalogInstance, chats });
+  }catch(err){
+    next(err);
+  }
+};
