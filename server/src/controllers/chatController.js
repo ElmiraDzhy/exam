@@ -327,3 +327,25 @@ module.exports.removeChatFromCatalog = async (req, res, next) => {
     next(err);
   }
 };
+
+module.exports.deleteCatalog = async (req, res, next) => {
+  try{
+    const catalogInstance = await db.Catalog.findByPk(req.params.catalogId);
+    await catalogInstance.setConversations([]);
+    await db.Catalog.destroy({
+      where: { id: req.params.catalogId },
+      include: [
+        {
+          model: db.Conversation,
+          through: { attributes: [] },
+        },
+      ],
+    });
+    const user = await db.User.findByPk(req.tokenData.userId);
+    const catalogs = await user.getCatalogs();
+
+    res.status(200).send(catalogs);
+  }catch(err){
+    next(err);
+  }
+};
