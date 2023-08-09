@@ -286,3 +286,20 @@ module.exports.createCatalog = async (req, res, next) => {
     next(err);
   }
 };
+
+module.exports.updateNameCatalog = async (req, res, next) => {
+  try {
+    const updatedCatalogInstance = await db.Catalog.update({
+      catalogName: req.body.catalogName,
+    },
+    {
+      where: {
+        id: req.body.catalogId,
+      },
+    });
+    res.status(200).send(updatedCatalogInstance);
+
+  } catch (err) {
+    next(err);
+  }
+};
