@@ -164,3 +164,46 @@ module.exports.getChat = async (req, res, next) => {
     next(err);
   }
 };
+
+module.exports.getPreview = async (req, res, next) => {
+  try{
+    const { userId } = req.tokenData;
+
+    const conversationData = await db.User.findByPk(userId, {
+      include: [
+        {
+          model: db.Conversation,
+          include: [
+            {
+              model: db.User,
+              attributes: ['id', 'firstName', 'lastName', 'displayName', 'avatar'],
+              through: {
+                model: db.ConversationUser,
+                where:{
+                  id: {
+                    [db.Sequelize.Op.ne]: userId,
+                  },
+                },
+              },
+            },
+          ],
+          through: {
+          },
+        },
+      ],
+    });
+    const rawObject = conversationData.get({ plain: true });
+
+    const conversations = rawObject.Conversations.map((conversation) => ({
+      id: conversation.id,
+      participants: conversation.Users.map(u => u.id),
+      blackList: conversation.Users.map(u => u.conversations_to_users.blocked),
+      favoriteList: conversation.Users.map(u => u.conversations_to_users.favourite),
+      interlocutor: conversation.Users.filter(u => u.id !== userId)[0],
+    }));
+
+    res.status(200).send(conversations);
+  }catch(err){
+    next(err);
+  }
+};
