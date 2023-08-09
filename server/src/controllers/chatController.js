@@ -240,3 +240,33 @@ module.exports.blackList = async (req, res, next) => {
     next(err);
   }
 };
+
+module.exports.favoriteChat = async (req, res, next) => {
+  try{
+    const { participants } = req.body;
+    const { userId } = req.tokenData;
+
+    const conversation = await db.ConversationUser.findOne({
+      attributes: ['conversation_id'],
+      where: {
+        userId: participants,
+      },
+      group: ['conversation_id'],
+      having: db.Sequelize.literal('COUNT(DISTINCT user_id) = 2'),
+      raw: true,
+    });
+
+    const [row, data] = await db.ConversationUser.update(
+      { favourite: req.body.favoriteFlag },
+      {
+        where: { conversationId: conversation.conversation_id, userId },
+        returning: true,
+        raw: true,
+      },
+    );
+
+    res.status(200).send(data);
+  }catch(err){
+    next(err);
+  }
+};
