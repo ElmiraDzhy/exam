@@ -297,9 +297,21 @@ module.exports.updateNameCatalog = async (req, res, next) => {
         id: req.body.catalogId,
       },
     });
-    res.status(200).send(updatedCatalogInstance);
 
+    res.status(200).send(updatedCatalogInstance);
   } catch (err) {
+    next(err);
+  }
+};
+
+module.exports.addNewChatToCatalog = async (req, res, next) => {
+  try{
+    const catalogInstance = await db.Catalog.findByPk(req.body.catalogId);
+    const conversationToAdd = await db.Conversation.findByPk(req.body.chatId);
+    const result = await catalogInstance.addConversation(conversationToAdd);
+
+    res.status(200).send(result);
+  }catch(err){
     next(err);
   }
 };
