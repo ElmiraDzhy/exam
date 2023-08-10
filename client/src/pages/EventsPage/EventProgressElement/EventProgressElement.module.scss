@@ -1,0 +1,37 @@
+.event-container {
+  .progress-container {
+    height: 30px;
+    width: 30vw;
+    background-color: rgba(97, 194, 255, 0.38);
+    border-radius: 3px;
+    //margin: 10px 0;
+    display: flex;
+    align-items: center;
+
+    .filler {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      background-color: #556da5;
+      border-radius: 3px 0 0 3px;
+      display: flex;
+      align-items: center;
+
+      .progress-label {
+        padding: 0 5px;
+        color: white;
+        font-weight: bold;
+        text-transform: capitalize;
+      }
+    }
+    .progress-time {
+      position: relative;
+      padding: 0 5px;
+      color: #556da5;
+      font-weight: bold;
+      margin-left: auto;
+      justify-self: flex-end;
+      z-index: 100;
+    }
+  }
+}
