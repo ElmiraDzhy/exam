@@ -19,11 +19,13 @@ import CONSTANTS from './constants';
 import browserHistory from './browserHistory';
 import ChatContainer from './components/Chat/ChatComponents/ChatContainer/ChatContainer';
 import EventsPage from "./pages/EventsPage";
+import GeneralCounter from "./components/GeneralCounter";
 
 class App extends Component {
   render() {
     return (
-      <Router history={browserHistory}>
+        <GeneralCounter>
+            <Router history={browserHistory}>
         <ToastContainer
           position="top-center"
           autoClose={5000}
@@ -73,6 +75,7 @@ class App extends Component {
         </Switch>
         <ChatContainer />
       </Router>
+        </GeneralCounter>
     );
   }
 }
