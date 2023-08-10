@@ -1,12 +1,18 @@
 .events-page-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  padding: 50px;
+  justify-content: space-around;
+  padding: 0 10vw;
   height: 50vh;
 
   @media (max-width: 768px) {
     padding: 30px;
+  }
+
+  @media screen and (max-width: 1200px) {
+    flex-direction: column;
+    height: fit-content;
   }
 
   .form-container {
@@ -14,11 +20,11 @@
     flex-direction: column;
     width: 100%;
     max-width: 400px;
-    margin: 0 auto;
     background-color: white;
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
+    height: 300px;
 
     label {
       display: block;
@@ -28,7 +34,6 @@
     }
 
     .input-field {
-      //width: 100%;
       padding: 10px;
       font-size: 16px;
       border: 1px solid #ccc;
@@ -55,5 +60,48 @@
         background-color: #40548b;
       }
     }
+  }
+
+  .events-progress-container{
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 20px;
+    height: 300px;
+    min-width: 400px;
+
+    @media screen and (max-width: 1200px) {
+      height: 30vh;
+      align-items: center;
+    }
+    .header-progress-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      width: 30vw;
+
+      p {
+        margin: 0;
+        font-weight: 600;
+        color: #333;
+        font-size: 14px;
+      }
+
+      p:first-child {
+        margin-bottom: 10px;
+        color: #556da5;
+        margin-right: auto;
+        font-size: 20px;
+
+      }
+    }
+
+    .progress-elements-container{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      height: 30vh;
+      overflow-y: auto;
+    }
+
   }
 }
