@@ -1,0 +1,31 @@
+.Toastify__toast-container {
+  z-index: 9999;
+}
+
+.Toastify__toast {
+  border-radius: 3px;
+  padding: 10px 20px;
+  font-size: 14px;
+}
+
+.Toastify__toast--success {
+  background-color: #556da5;
+  color: white;
+}
+
+.Toastify__toast-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Toastify__close-button {
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+
+.Toastify__progress-bar {
+  background-color: rgba(255, 255, 255, 0.2);
+}
