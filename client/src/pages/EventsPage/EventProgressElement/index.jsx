@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from './EventProgressElement.module.scss';
+import classNames from "classnames";
 
 const EventProgressElement = (props) => {
     const {  eventDate, eventName } = props;
@@ -32,7 +33,6 @@ const EventProgressElement = (props) => {
                 formattedTimeLeft += `${days}d `;
             }
             formattedTimeLeft += `${hours}h ${minutes}m ${seconds}s`;
-
             setTimeLeft(formattedTimeLeft);
 
         }, 1000);
@@ -40,16 +40,38 @@ const EventProgressElement = (props) => {
         return () => clearInterval(interval);
     }, [eventDate]);
 
+    const classNameEventContainer = classNames(styles['event-container'], {
+        [styles['expired']]: progress === 100,
+    })
+
+    const onClickHandler = () => {
+        let arrayForReminderEvents = JSON.parse(localStorage.getItem('eventNamesArray'));
+        arrayForReminderEvents = arrayForReminderEvents.filter(item => item !== eventName);
+
+        const localStoreEvents = JSON.parse(localStorage.getItem('events'));
+        delete localStoreEvents[eventName];
+
+        localStorage.setItem('events', JSON.stringify(localStoreEvents));
+        localStorage.setItem('eventNamesArray', JSON.stringify(arrayForReminderEvents));
+
+        props.rerender();
+    }
 
     return (
-        <div className={styles['event-container']}>
-            <div className={styles['progress-container']}>
-                    <div className={styles['filler']} style={{width: `${progress}%`}}>
-                        <span className={styles['progress-label']}>{`${eventName}`}</span>
-                    </div>
-                <span className={styles['progress-time']}>{`${timeLeft}`}</span>
+        <article className={styles['progress-element-wrapper']}>
+            <div className={classNameEventContainer}>
+                <div className={styles['progress-container']}>
+                        <div className={styles['filler']} style={{width: `${progress}%`}}>
+                            <span className={styles['progress-label']}>{`${eventName}`}</span>
+                        </div>
+                    <span className={styles['progress-time']}>{`${ progress === 100 ? 'expired' : timeLeft}`}</span>
+                </div>
             </div>
-        </div>
+            <button className={styles['delete-event-btn']} onClick={onClickHandler}>
+               <img src={'/staticImages/deleteEvent.svg'} alt={'delete event'}/>
+            </button>
+        </article>
+
 
     );
 };

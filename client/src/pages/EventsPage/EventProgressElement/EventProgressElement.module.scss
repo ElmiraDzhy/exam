@@ -1,37 +1,59 @@
-.event-container {
-  .progress-container {
-    height: 30px;
-    width: 30vw;
-    background-color: rgba(97, 194, 255, 0.38);
-    border-radius: 3px;
-    //margin: 10px 0;
-    display: flex;
-    align-items: center;
+.expired{
+  background-color: red;
+}
 
-    .filler {
-      position: relative;
-      z-index: 1;
-      height: 100%;
-      background-color: #556da5;
-      border-radius: 3px 0 0 3px;
+.progress-element-wrapper{
+  display: flex;
+
+  .event-container {
+    position: relative;
+    .progress-container {
+      height: 30px;
+      width: 30vw;
+      background-color: rgba(103, 110, 115, 0.27);
+      border-radius: 3px;
       display: flex;
       align-items: center;
 
-      .progress-label {
+      .filler {
+        position: relative;
+        z-index: 1;
+        height: 100%;
+        background-color: #556da5;
+        border-radius: 3px 0 0 3px;
+        display: flex;
+        align-items: center;
+
+        .progress-label {
+          position: absolute;
+          width: 200px;
+          padding: 0 5px;
+          color: white;
+          font-weight: bold;
+          text-transform: capitalize;
+        }
+      }
+
+      .progress-time {
+        position: absolute;
+        right: 0;
         padding: 0 5px;
-        color: white;
+        color: #80b7ff;
         font-weight: bold;
-        text-transform: capitalize;
+        margin-left: auto;
+        justify-self: flex-end;
+        z-index: 100;
       }
     }
-    .progress-time {
-      position: relative;
-      padding: 0 5px;
-      color: #556da5;
-      font-weight: bold;
-      margin-left: auto;
-      justify-self: flex-end;
-      z-index: 100;
+  }
+
+  .delete-event-btn{
+    padding: 0;
+    border: none;
+    background-color: transparent;
+
+    img{
+      width: 23px;
     }
   }
 }
