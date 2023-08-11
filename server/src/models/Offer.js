@@ -1,4 +1,4 @@
-const {Model} = require('sequelize');
+const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
 
@@ -6,8 +6,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models){
       Offer.belongsTo(models.User, { foreignKey: 'userId', sourceKey: 'id' });
       Offer.belongsTo(models.Contest,
-          { foreignKey: 'contestId', sourceKey: 'id' });
-      Offer.hasOne(models.Rating, { foreignKey: 'offerId', targetKey: 'id' })
+        { foreignKey: 'contestId', sourceKey: 'id' });
+      Offer.hasOne(models.Rating, { foreignKey: 'offerId', targetKey: 'id' });
     }
 
   }
@@ -44,14 +44,19 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
       defaultValue: 'pending',
-    }
+    },
+    isModerate: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: null,
+    },
   }, {
     timestamps: false,
     modelName: 'Offer',
     tableName: 'offers',
     sequelize,
-    underscored: true
-  })
+    underscored: true,
+  });
 
   return Offer;
 };
