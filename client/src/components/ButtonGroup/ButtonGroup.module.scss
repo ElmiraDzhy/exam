@@ -1,0 +1,12 @@
+.button-group-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  margin: 100px 10vw;
+
+  @media screen and (max-width: 1200px) {
+    flex-direction: column;
+    height: 500px;
+  }
+}
