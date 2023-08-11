@@ -70,6 +70,7 @@ const EventsPage = (props) => {
                     <div className={styles['header-progress-container']}>
                         <p>Live upcoming checks</p>
                         <p>Remaining time</p>
+                        <img className={styles['event-timer-img']} src={'/staticImages/event-timer.svg'} alt={'event timer picture'}/>
                     </div>
                     <div className={styles['progress-elements-container']}>
                         {Object.keys(events).length === 0 ? 'not found' : renderProgressEvents().sort((a, b) => new Date(a.props.eventDate) - new Date(b.props.eventDate))}

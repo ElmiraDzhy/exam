@@ -41,7 +41,7 @@ const EventProgressElement = (props) => {
     }, [eventDate]);
 
     const classNameEventContainer = classNames(styles['event-container'], {
-        [styles['expired']]: progress === 100,
+        [styles['expired']]: progress === 100 || progress < 0,
     })
 
     const onClickHandler = () => {
@@ -64,7 +64,7 @@ const EventProgressElement = (props) => {
                         <div className={styles['filler']} style={{width: `${progress}%`}}>
                             <span className={styles['progress-label']}>{`${eventName}`}</span>
                         </div>
-                    <span className={styles['progress-time']}>{`${ progress === 100 ? 'expired' : timeLeft}`}</span>
+                    <span className={styles['progress-time']}>{`${ progress === 100 || progress < 0 ? 'expired' : timeLeft}`}</span>
                 </div>
             </div>
             <button className={styles['delete-event-btn']} onClick={onClickHandler}>
