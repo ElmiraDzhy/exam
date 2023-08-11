@@ -1,9 +1,9 @@
-const {Model} = require('sequelize');
+const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
-      User.hasMany(models.Offer, {foreignKey: 'userId', targetKey: 'id'});
+      User.hasMany(models.Offer, { foreignKey: 'userId', targetKey: 'id' });
       User.hasMany(models.Contest, { foreignKey: 'userId', targetKey: 'id' });
       User.hasMany(models.Rating, { foreignKey: 'userId', targetKey: 'id' });
     }
@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 'anon.png',
     },
     role: {
-      type: DataTypes.ENUM('customer', 'creator'),
+      type: DataTypes.ENUM('customer', 'creator', 'moderator'),
       allowNull: false,
     },
     balance: {
@@ -63,15 +63,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.FLOAT,
       allowNull: false,
       defaultValue: 0,
-    }
+    },
   }, {
     timestamps: false,
     sequelize,
     modelName: 'User',
     tableName: 'users',
-    underscored: true
+    underscored: true,
   });
 
   return User;
 
-}
+};
