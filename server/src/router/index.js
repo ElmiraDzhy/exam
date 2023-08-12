@@ -193,4 +193,11 @@ router.patch(
   contestController.confirmOffer,
 );
 
+router.patch(
+  '/rescindOffer/:offerId',
+  checkToken.checkToken,
+  checkModeratorRole,
+  contestController.rescindOffer,
+);
+
 module.exports = router;

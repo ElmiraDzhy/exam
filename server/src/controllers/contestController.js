@@ -313,3 +313,25 @@ module.exports.confirmOffer = async (req, res, next) => {
     next(err);
   }
 };
+
+module.exports.rescindOffer = async (req, res, next) => {
+  try{
+    const { params: { offerId } } = req;
+    await db.Offer.update({ isModerate: false }, {
+      where: {
+        id: offerId,
+      },
+    });
+
+    const offers = await db.Offer.findAll({
+      where: {
+        status: 'pending',
+        isModerate: null,
+      },
+    });
+
+    res.status(200).send(offers);
+  }catch(err){
+    next(err);
+  }
+};
