@@ -186,4 +186,11 @@ router.get(
   contestController.getAllOffers,
 );
 
+router.patch(
+  '/confirmOffer/:offerId',
+  checkToken.checkToken,
+  checkModeratorRole,
+  contestController.confirmOffer,
+);
+
 module.exports = router;
