@@ -7,6 +7,7 @@ const checkToken = require('../middlewares/checkToken');
 const validators = require('../middlewares/validators');
 const chatController = require('../controllers/chatController');
 const upload = require('../utils/fileUpload');
+const { checkModeratorRole } = require('../middlewares/checkModeratorRole');
 const router = express.Router();
 
 router.post(
@@ -176,6 +177,13 @@ router.get(
   '/getCatalogs',
   checkToken.checkToken,
   chatController.getCatalogs,
+);
+
+router.get(
+  '/getAllOffers',
+  checkToken.checkToken,
+  checkModeratorRole,
+  contestController.getAllOffers,
 );
 
 module.exports = router;
