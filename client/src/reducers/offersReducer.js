@@ -8,6 +8,7 @@ const initialState = {
 
 export default function (state = initialState, action){
     switch(action.type){
+        case ACTION.CONFIRM_OFFER_REQUEST:
         case ACTION.GET_ALL_OFFERS_REQUEST: {
             return {
                 ...state,
@@ -15,6 +16,7 @@ export default function (state = initialState, action){
             };
         }
 
+        case ACTION.CONFIRM_OFFER_SUCCESS:
         case ACTION.GET_ALL_OFFERS_SUCCESS: {
             return {
                 ...state,
@@ -23,6 +25,7 @@ export default function (state = initialState, action){
             };
         }
 
+        case ACTION.CONFIRM_OFFER_ERROR:
         case ACTION.GET_ALL_OFFERS_ERROR: {
             return {
                 ...state,

@@ -75,3 +75,12 @@ export function* getAllOffersSaga(action){
     yield put(actionCreators.getOffersError(err));
   }
 }
+
+export function* confirmOfferSaga(action){
+  try{
+    const {data} = yield restController.confirmOffer(action.data);
+    yield put(actionCreators.confirmOfferSuccess(data));
+  }catch(err){
+    yield put(actionCreators.confirmOfferError(err));
+  }
+}

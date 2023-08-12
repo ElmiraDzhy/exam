@@ -13,7 +13,7 @@ import {
   getContestByIdSaga,
   downloadContestFileSaga,
   getAllOffersSaga,
-
+  confirmOfferSaga,
 } from './contestsSagas';
 import { changeMarkSaga, setOfferStatusSaga, addOfferSaga } from './offerSagas';
 import {
@@ -60,6 +60,7 @@ function* rootSaga() {
   yield takeLatest(ACTION.REMOVE_CHAT_FROM_CATALOG_REQUEST, removeChatFromCatalogSaga);
   yield takeLatest(ACTION.CHANGE_CATALOG_NAME_REQUEST, changeCatalogName);
   yield takeLatest(ACTION.GET_ALL_OFFERS_REQUEST, getAllOffersSaga);
+  yield takeLatest(ACTION.CONFIRM_OFFER_REQUEST, confirmOfferSaga);
 }
 
 export default rootSaga;

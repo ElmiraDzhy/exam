@@ -307,3 +307,18 @@ export const getOffersError = (data) => ({
   type: ACTION.GET_ALL_OFFERS_ERROR,
   data
 });
+
+export const confirmOfferRequest = (data) => ({
+  type: ACTION.CONFIRM_OFFER_REQUEST,
+  data
+});
+
+export const confirmOfferSuccess = (data) => ({
+  type: ACTION.CONFIRM_OFFER_SUCCESS,
+  data
+});
+
+export const confirmOfferError = (data) => ({
+  type: ACTION.CONFIRM_OFFER_ERROR,
+  data
+});
