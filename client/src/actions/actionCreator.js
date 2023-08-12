@@ -322,3 +322,18 @@ export const confirmOfferError = (data) => ({
   type: ACTION.CONFIRM_OFFER_ERROR,
   data
 });
+
+export const rescindOfferRequest = (data) => ({
+  type: ACTION.RESCIND_OFFER_REQUEST,
+  data
+});
+
+export const rescindOfferSuccess = (data) => ({
+  type: ACTION.RESCIND_OFFER_SUCCESS,
+  data
+});
+
+export const rescindOfferError = (data) => ({
+  type: ACTION.RESCIND_OFFER_ERROR,
+  data
+});

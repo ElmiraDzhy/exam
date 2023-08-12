@@ -84,3 +84,12 @@ export function* confirmOfferSaga(action){
     yield put(actionCreators.confirmOfferError(err));
   }
 }
+
+export function* rescindOfferSaga(action){
+  try{
+    const {data} = yield restController.rescindOffer(action.data);
+    yield put(actionCreators.rescindOfferSuccess(data));
+  }catch(err){
+    yield put(actionCreators.rescindOfferError(err));
+  }
+}
