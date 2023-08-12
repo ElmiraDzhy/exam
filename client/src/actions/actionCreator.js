@@ -292,3 +292,18 @@ export const changeModalShow = (data) => ({
   type: ACTION.CHANGE_SHOW_MODAL,
   data,
 });
+
+export const getOffersRequest = (data) => ({
+  type: ACTION.GET_ALL_OFFERS_REQUEST,
+  data
+});
+
+export const getOffersSuccess = (data) => ({
+  type: ACTION.GET_ALL_OFFERS_SUCCESS,
+  data
+});
+
+export const getOffersError = (data) => ({
+  type: ACTION.GET_ALL_OFFERS_ERROR,
+  data
+});

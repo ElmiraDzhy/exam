@@ -1,6 +1,7 @@
 import { put, select } from 'redux-saga/effects';
 import ACTION from '../actions/actionTypes';
 import * as restController from '../api/rest/restController';
+import * as actionCreators from '../actions/actionCreator';
 
 export function* activeContestsSaga(action) {
   yield put({ type: ACTION.GET_CONTESTS_ACTION_REQUEST });
@@ -61,5 +62,16 @@ export function* downloadContestFileSaga(action) {
     yield put({ type: ACTION.DOWNLOAD_CONTEST_FILE_SUCCESS, data });
   } catch (e) {
     yield put({ type: ACTION.DOWNLOAD_CONTEST_FILE_ERROR, error: e.response });
+  }
+}
+
+//offers for moderate
+
+export function* getAllOffersSaga(action){
+  try{
+    const {data} = yield restController.getAllOffers(action.data);
+    yield put(actionCreators.getOffersSuccess(data));
+  }catch(err){
+    yield put(actionCreators.getOffersError(err));
   }
 }
