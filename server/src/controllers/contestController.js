@@ -273,17 +273,20 @@ module.exports.getContests = (req, res, next) => {
       res.send({ contests, haveMore });
     })
     .catch(err => {
-      next(new ServerError());
+      next(new ServerError(err));
     });
 };
 
 module.exports.getAllOffers = async (req, res, next) => {
   try{
+    const { query: { offset, limit } } = req;
     const offers = await db.Offer.findAll({
       where: {
         status: 'pending',
         isModerate: null,
       },
+      limit,
+      offset: offset || 0,
     });
     res.status(200).send(offers);
   }catch(err){

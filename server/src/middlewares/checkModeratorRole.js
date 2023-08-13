@@ -1,13 +1,13 @@
 const RightsError = require('../errors/RightsError');
 
 module.exports.checkModeratorRole = async (req, res, next) => {
-  try{
-    if(req.tokenData.role === 'moderator'){
+  try {
+    if (req.tokenData.role === 'moderator') {
       return next();
-    }else{
+    } else {
       return new RightsError('Only moderator access');
     }
-  }catch(err){
+  } catch(err) {
     next(err);
   }
 };

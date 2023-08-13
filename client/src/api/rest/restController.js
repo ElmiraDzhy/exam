@@ -39,6 +39,11 @@ export const getActiveContests = ({
 }});
 
 export const getContestById = (data) => http.get(`getContestById/${data.contestId}`);
-export const getAllOffers = (data) => http.get(`getAllOffers`, data);
+export const getAllOffers = ({limit, offset}) => http.get(`getAllOffers`, {
+  params: {
+    limit,
+    offset,
+  }
+});
 export const confirmOffer = (data) => http.patch(`confirmOffer/${data.id}`);
 export const rescindOffer = (data) => http.patch(`rescindOffer/${data.id}`);

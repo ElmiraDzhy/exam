@@ -18,14 +18,22 @@ export default function (state = initialState, action){
             };
         }
 
-        case ACTION.RESCIND_OFFER_SUCCESS:
-        case ACTION.CONFIRM_OFFER_SUCCESS:
+
         case ACTION.GET_ALL_OFFERS_SUCCESS: {
+            return {
+                ...state,
+                offers: [...state.offers, ...action.data],
+                isFetching: false,
+            };
+        }
+
+        case ACTION.RESCIND_OFFER_SUCCESS:
+        case ACTION.CONFIRM_OFFER_SUCCESS:{
             return {
                 ...state,
                 offers: action.data,
                 isFetching: false,
-            };
+            }
         }
 
         case ACTION.RESCIND_OFFER_ERROR:

@@ -5,7 +5,7 @@ import Footer from "../../components/Footer/Footer";
 import {getOffersRequest, confirmOfferRequest, rescindOfferRequest} from '../../actions/actionCreator';
 import history from "../../browserHistory";
 import OfferForModerator from "./OfferForModerator";
-
+import styles from './ModeratorOfferPage.module.scss';
 
 const ModeratorOfferPage = (props) => {
 
@@ -19,10 +19,9 @@ const ModeratorOfferPage = (props) => {
         if(data.role !== 'moderator'){
             history.replace('/login');
         }
-        getOffersRequest(data);
+        getOffersRequest({ limit: 3});
 
-    }, []);
-
+    },[]);
 
     const confirmOfferHandler = (data) => {
         confirmOfferRequest(data);
@@ -32,14 +31,30 @@ const ModeratorOfferPage = (props) => {
         rescindOfferRequest(data)
     }
 
+    const  loadMore = (startFrom) => {
+        getOffersRequest({
+            limit: 3,
+            offset: startFrom,
+        });
+        scrollToBottom();
+    };
+
+    const scrollToBottom = () => {
+        window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: 'smooth',
+        });
+    };
+
     return(
         <>
         <Header/>
             {
-                data.role !== 'moderator' ? <p>Only for moderator page</p> : <section style={{display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '50px 0', width: '100%'}}>
-                    { isFetching || <>
+                data.role !== 'moderator' ? <p>Only for moderator page</p> : <section className={styles.container}>
+                    { isFetching || error || <>
                         <p>{offers.map(offer => <OfferForModerator offer={offer} confirm={confirmOfferHandler} rescind={rescindOfferHandler}/>)}</p>
                     </> }
+                    <button className={styles['load-more-button']} onClick={() => loadMore(offers.length)}>Load More <img src={'/staticImages/load-more.svg'} alt={'load more button'}/></button>
                 </section>
             }
         <Footer/>
