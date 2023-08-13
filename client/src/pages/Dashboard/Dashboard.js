@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { connect } from 'react-redux';
 import CONSTANTS from '../../constants';
 import CustomerDashboard from '../../components/CustomerDashboard/CustomerDashboard';
@@ -7,6 +7,13 @@ import Header from '../../components/Header/Header';
 
 const Dashboard = (props) => {
   const { role, history } = props;
+
+    useEffect(() => {
+        if(role === 'moderator'){
+            history.push('/moderatorOffer');
+        }
+  }, []);
+
   return (
     <div>
       <Header />

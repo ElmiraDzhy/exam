@@ -8,10 +8,13 @@ import Footer from '../../components/Footer/Footer';
 import styles from './Home.module.sass';
 import carouselConstants from '../../carouselConstants';
 import Spinner from '../../components/Spinner/Spinner';
+import { useHistory } from 'react-router-dom';
 
 const Home = (props) => {
+  const { isFetching, data } = props;
   const [index, setIndex] = useState(0);
   const [styleName, setStyle] = useState(styles.headline__static);
+  const history = useHistory();
   let timeout;
 
   useEffect(() => {
@@ -19,13 +22,17 @@ const Home = (props) => {
       setIndex(index + 1);
       setStyle(styles.headline__isloading);
     }, 3000);
+    if(data?.role === 'moderator'){
+      history.push('/moderatorOffer');
+    }
+
     return () => {
       setStyle(styles.headline__static);
       clearInterval(timeout);
     };
   });
 
-  const { isFetching } = props;
+
   const text = CONSTANTS.HEADER_ANIMATION_TEXT[index % CONSTANTS.HEADER_ANIMATION_TEXT.length];
   return (
     <>
@@ -221,9 +228,6 @@ const Home = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  const { isFetching } = state.userStore;
-  return { isFetching };
-};
+const mapStateToProps = ({userStore: {isFetching, data}}) => ({isFetching, data});
 
 export default connect(mapStateToProps, null)(Home);
