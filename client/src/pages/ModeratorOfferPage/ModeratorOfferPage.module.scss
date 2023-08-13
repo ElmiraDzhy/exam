@@ -1,0 +1,32 @@
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px 0;
+  width: 100%
+}
+
+.load-more-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #556da5;
+  color: white;
+  border: none;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #40548b;
+  }
+
+  img {
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+  }
+}
