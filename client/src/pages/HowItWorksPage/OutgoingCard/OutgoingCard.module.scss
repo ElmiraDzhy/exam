@@ -1,0 +1,62 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
+  height: 70px;
+  width: 100%;
+
+  border: 1px solid #c4bebe;
+  border-radius: 0.3125rem;
+
+  font-size: 1rem;
+  line-height: 1.5;
+  text-align: left;
+  white-space: inherit;
+
+  background-color: white;
+
+  transition-property: all;
+  transition-duration: 0.35s;
+  transition-timing-function: ease-in-out;
+
+  color: #1e2022;
+}
+
+.container:hover {
+  cursor: pointer;
+  border: 1px solid blue;
+}
+
+.containerOpen {
+  height: 300px;
+  min-height: 50px;
+  border: 1px solid #c4bebe;
+}
+
+.containerOpen:hover {
+  border: 1px solid #c4bebe;
+}
+
+.captionText{
+    vertical-align: center;
+}
+.captionWrapper {
+  display: flex;
+  padding: 20px;
+}
+
+.content {
+  display: none;
+}
+
+.contentOpen {
+  display: block;
+  margin: 0;
+  padding: 20px;
+  line-height: 1.5;
+}
+
+.arrow{
+  margin-left: auto;
+  color: #377dff;
+}

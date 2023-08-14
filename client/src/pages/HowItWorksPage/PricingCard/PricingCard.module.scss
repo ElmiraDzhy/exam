@@ -1,0 +1,53 @@
+.container{
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  padding: 40px;
+  height: 90px;
+  font-family: "Poppins",Helvetica,Arial,sans-serif;
+
+  &:nth-child(1):after{
+    position: absolute;
+    content: '';
+    bottom: 0;
+    width: 90%;
+    height: 1px;
+    background-color: #e7eaf3;
+  }
+}
+
+.header{
+  font-weight: 500;
+  font-size: 1.25rem;
+}
+
+.text{
+  font-size: 16px;
+  font-weight: 400;
+  color: #77838f;
+  line-height: 1.7;
+  margin-top: 10px;
+
+  & > a{
+   color: #377dff;
+
+    &:hover{
+      color: #0052ea;
+      cursor: pointer;
+    }
+  }
+}
+
+.arrow-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.3rem;
+  margin-right: 20px;
+
+  background: rgba(55,125,255,.1);
+  border-color: transparent;
+  border-radius: 50%;
+  color: #377dff;
+}

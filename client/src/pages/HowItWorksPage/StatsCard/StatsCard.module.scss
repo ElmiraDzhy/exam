@@ -1,0 +1,34 @@
+.container{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  height: 150px;
+  padding: 20px;
+}
+
+.icon-stats{
+  height: 77px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.bold-text{
+  font-weight: 600;
+  font-size: 1rem;
+  font-family: "Poppins",Helvetica,Arial,sans-serif;
+
+  line-height: 1.7;
+  color: #1e2022;
+}
+
+.text{
+  font-weight: 400;
+  text-align: center;
+  font-family: "Poppins",Helvetica,Arial,sans-serif;
+
+  line-height: 1.7;
+  color: #77838f;
+}
