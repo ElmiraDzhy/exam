@@ -302,7 +302,7 @@ module.exports.createCatalog = async (req, res, next) => {
 
 module.exports.updateNameCatalog = async (req, res, next) => {
   try {
-    const updatedCatalogInstance = await db.Catalog.update({
+    await db.Catalog.update({
       catalogName: req.body.catalogName,
     },
     {
@@ -311,7 +311,16 @@ module.exports.updateNameCatalog = async (req, res, next) => {
       },
     });
 
-    res.status(200).send(updatedCatalogInstance);
+    const result = await db.Catalog.findOne({
+      where: {
+        id: req.body.catalogId,
+      },
+      include: [{ model: db.Conversation }],
+      raw: true,
+    });
+
+    result.chats = [ result['Conversations.id']];
+    res.status(200).send(result);
   } catch (err) {
     next(err);
   }
@@ -321,9 +330,9 @@ module.exports.addNewChatToCatalog = async (req, res, next) => {
   try{
     const catalogInstance = await db.Catalog.findByPk(req.body.catalogId);
     const conversationToAdd = await db.Conversation.findByPk(req.body.chatId);
-    const result = await catalogInstance.addConversation(conversationToAdd);
+    await catalogInstance.addConversation(conversationToAdd);
 
-    res.status(200).send(result);
+    res.status(200).send(conversationToAdd.dataValues);
   }catch(err){
     next(err);
   }
@@ -356,7 +365,6 @@ module.exports.deleteCatalog = async (req, res, next) => {
     });
     const user = await db.User.findByPk(req.tokenData.userId);
     const catalogs = await user.getCatalogs();
-
     res.status(200).send(catalogs);
   }catch(err){
     next(err);
@@ -366,24 +374,24 @@ module.exports.deleteCatalog = async (req, res, next) => {
 module.exports.getCatalogs = async (req, res, next) => {
   try{
     const catalogs = await db.Catalog.findAll({
-      attributes: ['id', [db.Sequelize.literal('catalog_name'), 'catalogName']],
-      include: [
-        {
-          model: db.Conversation,
-          attributes: ['id'],
-          through: { attributes: [] },
-        },
-      ],
       where: {
         userId: req.tokenData.userId,
       },
-      raw: true,
+      include: [
+        {
+          model: db.Conversation,
+          through: { attributes: ['id'] },
+          attributes: ['id'],
+        },
+      ],
     });
 
-    const result = catalogs.map(catalog => ({
+    const rawResult = catalogs.map(item => item.get({ plain: true }));
+
+    const result = rawResult.map(catalog => ({
       id: catalog.id,
       catalogName: catalog.catalogName,
-      chats: [catalog['Conversations.id']],
+      chats: catalog['Conversations'].map(conversation => conversation.id),
     }));
 
     res.status(200).send({ data: result });

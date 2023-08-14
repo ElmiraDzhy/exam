@@ -61,7 +61,7 @@ export function* changeChatFavorite(action) {
     messagesPreview.map((preview) => {
       if(preview.participants.every((value) =>  data.participants.includes(value))){
         preview.favoriteList = data.favourite
-      };
+      }
     });
 
     yield put({ type: ACTION.CHANGE_CHAT_FAVORITE, data: { changedPreview: data, messagesPreview } });
@@ -98,7 +98,7 @@ export function* addChatToCatalog(action) {
     const { catalogList } = yield select((state) => state.chatStore);
     for (let i = 0; i < catalogList.length; i++) {
       if (catalogList[i]._id === data._id) {
-        catalogList[i].chats = data.chats;
+        catalogList[i].chats.push(data.id);
         break;
       }
     }
