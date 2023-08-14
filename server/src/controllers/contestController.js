@@ -60,9 +60,9 @@ module.exports.getContestById = async (req, res, next) => {
         {
           model: db.Offer,
           required: false,
-          where: req.tokenData.role === CONSTANTS.CREATOR
-            ? { userId: req.tokenData.userId }
-            : {},
+          where: {
+            isModerate: true,
+          },
           attributes: { exclude: ['userId', 'contestId'] },
           include: [
             {
