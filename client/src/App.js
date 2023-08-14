@@ -20,11 +20,14 @@ import browserHistory from './browserHistory';
 import ChatContainer from './components/Chat/ChatComponents/ChatContainer/ChatContainer';
 import ModeratorOfferPage from "./pages/ModeratorOfferPage";
 import HowItWorksPage from './pages/HowItWorksPage'
+import EventsPage from "./pages/EventsPage";
+import GeneralCounter from "./components/GeneralCounter";
 
 class App extends Component {
   render() {
     return (
-      <Router history={browserHistory}>
+        <GeneralCounter>
+            <Router history={browserHistory}>
         <ToastContainer
           position="top-center"
           autoClose={5000}
@@ -69,12 +72,14 @@ class App extends Component {
           <Route exact path="/dashboard" component={PrivateHoc(Dashboard)} />
           <Route exact path="/contest/:id" component={PrivateHoc(ContestPage)} />
           <Route exact path="/account" component={PrivateHoc(UserProfile)} />
+          <Route exact path="/events" component={PrivateHoc(EventsPage)} />
           <Route exact path="/how-it-works" component={HowItWorksPage}/>
           <Route exact path="/moderatorOffer" component={PrivateHoc(ModeratorOfferPage)}/>
           <Route component={NotFound} />
         </Switch>
         <ChatContainer />
       </Router>
+        </GeneralCounter>
     );
   }
 }
