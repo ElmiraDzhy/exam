@@ -14,10 +14,10 @@ function logError(error) {
     message: error.message || '',
     time: Date.now(),
     code: error.code || 0,
-    stackTrace: error.stack || {},
+    stackTrace: error.stack ? { error: error.stack } : {},
   };
 
-  const logString = JSON.stringify(logEntry, null, 2) + '\n';
+  const logString = JSON.stringify(logEntry, null) + '\n';
 
   fs.appendFile(logFilePath, logString, (err) => {
     if (err) {
