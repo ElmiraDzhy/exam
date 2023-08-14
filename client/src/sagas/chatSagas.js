@@ -1,5 +1,4 @@
 import { put, select } from 'redux-saga/effects';
-import remove from 'lodash/remove';
 import isEqual from 'lodash/isEqual';
 import ACTION from '../actions/actionTypes';
 import * as restController from '../api/rest/restController';
@@ -58,9 +57,13 @@ export function* changeChatFavorite(action) {
   try {
     const { data } = yield restController.changeChatFavorite(action.data);
     const { messagesPreview } = yield select((state) => state.chatStore);
-    messagesPreview.forEach((preview) => {
-      if (isEqual(preview.participants, data.participants)) preview.favoriteList = data.favoriteList;
+
+    messagesPreview.map((preview) => {
+      if(preview.participants.every((value) =>  data.participants.includes(value))){
+        preview.favoriteList = data.favourite
+      };
     });
+
     yield put({ type: ACTION.CHANGE_CHAT_FAVORITE, data: { changedPreview: data, messagesPreview } });
   } catch (err) {
     yield put({ type: ACTION.SET_CHAT_FAVORITE_ERROR, error: err.response });

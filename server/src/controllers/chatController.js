@@ -47,8 +47,8 @@ module.exports.addMessage = async (req, res, next) => {
     const favouriteAndBlock =  await db.ConversationUser.findAll({
       attributes: ['blocked', 'favourite'],
       where: {
-        user_id: [3, 1],
-        conversation_id: 19,
+        user_id: participants,
+        conversation_id: conversationId,
       },
       order: [['user_id', 'ASC']],
       raw: true,
@@ -179,11 +179,6 @@ module.exports.getPreview = async (req, res, next) => {
               attributes: ['id', 'firstName', 'lastName', 'displayName', 'avatar'],
               through: {
                 model: db.ConversationUser,
-                where:{
-                  id: {
-                    [db.Sequelize.Op.ne]: userId,
-                  },
-                },
               },
             },
           ],
@@ -265,7 +260,25 @@ module.exports.favoriteChat = async (req, res, next) => {
       },
     );
 
-    res.status(200).send(data);
+
+    const favouriteAndBlock =  await db.ConversationUser.findAll({
+      attributes: ['blocked', 'favourite'],
+      where: {
+        user_id: participants,
+        conversation_id: conversation.conversation_id,
+      },
+      order: [['user_id', 'DESC']],
+      raw: true,
+    });
+
+    const blockedArray = favouriteAndBlock.map(item => item.blocked);
+    const favArray = favouriteAndBlock.map(item => item.favourite);
+
+    data[0].participants = [...participants];
+    data[0].favourite = favArray;
+    data[0].blocked = blockedArray;
+
+    res.status(200).send(data[0]);
   }catch(err){
     next(err);
   }

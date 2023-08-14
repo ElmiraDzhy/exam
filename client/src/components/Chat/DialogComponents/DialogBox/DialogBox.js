@@ -18,8 +18,9 @@ const DialogBox = (props) => {
   const {
     favoriteList, participants, blackList, id, text, createAt,
   } = chatPreview;
-  const isFavorite = favoriteList[participants.indexOf(userId)];
-  const isBlocked = blackList[participants.indexOf(userId)];
+  const index = participants.indexOf(userId)
+  const isFavorite = favoriteList[index];
+  const isBlocked = blackList[index];
   return (
     <div
       className={styles.previewChatBox}
