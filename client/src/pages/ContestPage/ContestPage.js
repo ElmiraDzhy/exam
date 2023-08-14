@@ -101,6 +101,9 @@ class ContestPage extends React.Component {
     };
 
     render() {
+      if (!this.props.userStore.data?.role) {
+        this.props.history.replace('/login');
+      } else{
       const { role } = this.props.userStore.data;
       const {
         contestByIdStore,
@@ -190,6 +193,7 @@ Offer
             )}
         </div>
       );
+    }
     }
 }
 
