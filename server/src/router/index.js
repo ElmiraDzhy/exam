@@ -168,7 +168,7 @@ router.delete(
 );
 
 router.delete(
-  '/deleteCatalog',
+  '/deleteCatalog/:catalogId',
   checkToken.checkToken,
   chatController.deleteCatalog,
 );

@@ -6,6 +6,11 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Offer, { foreignKey: 'userId', targetKey: 'id' });
       User.hasMany(models.Contest, { foreignKey: 'userId', targetKey: 'id' });
       User.hasMany(models.Rating, { foreignKey: 'userId', targetKey: 'id' });
+      User.hasMany(models.Catalog, { foreignKey: 'userId', targetKey: 'id' });
+      User.belongsToMany(models.Conversation, {
+        through: 'conversations_to_users',
+        foreignKey: 'userId',
+      });
     }
 
   }
