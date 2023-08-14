@@ -18,10 +18,10 @@ import ContestCreationPage from './pages/ContestCreation/ContestCreationPage';
 import CONSTANTS from './constants';
 import browserHistory from './browserHistory';
 import ChatContainer from './components/Chat/ChatComponents/ChatContainer/ChatContainer';
-import ModeratorOfferPage from "./pages/ModeratorOfferPage";
+import ModeratorOfferPage from './pages/ModeratorOfferPage';
 import HowItWorksPage from './pages/HowItWorksPage'
-import EventsPage from "./pages/EventsPage";
-import GeneralCounter from "./components/GeneralCounter";
+import EventsPage from './pages/EventsPage';
+import GeneralCounter from './components/GeneralCounter';
 
 class App extends Component {
   render() {

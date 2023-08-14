@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import ButtonElement from "./ButtonElement";
+import React, {useState} from 'react';
+import ButtonElement from './ButtonElement';
 import styles from './ButtonGroup.module.scss';
 
 const buttonsContent = [{

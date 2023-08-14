@@ -10,7 +10,7 @@ import getContestByIdReducer from './getContestByIdReducer';
 import updateContestReducer from './updateContestReducer';
 import chatReducer from './chatReducer';
 import userProfileReducer from './userProfileReducer';
-import offersReducer from "./offersReducer";
+import offersReducer from './offersReducer';
 
 const appReducer = combineReducers({
   userStore: getUserReducer,

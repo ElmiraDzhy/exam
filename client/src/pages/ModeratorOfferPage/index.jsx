@@ -1,10 +1,10 @@
-import React, {useEffect} from "react";
-import {connect} from "react-redux";
-import Header from "../../components/Header/Header";
-import Footer from "../../components/Footer/Footer";
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
 import {getOffersRequest, confirmOfferRequest, rescindOfferRequest} from '../../actions/actionCreator';
-import history from "../../browserHistory";
-import OfferForModerator from "./OfferForModerator";
+import history from '../../browserHistory';
+import OfferForModerator from './OfferForModerator';
 import styles from './ModeratorOfferPage.module.scss';
 
 const ModeratorOfferPage = (props) => {

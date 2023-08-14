@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import styles from './EventProgressElement.module.scss';
-import classNames from "classnames";
+import classNames from 'classnames';
 
 const EventProgressElement = (props) => {
     const {  eventDate, eventName } = props;

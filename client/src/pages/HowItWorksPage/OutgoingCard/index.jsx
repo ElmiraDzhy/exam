@@ -1,9 +1,9 @@
-import React, {useState} from "react";
+import React, {useState} from 'react';
 import styles from './OutgoingCard.module.scss';
 import Icon from '@mdi/react';
 import { mdiArrowRight, mdiArrowDown } from '@mdi/js';
-import classNames from "classnames";
-import PropTypes from "prop-types";
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
 function OutgoingCard(props) {
     const {

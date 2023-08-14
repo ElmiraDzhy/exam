@@ -7,7 +7,7 @@ import styles from './OfferForm.module.sass';
 import FormInput from '../FormInput/FormInput';
 import Schems from '../../validators/validationSchems';
 import Error from '../Error/Error';
-import DragNDropArea from "../DragNDropArea";
+import DragNDropArea from '../DragNDropArea';
 
 const OfferForm = (props) => {
     const renderOfferInput = () => {

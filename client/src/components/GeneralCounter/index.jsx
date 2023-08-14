@@ -1,7 +1,7 @@
-import React, {useEffect} from "react";
-import {toast, ToastContainer} from "react-toastify";
+import React, {useEffect} from 'react';
+import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import "./toastifyCustomStyle.scss";
+import './toastifyCustomStyle.scss';
 const GeneralCounter = (props) => {
 
     const notify = (eventName) => {

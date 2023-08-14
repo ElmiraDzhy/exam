@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import Header from "../../components/Header/Header";
-import Footer from "../../components/Footer/Footer";
-import {Field, Form, Formik} from "formik";
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
+import {Field, Form, Formik} from 'formik';
 import styles from './EventsPage.module.scss';
-import EventProgressElement from "./EventProgressElement";
+import EventProgressElement from './EventProgressElement';
 
 const EventsPage = (props) => {
 

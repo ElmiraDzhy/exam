@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import styles from "./DragNDropArea.module.scss";
-import classNames from "classnames";
-import { useField } from "formik";
+import React, { useState } from 'react';
+import styles from './DragNDropArea.module.scss';
+import classNames from 'classnames';
+import { useField } from 'formik';
 
 function DragNDropArea(props) {
     const [field, , helpers] = useField(props.name);

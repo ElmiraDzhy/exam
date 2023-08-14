@@ -1,14 +1,14 @@
-import React from "react";
-import Header from "../../components/Header/Header";
-import Footer from "../../components/Footer/Footer";
+import React from 'react';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
 import Icon from '@mdi/react';
 import { mdiPlay, mdiChevronRight } from '@mdi/js';
 import styles from './HowItWorksPage.module.scss';
-import InfoCard from "./InfoCard";
-import StepCard from "./StepCard";
-import OutgoingCard from "./OutgoingCard";
-import StatsCard from "./StatsCard";
-import PricingCard from "./PricingCard";
+import InfoCard from './InfoCard';
+import StepCard from './StepCard';
+import OutgoingCard from './OutgoingCard';
+import StatsCard from './StatsCard';
+import PricingCard from './PricingCard';
 
 
 
@@ -131,7 +131,7 @@ const HowItWorksPage = (props) => {
                         <p className={styles['soft-btn']}>World's #1 Naming Platform</p>
                         <h1 className={styles['banner-header']}>How Does Squadhelp Work?</h1>
                         <p className={styles['section-info']}>Squadhelp helps you come up with a great name for your business by combining the power of crowd sourcing with sophisticated technology and Agency-level validation services.</p>
-                        <a className={styles['banner-play-button']}>
+                        <a href="#" className={styles['banner-play-button']}>
                             <Icon path={mdiPlay} size={1} />
                             Play Video</a>
                     </div>
