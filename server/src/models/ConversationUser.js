@@ -21,11 +21,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     favourite: {
       type: DataTypes.BOOLEAN,
-      default: false,
+      defaultValue: false,
     },
     blocked: {
       type: DataTypes.BOOLEAN,
-      default: false,
+      defaultValue: false,
     },
 
   }, {

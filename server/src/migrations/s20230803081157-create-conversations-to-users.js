@@ -27,11 +27,11 @@ module.exports = {
       },
       favourite: {
         type: Sequelize.BOOLEAN,
-        default: false,
+        defaultValue: false,
       },
       blocked: {
         type: Sequelize.BOOLEAN,
-        default: false,
+        defaultValue: false,
       },
     });
     await queryInterface.addConstraint('conversations_to_users', {

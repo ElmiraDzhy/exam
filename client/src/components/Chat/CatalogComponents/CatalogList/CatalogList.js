@@ -16,9 +16,9 @@ const CatalogList = (props) => {
   };
 
   const getListCatalog = () => {
-    const { catalogList } = props;
+    const { chatStore: {catalogList} } = props;
     const elementList = [];
-    catalogList.forEach((catalog) => {
+    catalogList && catalogList.forEach((catalog) => {
       elementList.push(<Catalog
         catalog={catalog}
         key={catalog.id}
@@ -36,9 +36,11 @@ const CatalogList = (props) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  changeShowModeCatalog: (data) => dispatch(changeShowModeCatalog(data)),
-  deleteCatalog: (data) => dispatch(deleteCatalog(data)),
-});
+const mapStateToProps = ({chatStore}) => ({chatStore});
 
-export default connect(null, mapDispatchToProps)(CatalogList);
+const mapDispatchToProps = {
+  changeShowModeCatalog,
+  deleteCatalog,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CatalogList);

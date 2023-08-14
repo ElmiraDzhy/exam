@@ -116,10 +116,8 @@ export function* createCatalog(action) {
 
 export function* deleteCatalog(action) {
   try {
-    yield restController.deleteCatalog(action.data);
-    const { catalogList } = yield select((state) => state.chatStore);
-    const newCatalogList = remove(catalogList, (catalog) => action.data.catalogId !== catalog._id);
-    yield put({ type: ACTION.DELETE_CATALOG_SUCCESS, data: newCatalogList });
+   const {data} = yield restController.deleteCatalog(action.data);
+    yield put({ type: ACTION.DELETE_CATALOG_SUCCESS, data: data });
   } catch (err) {
     yield put({ type: ACTION.DELETE_CATALOG_ERROR, error: err.response });
   }
