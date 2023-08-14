@@ -104,7 +104,7 @@ const OfferBox = (props) => {
         <div className={styles.userInfo}>
           <div className={styles.creativeInfoContainer}>
             <img
-              src={avatar === 'anon.png' ? CONSTANTS.ANONYM_IMAGE_PATH : `${CONSTANTS.publicURL}${avatar}`}
+              src={avatar === 'anon.png' ? CONSTANTS.ANONYM_IMAGE_PATH : `${avatar}`}
               alt="user"
             />
             <div className={styles.nameAndEmail}>
@@ -136,7 +136,7 @@ const OfferBox = (props) => {
                             <img
                               onClick={() => props.changeShowImage({ imagePath: data.fileName, isShowOnFull: true })}
                               className={styles.responseLogo}
-                              src={`${CONSTANTS.publicURL}${data.fileName}`}
+                              src={`${data.fileName}`}
                               alt="logo"
                             />
                           )

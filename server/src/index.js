@@ -13,9 +13,9 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use('/public', express.static('public'));
 app.use(router);
 app.use(handlerError);
+app.use('/public', express.static('public/'));
 
 cron.schedule('0 2 * * *', () => {
   processLogs();

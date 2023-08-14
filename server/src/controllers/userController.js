@@ -153,7 +153,7 @@ module.exports.payment = async (req, res, next) => {
 module.exports.updateUser = async (req, res, next) => {
   try {
     if (req.file) {
-      req.body.avatar = req.file.filename;
+      req.body.avatar = req.body.imagePath;
     }
     const updatedUser = await userQueries.updateUser(req.body,
       req.tokenData.userId);
