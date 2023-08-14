@@ -1,0 +1,48 @@
+.button-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+
+  margin: 0 10px;
+  height: 150px;
+  padding: 0 50px;
+
+  border: 1px solid grey;
+  border-radius: 5px;
+
+  font-size: 16px;
+  font-weight: 550;
+  color: gray;
+  background-color: transparent;
+}
+
+.button-container:hover{
+  border: 1px solid rgba(67, 190, 139, 0.8);
+
+  .flag-default{
+    background-color: rgba(67, 190, 139, 0.8);
+  }
+}
+
+.button-checked{
+  border: 1px solid #43be8b;
+  border-radius: 5px;
+}
+
+.flag-default{
+  padding: 10px 0;
+  width: 70px;
+
+  background-color: grey;
+  border-radius: 20px;
+
+  color: white;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+
+.flag-checked{
+  background-color: #43be8b;
+}
