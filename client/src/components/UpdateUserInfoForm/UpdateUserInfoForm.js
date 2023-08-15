@@ -58,7 +58,7 @@ const UpdateUserInfoForm = (props) => {
             }}
           />
         </div>
-          <DragNDropArea name={'file'}/>
+        <DragNDropArea name="file" />
         <button type="submit" disabled={submitting}>
           Submit
         </button>

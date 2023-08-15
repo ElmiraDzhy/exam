@@ -1,56 +1,53 @@
 import ACTION from '../actions/actionTypes';
 
 const initialState = {
-    offers: [],
-    isFetching: false,
-    error: null,
-}
+  offers: [],
+  isFetching: false,
+  error: null,
+};
 
-export default function (state = initialState, action){
-    switch(action.type){
-
-        case ACTION.RESCIND_OFFER_REQUEST:
-        case ACTION.CONFIRM_OFFER_REQUEST:
-        case ACTION.GET_ALL_OFFERS_REQUEST: {
-            return {
-                ...state,
-                isFetching: true,
-            };
-        }
-
-
-        case ACTION.GET_ALL_OFFERS_SUCCESS: {
-            return {
-                ...state,
-                offers: [...state.offers, ...action.data],
-                isFetching: false,
-            };
-        }
-
-        case ACTION.RESCIND_OFFER_SUCCESS:
-        case ACTION.CONFIRM_OFFER_SUCCESS:{
-            return {
-                ...state,
-                offers: action.data,
-                isFetching: false,
-            }
-        }
-
-        case ACTION.RESCIND_OFFER_ERROR:
-        case ACTION.CONFIRM_OFFER_ERROR:
-        case ACTION.GET_ALL_OFFERS_ERROR: {
-            return {
-                ...state,
-                error: action.data,
-                isFetching: false,
-            };
-        }
-
-        default: {
-            return {
-                ...state
-            };
-        }
+export default function (state = initialState, action) {
+  switch (action.type) {
+    case ACTION.RESCIND_OFFER_REQUEST:
+    case ACTION.CONFIRM_OFFER_REQUEST:
+    case ACTION.GET_ALL_OFFERS_REQUEST: {
+      return {
+        ...state,
+        isFetching: true,
+      };
     }
-}
 
+    case ACTION.GET_ALL_OFFERS_SUCCESS: {
+      return {
+        ...state,
+        offers: [...state.offers, ...action.data],
+        isFetching: false,
+      };
+    }
+
+    case ACTION.RESCIND_OFFER_SUCCESS:
+    case ACTION.CONFIRM_OFFER_SUCCESS: {
+      return {
+        ...state,
+        offers: action.data,
+        isFetching: false,
+      };
+    }
+
+    case ACTION.RESCIND_OFFER_ERROR:
+    case ACTION.CONFIRM_OFFER_ERROR:
+    case ACTION.GET_ALL_OFFERS_ERROR: {
+      return {
+        ...state,
+        error: action.data,
+        isFetching: false,
+      };
+    }
+
+    default: {
+      return {
+        ...state,
+      };
+    }
+  }
+}

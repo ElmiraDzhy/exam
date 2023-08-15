@@ -96,7 +96,7 @@ class Header extends React.Component {
             </div>
           </div>
           <div className={styles.navContainer}>
-           <Link to='/'><img src={`${CONSTANTS.STATIC_IMAGES_PATH}blue-logo.png`} className={styles.logo} alt="blue_logo" /></Link> 
+            <Link to="/"><img src={`${CONSTANTS.STATIC_IMAGES_PATH}blue-logo.png`} className={styles.logo} alt="blue_logo" /></Link>
             <div className={styles.leftNav}>
               <div className={styles.nav}>
                 <ul>
@@ -134,9 +134,9 @@ class Header extends React.Component {
                       <li><a href="#">LEADERBOARD</a></li>
                       <li className={styles.last}>
                         <a href="#">
-                            BECOME A
-                            CREATIVE
-</a>
+                          BECOME A
+                          CREATIVE
+                        </a>
                       </li>
                     </ul>
                   </li>
@@ -166,9 +166,9 @@ class Header extends React.Component {
                       <li><a href="#">VISUAL NAME SEARCH</a></li>
                       <li className={styles.last}>
                         <a href="#">
-                            SELL YOUR
-                            DOMAINS
-</a>
+                          SELL YOUR
+                          DOMAINS
+                        </a>
                       </li>
                     </ul>
                   </li>

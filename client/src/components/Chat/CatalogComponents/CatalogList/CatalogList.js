@@ -16,7 +16,7 @@ const CatalogList = (props) => {
   };
 
   const getListCatalog = () => {
-    const { chatStore: {catalogList} } = props;
+    const { chatStore: { catalogList } } = props;
     const elementList = [];
     catalogList && catalogList.forEach((catalog) => {
       elementList.push(<Catalog
@@ -36,7 +36,7 @@ const CatalogList = (props) => {
   );
 };
 
-const mapStateToProps = ({chatStore}) => ({chatStore});
+const mapStateToProps = ({ chatStore }) => ({ chatStore });
 
 const mapDispatchToProps = {
   changeShowModeCatalog,

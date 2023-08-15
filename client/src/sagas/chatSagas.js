@@ -26,14 +26,12 @@ export function* sendMessage(action) {
     const { data } = yield restController.newMessage(action.data);
     const { messagesPreview } = yield select((state) => state.chatStore);
     messagesPreview.forEach((preview) => {
-      if (preview.participants.every((value) =>  data.preview.participants.includes(value))) {
+      if (preview.participants.every((value) => data.preview.participants.includes(value))) {
         preview.text = data.preview.text;
         preview.sender = data.preview.sender;
         preview.createAt = data.preview.createdAt;
       }
     });
-
-
 
     yield put({
       type: ACTION.SEND_MESSAGE,
@@ -58,13 +56,15 @@ export function* changeChatFavorite(action) {
     const { data } = yield restController.changeChatFavorite(action.data);
     const { messagesPreview } = yield select((state) => state.chatStore);
 
-    messagesPreview.map((preview) => {
-      if(preview.participants.every((value) =>  data.participants.includes(value))){
-        preview.favoriteList = data.favourite
+    messagesPreview.forEach((preview) => {
+      if (preview.participants.every((value) => data.participants.includes(value))) {
+        preview.favoriteList = data.favourite;
       }
     });
 
-    yield put({ type: ACTION.CHANGE_CHAT_FAVORITE, data: { changedPreview: data, messagesPreview } });
+    yield put(
+      { type: ACTION.CHANGE_CHAT_FAVORITE, data: { changedPreview: data, messagesPreview } },
+    );
   } catch (err) {
     yield put({ type: ACTION.SET_CHAT_FAVORITE_ERROR, error: err.response });
   }
@@ -85,7 +85,7 @@ export function* changeChatBlock(action) {
 
 export function* getCatalogListSaga(action) {
   try {
-    const { data: {data} } = yield restController.getCatalogList(action.data);
+    const { data: { data } } = yield restController.getCatalogList(action.data);
     yield put({ type: ACTION.RECEIVE_CATALOG_LIST, data });
   } catch (err) {
     yield put({ type: ACTION.RECEIVE_CATALOG_LIST_ERROR, error: err.response });
@@ -119,8 +119,8 @@ export function* createCatalog(action) {
 
 export function* deleteCatalog(action) {
   try {
-   const {data} = yield restController.deleteCatalog(action.data);
-    yield put({ type: ACTION.DELETE_CATALOG_SUCCESS, data: data });
+    const { data } = yield restController.deleteCatalog(action.data);
+    yield put({ type: ACTION.DELETE_CATALOG_SUCCESS, data });
   } catch (err) {
     yield put({ type: ACTION.DELETE_CATALOG_ERROR, error: err.response });
   }

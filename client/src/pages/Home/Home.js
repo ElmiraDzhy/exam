@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Header from '../../components/Header/Header';
 import CONSTANTS from '../../constants';
@@ -8,7 +8,6 @@ import Footer from '../../components/Footer/Footer';
 import styles from './Home.module.sass';
 import carouselConstants from '../../carouselConstants';
 import Spinner from '../../components/Spinner/Spinner';
-import { useHistory } from 'react-router-dom';
 
 const Home = (props) => {
   const { isFetching, data } = props;
@@ -22,7 +21,8 @@ const Home = (props) => {
       setIndex(index + 1);
       setStyle(styles.headline__isloading);
     }, 3000);
-    if(data?.role === 'moderator'){
+
+    if (data?.role === 'moderator') {
       history.push('/moderatorOffer');
     }
 
@@ -31,7 +31,6 @@ const Home = (props) => {
       clearInterval(timeout);
     };
   });
-
 
   const text = CONSTANTS.HEADER_ANIMATION_TEXT[index % CONSTANTS.HEADER_ANIMATION_TEXT.length];
   return (
@@ -72,7 +71,7 @@ const Home = (props) => {
                     name ideas from world's largest community of naming experts.
                     With 75,000+ creatives and 15,000+ successful naming projects,
                     Squadhelp is by far the largest naming platform across the globe .
-</p>
+                  </p>
                 </div>
                 <div className={styles.card}>
                   <img
@@ -85,7 +84,7 @@ const Home = (props) => {
                     we ensure that you receive more ideas from our top-quality creatives,
                     and Gamification best practices ensure two-way communication throughout your
                     contest.
-</p>
+                  </p>
                 </div>
                 <div className={styles.card}>
                   <img
@@ -98,7 +97,7 @@ const Home = (props) => {
                     demographics to get unbiased feedback on your favorite names.
                     Also receive Trademark support from our team of Licensed Trademark Attorneys,
                     so you can pick your name with confidence.
-</p>
+                  </p>
                 </div>
               </div>
             </div>
@@ -153,9 +152,9 @@ const Home = (props) => {
                   <p>
                     <i className="fas fa-check" />
                     <span>
-                        We’ll walk you through exactly what you need to share about your project
-                        in order to get an awesome Name
-</span>
+                      We’ll walk you through exactly what you need to share about your project
+                      in order to get an awesome Name
+                    </span>
                   </p>
                 </div>
                 <img src={`${CONSTANTS.STATIC_IMAGES_PATH}gif/1-compressed.gif`} alt="compressed" />
@@ -228,6 +227,6 @@ const Home = (props) => {
   );
 };
 
-const mapStateToProps = ({userStore: {isFetching, data}}) => ({isFetching, data});
+const mapStateToProps = ({ userStore: { isFetching, data } }) => ({ isFetching, data });
 
 export default connect(mapStateToProps, null)(Home);

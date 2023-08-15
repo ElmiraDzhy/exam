@@ -10,7 +10,7 @@ import Header from '../../components/Header/Header';
 import ButtonGroup from '../../components/ButtonGroup';
 
 const StartContestPage = (props) => {
-  if (!props.userStore.data?.role ||  props.userStore.data.role !== CONSTANTS.CUSTOMER) {
+  if (!props.userStore.data?.role || props.userStore.data.role !== CONSTANTS.CUSTOMER) {
     props.history.replace('/');
   }
 
@@ -34,9 +34,9 @@ const StartContestPage = (props) => {
             START A CONTEST
           </h2>
           <span>
-            Launching a contest on Squadhelp is very simple. Select the type of contest you would like
-            to launch from the list below. Provide a detailed brief and select a pricing package.
-            Begin receiving submissions instantly!
+            Launching a contest on Squadhelp is very simple. Select the type of contest you would
+            like to launch from the list below. Provide a detailed brief and select a pricing
+            package. Begin receiving submissions instantly!
           </span>
         </div>
         <ProgressBar currentStep={1} />
@@ -47,7 +47,10 @@ const StartContestPage = (props) => {
             Our Most Popular
             <span>Categories</span>
           </span>
-          <span className={styles.info}>Pick from our most popular categories, launch a contest and begin receiving submissions right away</span>
+          <span className={styles.info}>
+            Pick from our most popular categories, launch a contest
+            and begin receiving submissions right away
+          </span>
           <hr />
         </div>
         <div className={styles.baseBundles}>
@@ -75,7 +78,9 @@ const StartContestPage = (props) => {
       <div className={styles.combinedBundles}>
         <div className={styles.infoCombinedBundles}>
           <span className={styles.headerInfo}>Save With Our Bundle Packages</span>
-          <span className={styles.info}>Launch multiple contests and pay a discounted bundle price</span>
+          <span className={styles.info}>
+            Launch multiple contests and pay a discounted bundle price
+          </span>
           <hr />
         </div>
         <div className={styles.baseBundles}>
@@ -105,7 +110,7 @@ const StartContestPage = (props) => {
           />
         </div>
       </div>
-      <ButtonGroup/>
+      <ButtonGroup />
       <Footer />
     </div>
   );

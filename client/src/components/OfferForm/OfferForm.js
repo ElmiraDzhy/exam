@@ -10,70 +10,74 @@ import Error from '../Error/Error';
 import DragNDropArea from '../DragNDropArea';
 
 const OfferForm = (props) => {
-    const renderOfferInput = () => {
-        if (props.contestType === CONTANTS.LOGO_CONTEST) {
-            return (
-                <DragNDropArea name="offerData"/>
-            );
-        }
-        return (
-            <FormInput
-                name="offerData"
-                classes={{
-                    container: styles.inputContainer,
-                    input: styles.input,
-                    warning: styles.fieldWarning,
-                    notValid: styles.notValid,
-                }}
-                type="text"
-                label="your suggestion"
-            />
-        );
-    };
-
-  const setOffer = (values, { resetForm }) => {
-      props.clearOfferError();
-      const { contestId, contestType, customerId } = props;
-
-      const data = new FormData();
-      data.append('contestId', contestId);
-      data.append('contestType', contestType);
-      data.append('offerData', values.offerData);
-      data.append('customerId', customerId);
-      props.setNewOffer(data);
-      resetForm();
+  const renderOfferInput = () => {
+    if (props.contestType === CONTANTS.LOGO_CONTEST) {
+      return (
+        <DragNDropArea name="offerData" />
+      );
+    }
+    return (
+      <FormInput
+        name="offerData"
+        classes={{
+          container: styles.inputContainer,
+          input: styles.input,
+          warning: styles.fieldWarning,
+          notValid: styles.notValid,
+        }}
+        type="text"
+        label="your suggestion"
+      />
+    );
   };
 
+  const setOffer = (values, { resetForm }) => {
+    props.clearOfferError();
+    const { contestId, contestType, customerId } = props;
 
-    const {  addOfferError, clearOfferError } = props;
-    const validationSchema = props.contestType === CONTANTS.LOGO_CONTEST ? Schems.LogoOfferSchema : Schems.TextOfferSchema;
-    return (
-        <div className={styles.offerContainer}>
-            {addOfferError && (
-                <Error
-                    data={addOfferError.data}
-                    status={addOfferError.status}
-                    clearError={clearOfferError}
-                />
-            )}
-            <Formik
-                onSubmit={setOffer}
-                initialValues={{
-                    offerData: "",
-                }}
-                validationSchema={validationSchema}>
-                <Form className={styles.form}>
-                    {renderOfferInput()}
+    const data = new FormData();
+    data.append('contestId', contestId);
+    data.append('contestType', contestType);
+    data.append('offerData', values.offerData);
+    data.append('customerId', customerId);
+    props.setNewOffer(data);
+    resetForm();
+  };
 
-                    <button
-                        type="submit"
-                        className={styles.btnOffer}>
-                        Send Offer
-                    </button>
-                </Form>
-            </Formik>
-        </div>
-    );
+  const { addOfferError, clearOfferError } = props;
+  const validationSchema = props.contestType === CONTANTS.LOGO_CONTEST
+    ? Schems.LogoOfferSchema
+    : Schems.TextOfferSchema;
+
+  return (
+    <div className={styles.offerContainer}>
+      {addOfferError && (
+        <Error
+          data={addOfferError.data}
+          status={addOfferError.status}
+          clearError={clearOfferError}
+        />
+      )}
+      <Formik
+        onSubmit={setOffer}
+        initialValues={{
+          offerData: '',
+        }}
+        validationSchema={validationSchema}
+      >
+        <Form className={styles.form}>
+          {renderOfferInput()}
+
+          <button
+            type="submit"
+            className={styles.btnOffer}
+          >
+            Send Offer
+          </button>
+        </Form>
+      </Formik>
+    </div>
+  );
 };
 
 const mapDispatchToProps = (dispatch) => ({

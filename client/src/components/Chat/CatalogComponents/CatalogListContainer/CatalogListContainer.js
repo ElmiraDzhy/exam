@@ -41,7 +41,7 @@ class CatalogListContainer extends React.Component {
               removeChat={this.removeChatFromCatalog}
             />
           )
-            : <CatalogList/>}
+            : <CatalogList />}
         </>
       );
     }

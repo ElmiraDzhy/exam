@@ -295,45 +295,45 @@ export const changeModalShow = (data) => ({
 
 export const getOffersRequest = (data) => ({
   type: ACTION.GET_ALL_OFFERS_REQUEST,
-  data
+  data,
 });
 
 export const getOffersSuccess = (data) => ({
   type: ACTION.GET_ALL_OFFERS_SUCCESS,
-  data
+  data,
 });
 
 export const getOffersError = (data) => ({
   type: ACTION.GET_ALL_OFFERS_ERROR,
-  data
+  data,
 });
 
 export const confirmOfferRequest = (data) => ({
   type: ACTION.CONFIRM_OFFER_REQUEST,
-  data
+  data,
 });
 
 export const confirmOfferSuccess = (data) => ({
   type: ACTION.CONFIRM_OFFER_SUCCESS,
-  data
+  data,
 });
 
 export const confirmOfferError = (data) => ({
   type: ACTION.CONFIRM_OFFER_ERROR,
-  data
+  data,
 });
 
 export const rescindOfferRequest = (data) => ({
   type: ACTION.RESCIND_OFFER_REQUEST,
-  data
+  data,
 });
 
 export const rescindOfferSuccess = (data) => ({
   type: ACTION.RESCIND_OFFER_SUCCESS,
-  data
+  data,
 });
 
 export const rescindOfferError = (data) => ({
   type: ACTION.RESCIND_OFFER_ERROR,
-  data
+  data,
 });

@@ -27,9 +27,13 @@ const DialogList = (props) => {
     event.stopPropagation();
   };
 
-  const onlyFavoriteDialogs = (chatPreview, userId) => chatPreview.favoriteList[chatPreview.participants.indexOf(userId)];
+  const onlyFavoriteDialogs = (chatPreview, userId) => {
+    return chatPreview.favoriteList[chatPreview.participants.indexOf(userId)];
+  };
 
-  const onlyBlockDialogs = (chatPreview, userId) => chatPreview.blackList[chatPreview.participants.indexOf(userId)];
+  const onlyBlockDialogs = (chatPreview, userId) => {
+    return chatPreview.blackList[chatPreview.participants.indexOf(userId)];
+  };
 
   const getTimeStr = (time) => {
     const currentTime = moment();
@@ -44,21 +48,27 @@ const DialogList = (props) => {
     const {
       userId, preview, goToExpandedDialog, chatMode, removeChat, interlocutor,
     } = props;
-    preview.forEach((chatPreview, index) => {
+
+    preview.forEach((chatPreview) => {
+      const operation = chatMode === CONSTANTS.CATALOG_PREVIEW_CHAT_MODE
+        ? removeChat
+        : changeShowCatalogCreation;
+
       const dialogNode = (
         <DialogBox
           interlocutor={chatPreview.interlocutor}
           chatPreview={chatPreview}
           userId={userId}
-          key={index}
+          key={chatPreview.id}
           getTimeStr={getTimeStr}
           changeFavorite={changeFavorite}
           changeBlackList={changeBlackList}
           chatMode={chatMode}
-          catalogOperation={chatMode === CONSTANTS.CATALOG_PREVIEW_CHAT_MODE ? removeChat :  changeShowCatalogCreation}
+          catalogOperation={operation}
           goToExpandedDialog={goToExpandedDialog}
         />
       );
+
       if (filterFunc && filterFunc(chatPreview, userId)) {
         arrayList.push(dialogNode);
       } else if (!filterFunc) {
@@ -70,8 +80,14 @@ const DialogList = (props) => {
 
   const renderChatPreview = () => {
     const { chatMode } = props;
-    if (chatMode === CONSTANTS.FAVORITE_PREVIEW_CHAT_MODE) return renderPreview(onlyFavoriteDialogs);
-    if (chatMode === CONSTANTS.BLOCKED_PREVIEW_CHAT_MODE) return renderPreview(onlyBlockDialogs);
+    if (chatMode === CONSTANTS.FAVORITE_PREVIEW_CHAT_MODE) {
+      return renderPreview(onlyFavoriteDialogs);
+    }
+
+    if (chatMode === CONSTANTS.BLOCKED_PREVIEW_CHAT_MODE) {
+      return renderPreview(onlyBlockDialogs);
+    }
+
     return renderPreview();
   };
 

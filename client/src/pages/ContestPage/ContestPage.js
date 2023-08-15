@@ -25,12 +25,12 @@ import 'react-image-lightbox/style.css';
 import Error from '../../components/Error/Error';
 
 class ContestPage extends React.Component {
-  componentWillUnmount() {
-    this.props.changeEditContest(false);
-  }
-
   componentDidMount() {
     this.getData();
+  }
+
+  componentWillUnmount() {
+    this.props.changeEditContest(false);
   }
 
     getData = () => {
@@ -50,14 +50,17 @@ class ContestPage extends React.Component {
           date={new Date()}
         />);
       }
-      return array.length !== 0 ? array : <div className={styles.notFound}>There is no suggestion at this moment</div>;
+      return array.length !== 0 ? array
+        : <div className={styles.notFound}>There is no suggestion at this moment</div>;
     };
 
     needButtons = (offerStatus) => {
       const contestCreatorId = this.props.contestByIdStore.contestData.User.id;
       const userId = this.props.userStore.data.id;
       const contestStatus = this.props.contestByIdStore.contestData.status;
-      return (contestCreatorId === userId && contestStatus === CONSTANTS.CONTEST_STATUS_ACTIVE && offerStatus === CONSTANTS.OFFER_STATUS_PENDING);
+      return (contestCreatorId === userId
+          && contestStatus === CONSTANTS.CONTEST_STATUS_ACTIVE
+          && offerStatus === CONSTANTS.OFFER_STATUS_PENDING);
     };
 
     setOfferStatus = (creatorId, offerId, command) => {
@@ -103,97 +106,100 @@ class ContestPage extends React.Component {
     render() {
       if (!this.props.userStore.data?.role) {
         this.props.history.replace('/login');
-      } else{
-      const { role } = this.props.userStore.data;
-      const {
-        contestByIdStore,
-        changeShowImage,
-        changeContestViewMode,
-        getData,
-        clearSetOfferStatusError,
-      } = this.props;
-      const {
-        isShowOnFull,
-        imagePath,
-        error,
-        isFetching,
-        isBrief,
-        contestData,
-        offers,
-        setOfferStatusError,
-      } = contestByIdStore;
-      return (
-        <div>
-          {/* <Chat/> */}
-          {isShowOnFull && (
-          <LightBox
-            mainSrc={`${imagePath}`}
-            onCloseRequest={() => changeShowImage({ isShowOnFull: false, imagePath: null })}
-          />
-          )}
-          <Header />
-          {error ? <div className={styles.tryContainer}><TryAgain getData={getData} /></div>
-            : (
-              isFetching
-                ? (
-                  <div className={styles.containerSpinner}>
-                    <Spinner />
-                  </div>
-                )
-                : (
-                  <div className={styles.mainInfoContainer}>
-                    <div className={styles.infoContainer}>
-                      <div className={styles.buttonsContainer}>
-                        <span
-                          onClick={() => changeContestViewMode(true)}
-                          className={classNames(styles.btn, { [styles.activeBtn]: isBrief })}
-                        >
-Brief
-</span>
-                        <span
-                          onClick={() => changeContestViewMode(false)}
-                          className={classNames(styles.btn, { [styles.activeBtn]: !isBrief })}
-                        >
-Offer
-</span>
-                      </div>
-                      {
-                                        isBrief
-                                          ? <Brief contestData={contestData} role={role} goChat={this.goChat} />
-                                          : (
-                                            <div className={styles.offersContainer}>
-                                              {(role === CONSTANTS.CREATOR && contestData.status === CONSTANTS.CONTEST_STATUS_ACTIVE)
-                                                && (
-                                                <OfferForm
-                                                  contestType={contestData.contestType}
-                                                  contestId={contestData.id}
-                                                  customerId={contestData.User.id}
-                                                />
-                                                )}
-                                              {setOfferStatusError && (
-                                              <Error
-                                                data={setOfferStatusError.data}
-                                                status={setOfferStatusError.status}
-                                                clearError={clearSetOfferStatusError}
-                                              />
-                                              )}
-                                              <div className={styles.offers}>
-                                                {this.setOffersList()}
-                                              </div>
-                                            </div>
-                                          )
-}
-                    </div>
-                    <ContestSideBar
-                      contestData={contestData}
-                      totalEntries={offers.length}
-                    />
-                  </div>
-                )
+      } else {
+        const { role } = this.props.userStore.data;
+        const {
+          contestByIdStore,
+          changeShowImage,
+          changeContestViewMode,
+          getData,
+          clearSetOfferStatusError,
+        } = this.props;
+        const {
+          isShowOnFull,
+          imagePath,
+          error,
+          isFetching,
+          isBrief,
+          contestData,
+          offers,
+          setOfferStatusError,
+        } = contestByIdStore;
+        return (
+          <div>
+            {/* <Chat/> */}
+            {isShowOnFull && (
+            <LightBox
+              mainSrc={`${imagePath}`}
+              onCloseRequest={() => changeShowImage({ isShowOnFull: false, imagePath: null })}
+            />
             )}
-        </div>
-      );
-    }
+            <Header />
+            {error ? <div className={styles.tryContainer}><TryAgain getData={getData} /></div>
+              : (
+                isFetching
+                  ? (
+                    <div className={styles.containerSpinner}>
+                      <Spinner />
+                    </div>
+                  )
+                  : (
+                    <div className={styles.mainInfoContainer}>
+                      <div className={styles.infoContainer}>
+                        <div className={styles.buttonsContainer}>
+                          <span
+                            onClick={() => changeContestViewMode(true)}
+                            className={classNames(styles.btn, { [styles.activeBtn]: isBrief })}
+                          >
+                            Brief
+                          </span>
+                          <span
+                            onClick={() => changeContestViewMode(false)}
+                            className={classNames(styles.btn, { [styles.activeBtn]: !isBrief })}
+                          >
+                            Offer
+                          </span>
+                        </div>
+                        {
+                          isBrief
+                            ? <Brief contestData={contestData} role={role} goChat={this.goChat} />
+                            : (
+                              <div className={styles.offersContainer}>
+                                {
+                                  (role === CONSTANTS.CREATOR
+                                      && contestData.status === CONSTANTS.CONTEST_STATUS_ACTIVE)
+                                  && (
+                                  <OfferForm
+                                    contestType={contestData.contestType}
+                                    contestId={contestData.id}
+                                    customerId={contestData.User.id}
+                                  />
+                                  )
+                                }
+                                {setOfferStatusError && (
+                                <Error
+                                  data={setOfferStatusError.data}
+                                  status={setOfferStatusError.status}
+                                  clearError={clearSetOfferStatusError}
+                                />
+                                )}
+                                <div className={styles.offers}>
+                                  {this.setOffersList()}
+                                </div>
+                              </div>
+                            )
+                        }
+                      </div>
+                      <ContestSideBar
+                        contestData={contestData}
+                        totalEntries={offers.length}
+                      />
+                    </div>
+                  )
+              )}
+          </div>
+        );
+      }
     }
 }
 

@@ -65,31 +65,31 @@ export function* downloadContestFileSaga(action) {
   }
 }
 
-//offers for moderate
+// offers for moderate
 
-export function* getAllOffersSaga(action){
-  try{
-    const {data} = yield restController.getAllOffers(action.data);
+export function* getAllOffersSaga(action) {
+  try {
+    const { data } = yield restController.getAllOffers(action.data);
     yield put(actionCreators.getOffersSuccess(data));
-  }catch(err){
+  } catch (err) {
     yield put(actionCreators.getOffersError(err));
   }
 }
 
-export function* confirmOfferSaga(action){
-  try{
-    const {data} = yield restController.confirmOffer(action.data);
+export function* confirmOfferSaga(action) {
+  try {
+    const { data } = yield restController.confirmOffer(action.data);
     yield put(actionCreators.confirmOfferSuccess(data));
-  }catch(err){
+  } catch (err) {
     yield put(actionCreators.confirmOfferError(err));
   }
 }
 
-export function* rescindOfferSaga(action){
-  try{
-    const {data} = yield restController.rescindOffer(action.data);
+export function* rescindOfferSaga(action) {
+  try {
+    const { data } = yield restController.rescindOffer(action.data);
     yield put(actionCreators.rescindOfferSuccess(data));
-  }catch(err){
+  } catch (err) {
     yield put(actionCreators.rescindOfferError(err));
   }
 }
