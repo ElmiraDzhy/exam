@@ -37,7 +37,7 @@ const Dialog = (props) => {
     const { userId } = props;
     let currentTime = moment();
 
-    messages.forEach((message, i) => {
+    messages.forEach((message) => {
       if (!currentTime.isSame(message.createdAt, 'date')) {
         messagesArray.push(
           <div key={message.createdAt} className={styles.date}>

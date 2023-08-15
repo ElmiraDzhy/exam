@@ -3,7 +3,7 @@ import ACTION from '../actions/actionTypes';
 import * as restController from '../api/rest/restController';
 import { controller } from '../api/ws/socketController';
 
-export function* privateSaga(action) {
+export function* privateSaga() {
   yield put({ type: ACTION.GET_USER_REQUEST });
   try {
     const { data } = yield restController.getUser();

@@ -25,7 +25,7 @@ class CustomerDashboard extends React.Component {
       this.props.getContests({ limit: 8, contestStatus: this.props.customerFilter });
     };
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
+    componentDidUpdate(prevProps) {
       if (this.props.customerFilter !== prevProps.customerFilter) {
         this.getContests();
       }
