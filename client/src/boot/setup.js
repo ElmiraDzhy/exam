@@ -13,8 +13,10 @@ class Setup extends React.Component {
   }
 
   render() {
+    const { store } = this.state;
+
     return (
-      <Provider store={this.state.store}>
+      <Provider store={store}>
         <App />
       </Provider>
     );
