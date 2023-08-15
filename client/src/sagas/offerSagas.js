@@ -7,15 +7,19 @@ export function* changeMarkSaga(action) {
   try {
     const { data } = yield restController.changeMark(action.data);
     const offers = yield select((state) => state.contestByIdStore.offers);
-    offers.forEach((offer) => {
+    const formattedOffers = offers.map((offer) => {
+      const newOffer = { ...offer };
+
       if (offer.User.id === data.userId) {
-        offer.User.rating = data.rating;
+        newOffer.User.rating = data.rating;
       }
       if (offer.id === action.data.offerId) {
-        offer.mark = action.data.mark;
+        newOffer.mark = action.data.mark;
       }
+
+      return newOffer;
     });
-    yield put({ type: ACTION.CHANGE_MARK_SUCCESS, data: offers });
+    yield put({ type: ACTION.CHANGE_MARK_SUCCESS, data: formattedOffers });
   } catch (err) {
     yield put({ type: ACTION.CHANGE_MARK_ERROR, error: err.response });
   }
@@ -36,14 +40,20 @@ export function* setOfferStatusSaga(action) {
   try {
     const { data } = yield restController.setOfferStatus(action.data);
     const offers = yield select((state) => state.contestByIdStore.offers);
-    offers.forEach((offer) => {
+    const formattedOffers = offers.map((offer) => {
+      const newOffer = { ...offer };
+
       if (data.status === CONSTANTS.OFFER_STATUS_WON) {
-        offer.status = data.id === offer.id ? CONSTANTS.OFFER_STATUS_WON : CONSTANTS.OFFER_STATUS_REJECTED;
+        newOffer.status = data.id === offer.id
+          ? CONSTANTS.OFFER_STATUS_WON
+          : CONSTANTS.OFFER_STATUS_REJECTED;
       } else if (data.id === offer.id) {
-        offer.status = CONSTANTS.OFFER_STATUS_REJECTED;
+        newOffer.status = CONSTANTS.OFFER_STATUS_REJECTED;
       }
+
+      return newOffer;
     });
-    yield put({ type: ACTION.CHANGE_STORE_FOR_STATUS, data: offers });
+    yield put({ type: ACTION.CHANGE_STORE_FOR_STATUS, data: formattedOffers });
   } catch (e) {
     yield put({ type: ACTION.SET_OFFER_STATUS_ERROR, error: e.response });
   }
