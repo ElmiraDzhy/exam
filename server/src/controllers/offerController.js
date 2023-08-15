@@ -2,12 +2,12 @@ const db = require('../models');
 const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  service: process.env.NODEMAILER_SERVICE,
   secure: false,
   auth: {
     type: 'login',
-    user: 'elmira.freshcode@gmail.com',
-    pass: 'qihuscepzxmejndn',
+    user: process.env.NODEMAILER_USER,
+    pass: process.env.NODEMAILER_PASSWORD,
   },
 });
 
