@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Formik, Form } from 'formik';
-import CONTANTS from '../../constants';
+import CONSTANTS from '../../constants';
 import { setOffer, clearAddOfferError } from '../../actions/actionCreator';
 import styles from './OfferForm.module.sass';
 import FormInput from '../FormInput/FormInput';
@@ -11,7 +11,7 @@ import DragNDropArea from '../DragNDropArea';
 
 const OfferForm = (props) => {
   const renderOfferInput = () => {
-    if (props.contestType === CONTANTS.LOGO_CONTEST) {
+    if (props.contestType === CONSTANTS.LOGO_CONTEST) {
       return (
         <DragNDropArea name="offerData" />
       );
@@ -45,7 +45,7 @@ const OfferForm = (props) => {
   };
 
   const { addOfferError, clearOfferError } = props;
-  const validationSchema = props.contestType === CONTANTS.LOGO_CONTEST
+  const validationSchema = props.contestType === CONSTANTS.LOGO_CONTEST
     ? Schems.LogoOfferSchema
     : Schems.TextOfferSchema;
 
