@@ -1,5 +1,4 @@
 const db = require('../models');
-const NotFound = require('../errors/UserNotFoundError');
 const RightsError = require('../errors/RightsError');
 const ServerError = require('../errors/ServerError');
 const CONSTANTS = require('../constants');
@@ -17,7 +16,7 @@ module.exports.parseBody = (req, res, next) => {
 };
 
 module.exports.canGetContest = async (req, res, next) => {
-  const {params: {contestId}} = req;
+  const { params: { contestId } } = req;
   let result = null;
   try {
     if (req.tokenData.role === CONSTANTS.CUSTOMER) {
