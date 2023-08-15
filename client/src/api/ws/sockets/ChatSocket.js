@@ -13,12 +13,16 @@ class ChatSocket extends WebSocket {
       this.socket.on(CONSTANTS.CHANGE_BLOCK_STATUS, (data) => {
         const { message } = data;
         const { messagesPreview } = this.getState().chatStore;
-        messagesPreview.forEach((preview) => {
-          if (isEqual(preview.participants, message.participants)) {
-            preview.blackList = message.blackList;
+        const formattedMessagePreviews = messagesPreview.map((preview) => {
+          const newPreview = { ...preview };
+
+          if (isEqual(newPreview.participants, message.participants)) {
+            newPreview.blackList = message.blackList;
           }
+
+          return newPreview;
         });
-        this.dispatch(changeBlockStatusInStore({ chatData: message, messagesPreview }));
+        this.dispatch(changeBlockStatusInStore({ chatData: message, formattedMessagePreviews }));
       });
     };
 
@@ -26,19 +30,23 @@ class ChatSocket extends WebSocket {
       this.socket.on('newMessage', (data) => {
         const { message } = data.message;
         const { messagesPreview } = this.getState().chatStore;
-        messagesPreview.forEach((preview) => {
-          const isPreview = preview.participants.every(
+        const formattedMessagePreviews = messagesPreview.forEach((preview) => {
+          const newPreview = { ...preview };
+
+          const isPreview = newPreview.participants.every(
             (value) => data.message.preview.participants.includes(value),
           );
 
           if (isPreview) {
-            preview.text = message.body;
-            preview.sender = message.sender;
-            preview.createAt = message.createdAt;
+            newPreview.text = message.body;
+            newPreview.sender = message.sender;
+            newPreview.createAt = message.createdAt;
           }
+
+          return newPreview;
         });
 
-        this.dispatch(addMessage({ message, messagesPreview }));
+        this.dispatch(addMessage({ message, formattedMessagePreviews }));
       });
     };
 
