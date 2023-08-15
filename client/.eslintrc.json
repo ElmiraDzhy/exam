@@ -28,7 +28,8 @@
           "_id"
         ]
       }
-    ]
+    ],
+    "arrow-body-style": "off"
   },
   "env": {
     "jest": true,
