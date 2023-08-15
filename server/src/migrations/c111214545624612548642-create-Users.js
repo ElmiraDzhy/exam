@@ -10,17 +10,17 @@ module.exports = {
       firstName: {
         type: Sequelize.STRING,
         allowNull: false,
-        field: 'first_name'
+        field: 'first_name',
       },
       lastName: {
         type: Sequelize.STRING,
         allowNull: false,
-        field: 'last_name'
+        field: 'last_name',
       },
       displayName: {
         type: Sequelize.STRING,
         allowNull: false,
-        field: 'display_name'
+        field: 'display_name',
       },
       password: {
         type: Sequelize.STRING,
@@ -48,7 +48,7 @@ module.exports = {
       accessToken: {
         type: Sequelize.TEXT,
         allowNull: true,
-        field: 'access_token'
+        field: 'access_token',
       },
       rating: {
         type: Sequelize.FLOAT,
@@ -56,15 +56,15 @@ module.exports = {
         defaultValue: 0,
       },
     })
-        .then(() => queryInterface.addConstraint('users',  {
-          type: 'check',
-          fields: ['balance'],
-          where: {
-            balance: {
-              [ Sequelize.Op.gte ]: 0,
-            },
+      .then(() => queryInterface.addConstraint('users',  {
+        type: 'check',
+        fields: ['balance'],
+        where: {
+          balance: {
+            [ Sequelize.Op.gte ]: 0,
           },
-        }));
+        },
+      }));
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('users');

@@ -10,17 +10,17 @@ module.exports = {
       contestType: {
         allowNull: false,
         type: Sequelize.ENUM('name', 'tagline', 'logo'),
-        field: 'contest_type'
+        field: 'contest_type',
       },
       fileName: {
         allowNull: true,
         type: Sequelize.STRING,
-        field: 'file_name'
+        field: 'file_name',
       },
       originalFileName: {
         allowNull: true,
         type: Sequelize.STRING,
-        field: 'original_file_name'
+        field: 'original_file_name',
       },
       title: {
         allowNull: true,
@@ -29,7 +29,7 @@ module.exports = {
       typeOfName: {
         allowNull: true,
         type: Sequelize.STRING,
-        field: 'type_of_name'
+        field: 'type_of_name',
       },
       industry: {
         allowNull: true,
@@ -38,27 +38,27 @@ module.exports = {
       focusOfWork: {
         allowNull: true,
         type: Sequelize.TEXT,
-        field: 'focus_of_work'
+        field: 'focus_of_work',
       },
       targetCustomer: {
         allowNull: true,
         type: Sequelize.TEXT,
-        field: 'target_customer'
+        field: 'target_customer',
       },
       styleName: {
         allowNull: true,
         type: Sequelize.STRING,
-        field: 'style_name'
+        field: 'style_name',
       },
       nameVenture: {
         allowNull: true,
         type: Sequelize.STRING,
-        field: 'name_venture'
+        field: 'name_venture',
       },
       typeOfTagline: {
         allowNull: true,
         type: Sequelize.STRING,
-        field: 'type_of_tagline'
+        field: 'type_of_tagline',
       },
       status: {
         allowNull: false,
@@ -67,7 +67,7 @@ module.exports = {
       brandStyle: {
         allowNull: true,
         type: Sequelize.STRING,
-        field: 'brand_style'
+        field: 'brand_style',
       },
       prize: {
         allowNull: false,
@@ -77,7 +77,7 @@ module.exports = {
         allowNull: true,
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW,
-        field: 'created_at'
+        field: 'created_at',
       },
       priority: {
         allowNull: false,
@@ -86,7 +86,7 @@ module.exports = {
       orderId: {
         allowNull: false,
         type: Sequelize.STRING,
-        field: 'order_id'
+        field: 'order_id',
       },
       userId: {
         allowNull: false,
@@ -94,7 +94,7 @@ module.exports = {
         field: 'user_id',
         references: {
           model: {
-            tableName: 'users'
+            tableName: 'users',
           },
           key: 'id',
         },

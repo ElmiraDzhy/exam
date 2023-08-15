@@ -12,7 +12,7 @@ module.exports = {
         allowNull: false,
         field: 'user_id',
         references: {
-          model: {tableName: 'users'},
+          model: { tableName: 'users' },
           key: 'id',
         },
       },
@@ -21,7 +21,7 @@ module.exports = {
         allowNull: false,
         field: 'contest_id',
         references: {
-          model:  {tableName: 'contests'},
+          model:  { tableName: 'contests' },
           key: 'id',
         },
       },
@@ -37,7 +37,7 @@ module.exports = {
       originalFileName: {
         type: Sequelize.STRING,
         allowNull: true,
-        field: 'original_file_name'
+        field: 'original_file_name',
       },
       status: {
         type: Sequelize.STRING,
