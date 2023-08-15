@@ -5,6 +5,18 @@ const userQueries = require('./queries/userQueries');
 const controller = require('../socketInit');
 const UtilFunctions = require('../utils/functions');
 const CONSTANTS = require('../constants');
+const nodemailer = require('nodemailer');
+
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  secure: false,
+  auth: {
+    type: 'login',
+    user: 'elmira.freshcode@gmail.com',
+    pass: 'qihuscepzxmejndn',
+  },
+});
 
 module.exports.dataForContest = async (req, res, next) => {
   const response = {};
@@ -304,6 +316,31 @@ module.exports.confirmOffer = async (req, res, next) => {
       },
     });
 
+    const offerInstance = await db.Offer.findOne({
+      where: { id: offerId },
+    });
+
+    const userToMail = await db.User.findOne({
+      where: {
+        id: offerInstance.userId,
+      },
+    });
+
+    const mailOptions = {
+      from: 'elmira.freshcode@gmail.com',
+      to: userToMail.email,
+      subject: 'Squadhelp offer moderate',
+      text: 'Your offer was confirmed by moderator',
+    };
+
+    transporter.sendMail(mailOptions,  (error, info) => {
+      if (error) {
+        console.error('Error sending email:', error);
+      } else {
+        console.log('Email sent:', info.response);
+      }
+    });
+
     const offers = await db.Offer.findAll({
       where: {
         status: 'pending',
@@ -324,6 +361,31 @@ module.exports.rescindOffer = async (req, res, next) => {
       where: {
         id: offerId,
       },
+    });
+
+    const offerInstance = await db.Offer.findOne({
+      where: { id: offerId },
+    });
+
+    const userToMail = await db.User.findOne({
+      where: {
+        id: offerInstance.userId,
+      },
+    });
+
+    const mailOptions = {
+      from: 'elmira.freshcode@gmail.com',
+      to: userToMail.email,
+      subject: 'Squadhelp offer moderate',
+      text: 'Your offer was reject by moderator',
+    };
+
+    transporter.sendMail(mailOptions,  (error, info) => {
+      if (error) {
+        console.error('Error sending email:', error);
+      } else {
+        console.log('Email sent:', info.response);
+      }
     });
 
     const offers = await db.Offer.findAll({

@@ -52,7 +52,7 @@ const ModeratorOfferPage = (props) => {
             {
                 data.role !== 'moderator' ? <p>Only for moderator page</p> : <section className={styles.container}>
                     { isFetching || error || <>
-                        <p>{offers.map(offer => <OfferForModerator offer={offer} confirm={confirmOfferHandler} rescind={rescindOfferHandler}/>)}</p>
+                        <section>{offers.map(offer => <OfferForModerator key={offer.id} offer={offer} confirm={confirmOfferHandler} rescind={rescindOfferHandler}/>)}</section>
                     </> }
                     <button className={styles['load-more-button']} onClick={() => loadMore(offers.length)}>Load More <img src={'/staticImages/load-more.svg'} alt={'load more button'}/></button>
                 </section>
