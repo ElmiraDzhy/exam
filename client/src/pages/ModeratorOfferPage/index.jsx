@@ -1,12 +1,11 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import {getOffersRequest, confirmOfferRequest, rescindOfferRequest} from '../../actions/actionCreator';
-import history from '../../browserHistory';
 import OfferForModerator from './OfferForModerator';
 import styles from './ModeratorOfferPage.module.scss';
 
+import {useHistory} from "react-router-dom";
 const ModeratorOfferPage = (props) => {
 
     const {userStore: {data},
@@ -14,9 +13,10 @@ const ModeratorOfferPage = (props) => {
         getOffersRequest,
         confirmOfferRequest,
         rescindOfferRequest} = props;
+    const history = useHistory();
 
     useEffect(() => {
-        if(data.role !== 'moderator'){
+        if(!data || data.role !== 'moderator'){
             history.replace('/login');
         }
         getOffersRequest({ limit: 3});
@@ -48,9 +48,14 @@ const ModeratorOfferPage = (props) => {
 
     return(
         <>
-        <Header/>
+            <section className={styles['header-container']}>
+                <div className={styles['fixed-header']}>
+                    <span className={styles['info']}>Squadhelp recognized as one of the Most Innovative Companies by Inc Magazine.</span>
+                    <a href="#">Read Announcement</a>
+                </div>
+            </section>
             {
-                data.role !== 'moderator' ? <p>Only for moderator page</p> : <section className={styles.container}>
+                 data && data.role !== 'moderator' ? <p>Only for moderator page</p> : <section className={styles.container}>
                     { isFetching || error || <>
                         <section>{offers.map(offer => <OfferForModerator key={offer.id} offer={offer} confirm={confirmOfferHandler} rescind={rescindOfferHandler}/>)}</section>
                     </> }
