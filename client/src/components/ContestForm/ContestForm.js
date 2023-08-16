@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Form, Formik } from 'formik';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -30,33 +31,38 @@ const variableOptions = {
 };
 
 class ContestForm extends React.Component {
+  componentDidMount() {
+    this.getPreference();
+  }
+
     getPreference = () => {
-      const { contestType } = this.props;
+      const { contestType, getData } = this.props;
       switch (contestType) {
         case CONSTANTS.NAME_CONTEST: {
-          this.props.getData({
+          getData({
             characteristic1: 'nameStyle',
             characteristic2: 'typeOfName',
           });
           break;
         }
         case CONSTANTS.TAGLINE_CONTEST: {
-          this.props.getData({ characteristic1: 'typeOfTagline' });
+          getData({ characteristic1: 'typeOfTagline' });
           break;
         }
         case CONSTANTS.LOGO_CONTEST: {
-          this.props.getData({ characteristic1: 'brandStyle' });
+          getData({ characteristic1: 'brandStyle' });
           break;
         }
+        default:
       }
     }
 
-    componentDidMount() {
-      this.getPreference();
-    }
-
     render() {
-      const { isFetching, error } = this.props.dataForContest;
+      const {
+        dataForContest: { isFetching, error, data },
+        initialValues, handleSubmit, contestType,
+        formRef, isEditContest,
+      } = this.props;
       if (error) {
         return <TryAgain getData={this.getPreference} />;
       }
@@ -73,12 +79,12 @@ class ContestForm extends React.Component {
                 focusOfWork: '',
                 targetCustomer: '',
                 file: '',
-                ...variableOptions[this.props.contestType],
-                ...this.props.initialValues,
+                ...variableOptions[contestType],
+                ...initialValues,
               }}
-              onSubmit={this.props.handleSubmit}
+              onSubmit={handleSubmit}
               validationSchema={Schems.ContestSchem}
-              innerRef={this.props.formRef}
+              innerRef={formRef}
               enableReinitialize
             >
               <Form>
@@ -105,7 +111,7 @@ class ContestForm extends React.Component {
                       warning: styles.warning,
                     }}
                     header="Describe industry associated with your venture"
-                    optionsArray={this.props.dataForContest.data.industry}
+                    optionsArray={data.industry}
                   />
                 </div>
                 <div className={styles.inputContainer}>
@@ -150,7 +156,7 @@ class ContestForm extends React.Component {
                   }}
                   type="file"
                 />
-                {this.props.isEditContest
+                {isEditContest
                   ? <button type="submit" className={styles.changeData}>Set Data</button> : null}
               </Form>
             </Formik>
@@ -172,6 +178,25 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => ({
   getData: (data) => dispatch(getDataForContest(data)),
 });
+
+ContestForm.propTypes = {
+  getData: PropTypes.func.isRequired,
+  formRef: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  contestType: PropTypes.string.isRequired,
+
+  isEditContest: PropTypes.bool.isRequired,
+
+  initialValues: PropTypes.shape({}).isRequired,
+  dataForContest: PropTypes.shape({
+    isFetching: PropTypes.bool,
+    error: PropTypes.shape({}),
+    data: PropTypes.shape({
+      industry: PropTypes.arrayOf(PropTypes.string),
+    }),
+  }).isRequired,
+
+};
 
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(ContestForm),
