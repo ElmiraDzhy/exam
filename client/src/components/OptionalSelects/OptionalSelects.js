@@ -1,15 +1,28 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import CONSTANTS from '../../constants';
 import SelectInput from '../SelectInput/SelectInput';
 import FormInput from '../FormInput/FormInput';
 import styles from '../ContestForm/ContestForm.module.sass';
 import Spinner from '../Spinner/Spinner';
 
-const OptionalSelects = (props) => {
-  if (props.isFetching) {
+const OptionalSelects = ({
+  isFetching,
+  contestType,
+  dataForContest: {
+    data: {
+      typeOfName,
+      nameStyle,
+      brandStyle,
+      typeOfTagline,
+    },
+  },
+}) => {
+  if (isFetching) {
     return <Spinner />;
   }
-  switch (props.contestType) {
+
+  switch (contestType) {
     case CONSTANTS.NAME_CONTEST: {
       return (
         <>
@@ -22,7 +35,7 @@ const OptionalSelects = (props) => {
               selectInput: styles.select,
               warning: styles.warning,
             }}
-            optionsArray={props.dataForContest.data.typeOfName}
+            optionsArray={typeOfName}
           />
           <SelectInput
             name="styleName"
@@ -33,7 +46,7 @@ const OptionalSelects = (props) => {
               selectInput: styles.select,
               warning: styles.warning,
             }}
-            optionsArray={props.dataForContest.data.nameStyle}
+            optionsArray={nameStyle}
           />
         </>
       );
@@ -65,7 +78,7 @@ const OptionalSelects = (props) => {
               warning: styles.warning,
             }}
             header="Brand Style"
-            optionsArray={props.dataForContest.data.brandStyle}
+            optionsArray={brandStyle}
           />
         </>
       );
@@ -97,12 +110,32 @@ const OptionalSelects = (props) => {
               warning: styles.warning,
             }}
             header="Type tagline"
-            optionsArray={props.dataForContest.data.typeOfTagline}
+            optionsArray={typeOfTagline}
           />
         </>
       );
     }
+    default:
+      return <Spinner />;
   }
+};
+
+OptionalSelects.propTypes = {
+  isFetching: PropTypes.bool,
+  contestType: PropTypes.string.isRequired,
+  dataForContest: PropTypes.shape({
+    data: PropTypes.shape({
+      typeOfName: PropTypes.string,
+      nameStyle: PropTypes.string,
+      brandStyle: PropTypes.string,
+      typeOfTagline: PropTypes.string,
+    }),
+  }),
+};
+
+OptionalSelects.defaultProps = {
+  isFetching: false,
+  dataForContest: {},
 };
 
 export default OptionalSelects;
