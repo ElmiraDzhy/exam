@@ -1,13 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import InputMask from 'react-input-mask';
 import { useField } from 'formik';
 
 const PayInput = (props) => {
   const {
-    label, changeFocus, classes, isInputMask, mask,
+    label, changeFocus, classes, isInputMask, mask, name,
   } = props;
-  const [field, meta] = useField(props.name);
+
+  const [field, meta] = useField(name);
   const { touched, error } = meta;
 
   if (field.name === 'sum') {
@@ -62,6 +64,24 @@ const PayInput = (props) => {
       )}
     </div>
   );
+};
+
+PayInput.propTypes = {
+  label: PropTypes.string.isRequired,
+  changeFocus: PropTypes.func.isRequired,
+  classes: PropTypes.shape({
+    container: PropTypes.string,
+    input: PropTypes.string,
+    notValid: PropTypes.string,
+    error: PropTypes.string,
+  }).isRequired,
+  isInputMask: PropTypes.bool,
+  mask: PropTypes.shape({}).isRequired,
+  name: PropTypes.string.isRequired,
+};
+
+PayInput.defaultProps = {
+  isInputMask: false,
 };
 
 export default PayInput;
