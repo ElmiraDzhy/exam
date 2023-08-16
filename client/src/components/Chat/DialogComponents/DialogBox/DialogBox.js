@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styles from './DialogBox.module.sass';
 import CONSTANTS from '../../../../constants';
@@ -23,6 +24,9 @@ const DialogBox = (props) => {
   const isBlocked = blackList[index];
   return (
     <div
+      role="button"
+      tabIndex="0"
+      onKeyUp="handleKeyUp(event)"
       className={styles.previewChatBox}
       onClick={() => goToExpandedDialog({
         interlocutor,
@@ -70,6 +74,31 @@ const DialogBox = (props) => {
       </div>
     </div>
   );
+};
+
+DialogBox.propTypes = {
+  userId: PropTypes.number.isRequired,
+  getTimeStr: PropTypes.func.isRequired,
+  changeFavorite: PropTypes.func.isRequired,
+  changeBlackList: PropTypes.func.isRequired,
+  catalogOperation: PropTypes.func.isRequired,
+  goToExpandedDialog: PropTypes.func.isRequired,
+
+  chatMode: PropTypes.bool.isRequired,
+  interlocutor: PropTypes.shape({
+    avatar: PropTypes.string,
+    firstName: PropTypes.string,
+  }).isRequired,
+
+  chatPreview: PropTypes.shape({
+    favoriteList: PropTypes.arrayOf(PropTypes.bool),
+    participants: PropTypes.arrayOf(PropTypes.bool),
+    blackList: PropTypes.arrayOf(PropTypes.bool),
+    id: PropTypes.number,
+    text: PropTypes.string,
+    createAt: PropTypes.string,
+  }).isRequired,
+
 };
 
 export default DialogBox;
