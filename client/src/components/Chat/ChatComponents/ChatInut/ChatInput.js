@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Form, Formik } from 'formik';
 import { sendMessageAction } from '../../../../actions/actionCreator';
@@ -9,10 +10,12 @@ import Schems from '../../../../validators/validationSchems';
 
 const ChatInput = (props) => {
   const submitHandler = (values, { resetForm }) => {
-    props.sendMessage({
+    const { sendMessage, interlocutor } = props;
+
+    sendMessage({
       messageBody: values.message,
-      recipient: props.interlocutor.id,
-      interlocutor: props.interlocutor,
+      recipient: interlocutor.id,
+      interlocutor,
     });
     resetForm();
   };
@@ -53,5 +56,13 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
   sendMessage: (data) => dispatch(sendMessageAction(data)),
 });
+
+ChatInput.propTypes = {
+  sendMessage: PropTypes.func.isRequired,
+  interlocutor: PropTypes.shape({
+    id: PropTypes.number,
+  }).isRequired,
+
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatInput);
