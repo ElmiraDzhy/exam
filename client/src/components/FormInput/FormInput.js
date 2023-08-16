@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Field, ErrorMessage } from 'formik';
 import classNames from 'classnames';
 
@@ -25,5 +26,23 @@ const FormInput = ({
     }}
   </Field>
 );
+
+FormInput.propTypes = {
+  label: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+
+  classes: PropTypes.shape({
+    input: PropTypes.string,
+    container: PropTypes.string,
+    notValid: PropTypes.string,
+    valid: PropTypes.string,
+    warning: PropTypes.string,
+  }).isRequired,
+  field: PropTypes.shape({}).isRequired,
+  meta: PropTypes.shape({
+    touched: PropTypes.bool,
+    error: PropTypes.shape({}),
+  }).isRequired,
+};
 
 export default FormInput;
