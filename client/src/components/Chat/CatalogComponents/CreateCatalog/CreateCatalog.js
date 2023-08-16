@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Formik, Form } from 'formik';
 import FormInput from '../../../FormInput/FormInput';
@@ -8,9 +9,9 @@ import Schems from '../../../../validators/validationSchems';
 
 const CreateCatalog = (props) => {
   const click = (values) => {
-    const { createCatalog } = props;
+    const { createCatalogDispatch } = props;
     const { addChatId } = props;
-    createCatalog({ catalogName: values.catalogName, chatId: addChatId });
+    createCatalogDispatch({ catalogName: values.catalogName, chatId: addChatId });
   };
   return (
     <Formik
@@ -37,9 +38,14 @@ const CreateCatalog = (props) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  createCatalog: (data) => dispatch(createCatalog(data)),
+  createCatalogDispatch: (data) => dispatch(createCatalog(data)),
 });
 
 const mapStateToProps = (state) => state.chatStore;
+
+CreateCatalog.propTypes = {
+  createCatalogDispatch: PropTypes.func.isRequired,
+  addChatId: PropTypes.number.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateCatalog);
