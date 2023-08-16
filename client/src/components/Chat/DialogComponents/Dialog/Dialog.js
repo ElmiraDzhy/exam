@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import className from 'classnames';
@@ -8,7 +9,9 @@ import styles from './Dialog.module.sass';
 import ChatInput from '../../ChatComponents/ChatInut/ChatInput';
 
 const Dialog = (props) => {
-  const { interlocutor, messages } = props;
+  const {
+    interlocutor, messages, getDialog, clearMessageListDispatch,
+  } = props;
 
   const messagesEnd = React.createRef();
 
@@ -17,14 +20,14 @@ const Dialog = (props) => {
   };
 
   useEffect(() => {
-    props.getDialog({ interlocutorId: interlocutor.id });
+    getDialog({ interlocutorId: interlocutor.id });
   }, [interlocutor.id]);
 
   useEffect(() => {
-    props.getDialog({ interlocutorId: interlocutor.id });
+    getDialog({ interlocutorId: interlocutor.id });
     scrollToBottom();
     return () => {
-      props.clearMessageList();
+      clearMessageListDispatch();
     };
   }, []);
 
@@ -73,8 +76,7 @@ const Dialog = (props) => {
   };
 
   const blockMessage = () => {
-    const { userId, chatData } = props;
-    const { blackList, participants } = chatData;
+    const { userId, chatData, chatData: { blackList, participants } } = props;
     const userIndex = participants.indexOf(userId);
     let message;
     if (chatData && blackList[userIndex]) {
@@ -103,7 +105,24 @@ const mapStateToProps = (state) => state.chatStore;
 
 const mapDispatchToProps = (dispatch) => ({
   getDialog: (data) => dispatch(getDialogMessages(data)),
-  clearMessageList: () => dispatch(clearMessageList()),
+  clearMessageListDispatch: () => dispatch(clearMessageList()),
 });
+
+Dialog.propTypes = {
+  getDialog: PropTypes.func.isRequired,
+  clearMessageListDispatch: PropTypes.func.isRequired,
+
+  userId: PropTypes.number.isRequired,
+
+  interlocutor: PropTypes.shape({
+    id: PropTypes.number,
+  }).isRequired,
+  messages: PropTypes.arrayOf(PropTypes.object).isRequired,
+
+  chatData: PropTypes.shape({
+    blackList: PropTypes.arrayOf(PropTypes.bool),
+    participants: PropTypes.arrayOf(PropTypes.number),
+  }).isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dialog);
