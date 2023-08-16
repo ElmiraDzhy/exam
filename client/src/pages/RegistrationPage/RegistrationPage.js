@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Logo from '../../components/Logo';
@@ -9,7 +10,9 @@ import { clearErrorSignUpAndLogin } from '../../actions/actionCreator';
 import CONSTANTS from '../../constants';
 
 const RegistrationPage = (props) => {
-  props.clearError();
+  const { clearError, history } = props;
+
+  clearError();
 
   return (
     <div className={styles.signUpPage}>
@@ -25,7 +28,7 @@ const RegistrationPage = (props) => {
             </Link>
           </div>
         </div>
-        <RegistrationForm history={props.history} />
+        <RegistrationForm history={history} />
       </div>
       <div className={styles.footer}>
         <div className={styles.articlesMainContainer}>
@@ -69,7 +72,7 @@ const RegistrationPage = (props) => {
               receive an unmatched
               breadth of name ideas from dozens of unique, creative minds while
               working with
-              the world's largest branding community.
+              the world&apos;s largest branding community.
               Quality and Collaboration: Using an advanced Quality Scoring
               Algorithm, we ensure
               that you receive more ideas from our top-quality creatives, and we
@@ -77,7 +80,7 @@ const RegistrationPage = (props) => {
               best practices to encourage high-quality brainstorming and two-way
               communication
               throughout your contest.
-              We don’t stop at ideation: Choose your name with confidence
+              We don&apos;t stop at ideation: Choose your name with confidence
               through our high-end
               validation services. Poll your target demographics to get unbiased
               feedback on your
@@ -179,5 +182,10 @@ const RegistrationPage = (props) => {
 const mapDispatchToProps = (dispatch) => ({
   clearError: () => dispatch(clearErrorSignUpAndLogin()),
 });
+
+RegistrationPage.propTypes = {
+  clearError: PropTypes.func.isRequired,
+  history: PropTypes.shape({}).isRequired,
+};
 
 export default connect(null, mapDispatchToProps)(RegistrationPage);
