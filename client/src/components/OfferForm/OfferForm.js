@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Formik, Form } from 'formik';
 import CONSTANTS from '../../constants';
@@ -10,8 +11,12 @@ import Error from '../Error/Error';
 import DragNDropArea from '../DragNDropArea';
 
 const OfferForm = (props) => {
+  const {
+    addOfferError, clearOfferError, contestType, contestId, customerId,
+  } = props;
+
   const renderOfferInput = () => {
-    if (props.contestType === CONSTANTS.LOGO_CONTEST) {
+    if (contestType === CONSTANTS.LOGO_CONTEST) {
       return (
         <DragNDropArea name="offerData" />
       );
@@ -31,10 +36,8 @@ const OfferForm = (props) => {
     );
   };
 
-  const setOffer = (values, { resetForm }) => {
+  const setOfferHandler = (values, { resetForm }) => {
     props.clearOfferError();
-    const { contestId, contestType, customerId } = props;
-
     const data = new FormData();
     data.append('contestId', contestId);
     data.append('contestType', contestType);
@@ -44,8 +47,7 @@ const OfferForm = (props) => {
     resetForm();
   };
 
-  const { addOfferError, clearOfferError } = props;
-  const validationSchema = props.contestType === CONSTANTS.LOGO_CONTEST
+  const validationSchema = contestType === CONSTANTS.LOGO_CONTEST
     ? Schems.LogoOfferSchema
     : Schems.TextOfferSchema;
 
@@ -59,7 +61,7 @@ const OfferForm = (props) => {
         />
       )}
       <Formik
-        onSubmit={setOffer}
+        onSubmit={setOfferHandler}
         initialValues={{
           offerData: '',
         }}
@@ -88,6 +90,20 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => {
   const { addOfferError } = state.contestByIdStore;
   return { addOfferError };
+};
+
+OfferForm.propTypes = {
+  clearOfferError: PropTypes.func.isRequired,
+  setNewOffer: PropTypes.func.isRequired,
+
+  contestId: PropTypes.number.isRequired,
+  customerId: PropTypes.number.isRequired,
+  contestType: PropTypes.string.isRequired,
+
+  addOfferError: PropTypes.shape({
+    data: PropTypes.string,
+    status: PropTypes.number,
+  }).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(OfferForm);
