@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import CONSTANTS from '../../../../constants';
@@ -46,7 +47,7 @@ const DialogList = (props) => {
   const renderPreview = (filterFunc) => {
     const arrayList = [];
     const {
-      userId, preview, goToExpandedDialog, chatMode, removeChat,
+      userId, preview, goToExpandedDialogDispatch, chatMode, removeChat,
     } = props;
 
     preview.forEach((chatPreview) => {
@@ -65,7 +66,7 @@ const DialogList = (props) => {
           changeBlackList={changeBlackList}
           chatMode={chatMode}
           catalogOperation={operation}
-          goToExpandedDialog={goToExpandedDialog}
+          goToExpandedDialog={goToExpandedDialogDispatch}
         />
       );
 
@@ -101,10 +102,23 @@ const DialogList = (props) => {
 const mapStateToProps = (state) => state.chatStore;
 
 const mapDispatchToProps = (dispatch) => ({
-  goToExpandedDialog: (data) => dispatch(goToExpandedDialog(data)),
+  goToExpandedDialogDispatch: (data) => dispatch(goToExpandedDialog(data)),
   changeChatFavorite: (data) => dispatch(changeChatFavorite(data)),
   changeChatBlock: (data) => dispatch(changeChatBlock(data)),
   changeShowAddChatToCatalogMenu: (data) => dispatch(changeShowAddChatToCatalogMenu(data)),
 });
+
+DialogList.propTypes = {
+  changeChatFavorite: PropTypes.func.isRequired,
+  changeChatBlock: PropTypes.func.isRequired,
+  changeShowAddChatToCatalogMenu: PropTypes.func.isRequired,
+  goToExpandedDialogDispatch: PropTypes.func.isRequired,
+  removeChat: PropTypes.func.isRequired,
+
+  userId: PropTypes.number.isRequired,
+  preview: PropTypes.arrayOf(PropTypes.object).isRequired,
+  chatMode: PropTypes.string.isRequired,
+
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(DialogList);
