@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import Header from '../../components/Header/Header';
@@ -20,7 +21,7 @@ const UserProfile = (props) => {
   };
 
   const {
-    balance, role, profileModeView, changeProfileModeView, error, clearPaymentStore,
+    balance, role, profileModeView, changeProfileModeViewDispatch, error, clearPaymentStoreDispatch,
   } = props;
   return (
     <div>
@@ -30,15 +31,23 @@ const UserProfile = (props) => {
           <span className={styles.headerAside}>Select Option</span>
           <div className={styles.optionsContainer}>
             <div
-              className={classNames(styles.optionContainer, { [styles.currentOption]: profileModeView === CONSTANTS.USER_INFO_MODE })}
-              onClick={() => changeProfileModeView(CONSTANTS.USER_INFO_MODE)}
+              role="button"
+              tabIndex="0"
+              onKeyUp="handleKeyUp(event)"
+              className={classNames(styles.optionContainer,
+                { [styles.currentOption]: profileModeView === CONSTANTS.USER_INFO_MODE })}
+              onClick={() => changeProfileModeViewDispatch(CONSTANTS.USER_INFO_MODE)}
             >
               UserInfo
             </div>
             {role === CONSTANTS.CREATOR && (
               <div
-                className={classNames(styles.optionContainer, { [styles.currentOption]: profileModeView === CONSTANTS.CASHOUT_MODE })}
-                onClick={() => changeProfileModeView(CONSTANTS.CASHOUT_MODE)}
+                role="button"
+                tabIndex="0"
+                onKeyUp="handleKeyUp(event)"
+                className={classNames(styles.optionContainer,
+                  { [styles.currentOption]: profileModeView === CONSTANTS.CASHOUT_MODE })}
+                onClick={() => changeProfileModeViewDispatch(CONSTANTS.CASHOUT_MODE)}
               >
                 Cashout
               </div>
@@ -50,12 +59,22 @@ const UserProfile = (props) => {
                       ? <UserInfo />
                       : (
                         <div className={styles.container}>
-                          {parseInt(balance) === 0
-                            ? <span className={styles.notMoney}>There is no money on your balance</span>
+                          {parseInt(balance, 10) === 0
+                            ? (
+                              <span className={styles.notMoney}>
+                                There is no money on your balance
+                              </span>
+                            )
                             : (
                               <div>
                                 {error
-                                    && <Error data={error.data} status={error.status} clearError={clearPaymentStore} />}
+                                    && (
+                                    <Error
+                                      data={error.data}
+                                      status={error.status}
+                                      clearError={clearPaymentStoreDispatch}
+                                    />
+                                    )}
                                 <PayForm sendRequest={pay} />
                               </div>
                             )}
@@ -78,8 +97,21 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   cashOut: (data) => dispatch(cashOut(data)),
-  changeProfileModeView: (data) => dispatch(changeProfileModeView(data)),
-  clearPaymentStore: () => dispatch(clearPaymentStore()),
+  changeProfileModeViewDispatch: (data) => dispatch(changeProfileModeView(data)),
+  clearPaymentStoreDispatch: () => dispatch(clearPaymentStore()),
 });
+
+UserProfile.propTypes = {
+  cashOut: PropTypes.func.isRequired,
+  balance: PropTypes.number.isRequired,
+  role: PropTypes.string.isRequired,
+  profileModeView: PropTypes.string.isRequired,
+  changeProfileModeViewDispatch: PropTypes.func.isRequired,
+  error: PropTypes.shape({
+    data: PropTypes.string,
+    status: PropTypes.number,
+  }).isRequired,
+  clearPaymentStoreDispatch: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);
