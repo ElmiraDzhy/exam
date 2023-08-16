@@ -1,4 +1,5 @@
 import React, { useLayoutEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Field, ErrorMessage } from 'formik';
 
 const SelectInput = ({
@@ -16,19 +17,19 @@ const SelectInput = ({
 
   const getOptionsArray = () => {
     const array = [];
-    for (let i = 0; optionsArray && i < optionsArray.length; i++) {
-      let option;
+
+    optionsArray.forEach((option, i) => {
       if (valueArray) {
-        option = (
-          <option key={i} value={valueArray[i]}>
-            {optionsArray[i]}
-          </option>
+        array.push(
+          <option key={array.length} value={valueArray[i]}>
+            {option}
+          </option>,
         );
       } else {
-        option = <option key={i}>{optionsArray[i]}</option>;
+        array.push(<option key={array.length}>{option}</option>);
       }
-      array.push(option);
-    }
+    });
+
     return array;
   };
 
@@ -70,5 +71,37 @@ const SelectInputWrapper = ({
     )}
   </Field>
 );
+
+SelectInput.propTypes = {
+  header: PropTypes.string.isRequired,
+  optionsArray: PropTypes.arrayOf(PropTypes.string).isRequired,
+  valueArray: PropTypes.arrayOf(PropTypes.string).isRequired,
+
+  form: PropTypes.shape({
+    setFieldValue: PropTypes.func,
+  }).isRequired,
+  meta: PropTypes.shape({
+    initialValue: PropTypes.shape({}),
+  }).isRequired,
+  field: PropTypes.shape({
+    name: PropTypes.string,
+  }).isRequired,
+  classes: PropTypes.shape({
+    inputContainer: PropTypes.string,
+    inputHeader: PropTypes.string,
+    selectInput: PropTypes.string,
+  }).isRequired,
+
+};
+
+SelectInputWrapper.propTypes = {
+  header: PropTypes.string.isRequired,
+  classes: PropTypes.shape({
+    warning: PropTypes.string,
+  }).isRequired,
+  optionsArray: PropTypes.arrayOf(PropTypes.string).isRequired,
+  valueArray: PropTypes.arrayOf(PropTypes.string).isRequired,
+
+};
 
 export default SelectInputWrapper;
