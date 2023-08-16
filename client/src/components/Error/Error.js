@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './Error.module.sass';
 
 const Error = (props) => {
@@ -24,9 +25,24 @@ const Error = (props) => {
   return (
     <div className={styles.errorContainer}>
       <span>{getMessage()}</span>
-      <i className="far fa-times-circle" onClick={() => clearError()} />
+      <button onClick={() => clearError()} type="button">
+        <i
+          className="far fa-times-circle"
+        />
+      </button>
     </div>
   );
+};
+
+Error.propTypes = {
+  status: PropTypes.number,
+  data: PropTypes.string,
+  clearError: PropTypes.func.isRequired,
+};
+
+Error.defaultProps = {
+  status: 400,
+  data: 'Error',
 };
 
 export default Error;
