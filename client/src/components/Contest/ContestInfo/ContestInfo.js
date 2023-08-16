@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from '../../Brief/Brief.module.sass';
 import CONSTANTS from '../../../constants';
 import LogoContestSpecialInfo from './LogoContestSpecialInfo';
@@ -14,6 +15,33 @@ const ContestInfo = (props) => {
     title, focusOfWork, targetCustomer, industry, originalFileName,
     fileName, User, status,
   } = contestData;
+
+  let contestElement;
+
+  switch (contestType) {
+    case CONSTANTS.NAME_CONTEST: {
+      contestElement = <NameContestSpecialInfo typeOfName={typeOfName} styleName={styleName} />;
+      break;
+    }
+    case CONSTANTS.TAGLINE_CONTEST: {
+      contestElement = (
+        <TaglineContestSpecialInfo
+          typeOfTagline={typeOfTagline}
+          nameVenture={contestData.nameVenture}
+        />
+      );
+      break;
+    }
+    default: {
+      contestElement = (
+        <LogoContestSpecialInfo
+          brandStyle={brandStyle}
+          nameVenture={contestData.nameVenture}
+        />
+      );
+    }
+  }
+
   return (
     <div className={styles.mainContestInfoContainer}>
       <div className={styles.infoContainer}>
@@ -23,32 +51,31 @@ const ContestInfo = (props) => {
             <span className={styles.data}>{contestType}</span>
           </div>
           {
-                        (User.id === userId && status !== CONSTANTS.CONTEST_STATUS_FINISHED)
-                        && <div onClick={() => changeEditContest(true)} className={styles.editBtn}>Edit</div>
-                    }
+            (User.id === userId && status !== CONSTANTS.CONTEST_STATUS_FINISHED)
+              && (
+              <div
+                role="button"
+                tabIndex="0"
+                onKeyUp="handleKeyUp(event)"
+                onClick={() => changeEditContest(true)}
+                className={styles.editBtn}
+              >
+                Edit
+              </div>
+              )
+          }
           {
-                        role !== CONSTANTS.CUSTOMER
-                        && <i onClick={goChat} className="fas fa-comments" />
-                    }
+            role !== CONSTANTS.CUSTOMER
+              && <i onClick={goChat} className="fas fa-comments" />
+          }
         </div>
         <div className={styles.dataContainer}>
           <span className={styles.label}>Title of the Project</span>
           <span className={styles.data}>{title}</span>
         </div>
         {
-                    contestType === CONSTANTS.NAME_CONTEST
-                      ? <NameContestSpecialInfo typeOfName={typeOfName} styleName={styleName} />
-                      : (
-                        contestType === CONSTANTS.TAGLINE_CONTEST
-                          ? (
-                            <TaglineContestSpecialInfo
-                              typeOfTagline={typeOfTagline}
-                              nameVenture={contestData.nameVenture}
-                            />
-                          )
-                          : <LogoContestSpecialInfo brandStyle={brandStyle} nameVenture={contestData.nameVenture} />
-                      )
-                }
+          contestElement
+        }
         <div className={styles.dataContainer}>
           <span className={styles.label}>What is your Business/ Brand about?</span>
           <span className={styles.data}>{focusOfWork}</span>
@@ -78,6 +105,33 @@ const ContestInfo = (props) => {
       </div>
     </div>
   );
+};
+
+ContestInfo.propTypes = {
+  changeEditContest: PropTypes.func.isRequired,
+  goChat: PropTypes.func.isRequired,
+
+  userId: PropTypes.number.isRequired,
+  role: PropTypes.string.isRequired,
+
+  contestData: PropTypes.shape({
+    typeOfTagline: PropTypes.string,
+    brandStyle: PropTypes.string,
+    typeOfName: PropTypes.string,
+    styleName: PropTypes.string,
+    contestType: PropTypes.string,
+    title: PropTypes.string,
+    focusOfWork: PropTypes.string,
+    targetCustomer: PropTypes.string,
+    industry: PropTypes.string,
+    originalFileName: PropTypes.string,
+    fileName: PropTypes.string,
+    User: PropTypes.shape({
+      id: PropTypes.number,
+    }),
+    status: PropTypes.string,
+    nameVenture: PropTypes.string,
+  }).isRequired,
 };
 
 export default ContestInfo;
