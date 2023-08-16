@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Cards from 'react-credit-cards';
 import { Form, Formik } from 'formik';
 import 'react-credit-cards/es/styles-compiled.css';
@@ -9,7 +10,7 @@ import PayInput from '../InputComponents/PayInput/PayInput';
 import Schems from '../../validators/validationSchems';
 
 const PayForm = (props) => {
-  const changeFocusOnCard = (name) => {
+  const changeFocusOnCardHandler = (name) => {
     props.changeFocusOnCard(name);
   };
 
@@ -57,7 +58,7 @@ const PayForm = (props) => {
                     }}
                     type="text"
                     label="name"
-                    changeFocus={changeFocusOnCard}
+                    changeFocus={changeFocusOnCardHandler}
                   />
                 </div>
                 {!isPayForOrder && (
@@ -90,7 +91,7 @@ const PayForm = (props) => {
                     }}
                     type="text"
                     label="card number"
-                    changeFocus={changeFocusOnCard}
+                    changeFocus={changeFocusOnCardHandler}
                   />
                 </div>
                 <div className={styles.smallInputContainer}>
@@ -108,7 +109,7 @@ const PayForm = (props) => {
                       }}
                       type="text"
                       label="expiry"
-                      changeFocus={changeFocusOnCard}
+                      changeFocus={changeFocusOnCardHandler}
                     />
                   </div>
                   <div className={styles.smallInput}>
@@ -125,7 +126,7 @@ const PayForm = (props) => {
                       }}
                       type="text"
                       label="cvc"
-                      changeFocus={changeFocusOnCard}
+                      changeFocus={changeFocusOnCardHandler}
                     />
                   </div>
                 </div>
@@ -142,7 +143,13 @@ const PayForm = (props) => {
         </button>
         {isPayForOrder
                 && (
-                <div onClick={() => props.back()} className={styles.backButton}>
+                <div
+                  role="button"
+                  tabIndex="0"
+                  onKeyUp="handleKeyUp(event)"
+                  onClick={() => props.back()}
+                  className={styles.backButton}
+                >
                   <span>Back</span>
                 </div>
                 )}
@@ -154,5 +161,13 @@ const PayForm = (props) => {
 const mapDispatchToProps = (dispatch) => ({
   changeFocusOnCard: (data) => dispatch(changeFocusOnCard(data)),
 });
+
+PayForm.propTypes = {
+  changeFocusOnCard: PropTypes.func.isRequired,
+  back: PropTypes.func.isRequired,
+  focusOnElement: PropTypes.bool.isRequired,
+  isPayForOrder: PropTypes.bool.isRequired,
+  sendRequest: PropTypes.func.isRequired,
+};
 
 export default connect(null, mapDispatchToProps)(PayForm);
