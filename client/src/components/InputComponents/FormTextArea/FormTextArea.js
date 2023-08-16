@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Field, ErrorMessage } from 'formik';
 
 const FormTextArea = ({
-  label, classes, type, ...rest
+  label, classes, ...rest
 }) => (
   <Field {...rest}>
     {(props) => {
@@ -26,5 +27,22 @@ const FormTextArea = ({
     }}
   </Field>
 );
+
+FormTextArea.propTypes = {
+  label: PropTypes.string.isRequired,
+  classes: PropTypes.shape({
+    container: PropTypes.string.isRequired,
+    inputStyle: PropTypes.string.isRequired,
+    notValid: PropTypes.string.isRequired,
+    warning: PropTypes.string.isRequired,
+  }).isRequired,
+  field: PropTypes.shape({
+    name: PropTypes.string,
+  }).isRequired,
+  meta: PropTypes.shape({
+    touched: PropTypes.bool,
+    error: PropTypes.shape({}),
+  }).isRequired,
+};
 
 export default FormTextArea;
