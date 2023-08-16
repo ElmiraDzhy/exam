@@ -6,7 +6,7 @@ const initialState = {
   focusOnElement: 'number',
 };
 
-export default function (state = initialState, action) {
+export default (state = initialState, action) => {
   switch (action.type) {
     case ACTION.CHANGE_FOCUS_ON_CARD: {
       return {
@@ -34,4 +34,4 @@ export default function (state = initialState, action) {
     default:
       return state;
   }
-}
+};

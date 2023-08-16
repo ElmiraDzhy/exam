@@ -6,7 +6,7 @@ const initialState = {
   error: null,
 };
 
-export default function (state = initialState, action) {
+export default (state = initialState, action) => {
   switch (action.type) {
     case ACTION.RESCIND_OFFER_REQUEST:
     case ACTION.CONFIRM_OFFER_REQUEST:
@@ -50,4 +50,4 @@ export default function (state = initialState, action) {
       };
     }
   }
-}
+};

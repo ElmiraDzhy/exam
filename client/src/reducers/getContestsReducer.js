@@ -16,7 +16,7 @@ const initialState = {
   haveMore: true,
 };
 
-export default function (state = initialState, action) {
+export default (state = initialState, action) => {
   switch (action.type) {
     case ACTION.GET_CONTESTS_ACTION_REQUEST: {
       return {
@@ -66,4 +66,4 @@ export default function (state = initialState, action) {
     default:
       return state;
   }
-}
+};

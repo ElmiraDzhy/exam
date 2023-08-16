@@ -20,7 +20,7 @@ const initialState = {
   catalogCreationMode: CONSTANTS.ADD_CHAT_TO_OLD_CATALOG,
 };
 
-export default function (state = initialState, action) {
+export default (state = initialState, action) => {
   switch (action.type) {
     case ACTION.GET_PREVIEW_CHAT: {
       return {
@@ -243,4 +243,4 @@ export default function (state = initialState, action) {
     default:
       return state;
   }
-}
+};
