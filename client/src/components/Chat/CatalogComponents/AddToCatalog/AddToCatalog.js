@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Formik, Form } from 'formik';
 import SelectInput from '../../../SelectInput/SelectInput';
@@ -6,8 +7,9 @@ import { addChatToCatalog } from '../../../../actions/actionCreator';
 import styles from './AddToCatalog.module.sass';
 
 const AddToCatalog = (props) => {
+  const { catalogList, addChatId } = props;
+
   const getCatalogsNames = () => {
-    const { catalogList } = props;
     const namesArray = [];
     catalogList.forEach((catalog) => {
       namesArray.push(catalog.catalogName);
@@ -16,7 +18,6 @@ const AddToCatalog = (props) => {
   };
 
   const getValueArray = () => {
-    const { catalogList } = props;
     const valueArray = [];
     catalogList.forEach((catalog) => {
       valueArray.push(catalog.id);
@@ -25,7 +26,6 @@ const AddToCatalog = (props) => {
   };
 
   const click = (values) => {
-    const { addChatId } = props;
     props.addChatToCatalog({ chatId: addChatId, catalogId: values.catalogId });
   };
 
@@ -62,5 +62,12 @@ const mapStateToProps = (state) => state.chatStore;
 const mapDispatchToProps = (dispatch) => ({
   addChatToCatalog: (data) => dispatch(addChatToCatalog(data)),
 });
+
+AddToCatalog.propTypes = {
+  addChatToCatalog: PropTypes.func.isRequired,
+  catalogList: PropTypes.arrayOf(PropTypes.object).isRequired,
+  addChatId: PropTypes.func.isRequired,
+
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddToCatalog);
