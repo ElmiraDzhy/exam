@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './ContestInfo.module.sass';
 
 const NameContestSpecialInfo = (props) => {
@@ -15,6 +16,11 @@ const NameContestSpecialInfo = (props) => {
       </div>
     </>
   );
+};
+
+NameContestSpecialInfo.propTypes = {
+  typeOfName: PropTypes.string.isRequired,
+  styleName: PropTypes.string.isRequired,
 };
 
 export default NameContestSpecialInfo;
