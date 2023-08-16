@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Field, Form, Formik } from 'formik';
 import Error from '../Error/Error';
@@ -13,11 +14,13 @@ import Schems from '../../validators/validationSchems';
 
 class RegistrationForm extends React.Component {
   componentWillUnmount() {
-    this.props.authClear();
+    const { authClear } = this.props;
+    authClear();
   }
 
     clicked = (values) => {
-      this.props.register({
+      const { register, history } = this.props;
+      register({
         data: {
           firstName: values.firstName,
           lastName: values.lastName,
@@ -26,7 +29,7 @@ class RegistrationForm extends React.Component {
           password: values.password,
           role: values.role,
         },
-        history: this.props.history,
+        history,
       });
     };
 
@@ -173,5 +176,22 @@ const mapDispatchToProps = (dispatch) => (
     authClear: () => dispatch(clearAuth()),
   }
 );
+
+RegistrationForm.propTypes = {
+  authClear: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
+  history: PropTypes.shape({}).isRequired,
+  submitting: PropTypes.bool,
+  auth: PropTypes.shape({
+    error: PropTypes.shape({
+      data: PropTypes.string,
+      status: PropTypes.number,
+    }),
+  }).isRequired,
+};
+
+RegistrationForm.defaultProps = {
+  submitting: false,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegistrationForm);
