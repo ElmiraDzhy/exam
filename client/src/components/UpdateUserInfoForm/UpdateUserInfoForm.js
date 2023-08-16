@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Form, Formik } from 'formik';
 import { connect } from 'react-redux';
 import { clearUserError } from '../../actions/actionCreator';
@@ -10,12 +11,22 @@ import DragNDropArea from '../DragNDropArea';
 
 const UpdateUserInfoForm = (props) => {
   const {
-    onSubmit, submitting, error, clearUserError,
+    onSubmit, submitting, error, clearUserErrorDispatch, initialValues,
   } = props;
   return (
-    <Formik onSubmit={onSubmit} initialValues={props.initialValues} validationSchema={Schems.UpdateUserSchema}>
+    <Formik
+      onSubmit={onSubmit}
+      initialValues={initialValues}
+      validationSchema={Schems.UpdateUserSchema}
+    >
       <Form className={styles.updateContainer}>
-        {error && <Error data={error.data} status={error.status} clearError={clearUserError} />}
+        {error && (
+        <Error
+          data={error.data}
+          status={error.status}
+          clearError={clearUserErrorDispatch}
+        />
+        )}
         <div className={styles.container}>
           <span className={styles.label}>First Name</span>
           <FormInput
@@ -80,7 +91,24 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  clearUserError: () => dispatch(clearUserError()),
+  clearUserErrorDispatch: () => dispatch(clearUserError()),
 });
+
+UpdateUserInfoForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  submitting: PropTypes.bool.isRequired,
+  error: PropTypes.shape({
+    data: PropTypes.string,
+    status: PropTypes.number,
+  }),
+  clearUserErrorDispatch: PropTypes.func.isRequired,
+  initialValues: PropTypes.shape({}),
+
+};
+
+UpdateUserInfoForm.defaultProps = {
+  error: {},
+  initialValues: {},
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(UpdateUserInfoForm);
