@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import LoginForm from '../../components/LoginForm/LoginForm';
@@ -7,7 +8,7 @@ import styles from './LoginPage.module.sass';
 import { clearErrorSignUpAndLogin } from '../../actions/actionCreator';
 import CONSTANTS from '../../constants';
 
-const LoginPage = (props) => (
+const LoginPage = ({ history }) => (
   <div className={styles.mainContainer}>
     <div className={styles.loginContainer}>
       <div className={styles.headerSignUpPage}>
@@ -22,7 +23,7 @@ const LoginPage = (props) => (
         </div>
       </div>
       <div className={styles.loginFormContainer}>
-        <LoginForm history={props.history} />
+        <LoginForm history={history} />
       </div>
     </div>
   </div>
@@ -31,5 +32,9 @@ const LoginPage = (props) => (
 const mapDispatchToProps = (dispatch) => ({
   clearError: () => dispatch(clearErrorSignUpAndLogin()),
 });
+
+LoginPage.propTypes = {
+  history: PropTypes.shape({}).isRequired,
+};
 
 export default connect(null, mapDispatchToProps)(LoginPage);
