@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Form, Formik } from 'formik';
 import { authActionLogin, clearAuth } from '../../actions/actionCreator';
@@ -9,16 +10,18 @@ import Error from '../Error/Error';
 
 class LoginForm extends React.Component {
   componentWillUnmount() {
-    this.props.authClear();
+    const { authClearDispatch } = this.props;
+    authClearDispatch();
   }
 
     clicked = (values) => {
-      this.props.loginRequest({ data: values, history: this.props.history });
+      const { loginRequestDispatch, history } = this.props;
+      loginRequestDispatch({ data: values, history });
     };
 
     render() {
-      const { error, isFetching } = this.props.auth;
-      const { submitting, authClear } = this.props;
+      const { auth: { error, isFetching } } = this.props;
+      const { submitting, authClearDispatch } = this.props;
 
       const formInputClasses = {
         container: styles.inputContainer,
@@ -34,7 +37,7 @@ class LoginForm extends React.Component {
           <Error
             data={error.data}
             status={error.status}
-            clearError={authClear}
+            clearError={authClearDispatch}
           />
           )}
           <h2>LOGIN TO YOUR ACCOUNT</h2>
@@ -84,9 +87,27 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => (
   {
-    loginRequest: ({ data, history }) => dispatch(authActionLogin(data, history)),
-    authClear: () => dispatch(clearAuth()),
+    loginRequestDispatch: ({ data, history }) => dispatch(authActionLogin(data, history)),
+    authClearDispatch: () => dispatch(clearAuth()),
   }
 );
+
+LoginForm.propTypes = {
+  authClearDispatch: PropTypes.func.isRequired,
+  loginRequestDispatch: PropTypes.func.isRequired,
+  submitting: PropTypes.bool.isRequired,
+
+  history: PropTypes.shape({
+
+  }).isRequired,
+
+  auth: PropTypes.shape({
+    error: PropTypes.shape({
+      data: PropTypes.string,
+      status: PropTypes.number,
+    }),
+    isFetching: PropTypes.bool,
+  }).isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
