@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styles from './ContestCreationPage.module.sass';
 import { saveContestToStore, clearDataForContest } from '../../actions/actionCreator';
@@ -10,13 +11,17 @@ import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
 
 const ContestCreationPage = (props) => {
+  const {
+    contestStore: { contests }, bundleStore, contestType, history, title,
+  } = props;
   const formRef = useRef();
-  const contestData = props.contestStore.contests[props.contestType] ? props.contestStore.contests[props.contestType] : { contestType: props.contestType };
+  const contestData = contests[contestType] ? contests[contestType] : { contestType };
 
   const handleSubmit = (values) => {
-    props.saveContest({ type: props.contestType, info: values });
-    const route = props.bundleStore.bundle[props.contestType] === 'payment' ? '/payment' : `${props.bundleStore.bundle[props.contestType]}Contest`;
-    props.history.push(route);
+    const { saveContest } = props;
+    saveContest({ type: contestType, info: values });
+    const route = bundleStore.bundle[props.contestType] === 'payment' ? '/payment' : `${props.bundleStore.bundle[props.contestType]}Contest`;
+    history.push(route);
   };
 
   const submitForm = () => {
@@ -25,7 +30,11 @@ const ContestCreationPage = (props) => {
     }
   };
 
-  !props.bundleStore.bundle && props.history.replace('/startContest');
+  useEffect(() => {
+    if (!bundleStore.bundle) {
+      history.replace('/startContest');
+    }
+  }, []);
 
   return (
     <div>
@@ -33,10 +42,11 @@ const ContestCreationPage = (props) => {
       <div className={styles.startContestHeader}>
         <div className={styles.startContestInfo}>
           <h2>
-            {props.title}
+            {title}
           </h2>
           <span>
-            Tell us a bit more about your business as well as your preferences so that creatives get a better idea about what you are looking for
+            Tell us a bit more about your business as well as your preferences
+            so that creatives get a better idea about what you are looking for
           </span>
         </div>
         <ProgressBar currentStep={2} />
@@ -44,7 +54,7 @@ const ContestCreationPage = (props) => {
       <div className={styles.container}>
         <div className={styles.formContainer}>
           <ContestForm
-            contestType={props.contestType}
+            contestType={contestType}
             handleSubmit={handleSubmit}
             formRef={formRef}
             defaultData={contestData}
@@ -75,5 +85,25 @@ const mapDispatchToProps = (dispatch) => (
     clearDataForContest: () => dispatch(clearDataForContest()),
   }
 );
+
+ContestCreationPage.propTypes = {
+  saveContest: PropTypes.func.isRequired,
+
+  contestType: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+
+  contestStore: PropTypes.shape({
+    contests: PropTypes.arrayOf(PropTypes.object),
+  }).isRequired,
+
+  bundleStore: PropTypes.shape({
+    bundle: PropTypes.shape({}),
+  }).isRequired,
+
+  history: PropTypes.shape({
+    push: PropTypes.func,
+    replace: PropTypes.func,
+  }).isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContestCreationPage);
