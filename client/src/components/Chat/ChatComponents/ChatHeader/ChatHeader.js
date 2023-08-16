@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { backToDialogList, changeChatFavorite, changeChatBlock } from '../../../../actions/actionCreator';
@@ -26,11 +27,17 @@ const ChatHeader = (props) => {
     return blackList[participants.indexOf(userId)];
   };
 
-  const { avatar, firstName } = props.interlocutor;
-  const { backToDialogList, chatData, userId } = props;
+  const { interlocutor: { avatar, firstName } } = props;
+  const { backToDialogListDispatch, chatData, userId } = props;
   return (
     <div className={styles.chatHeader}>
-      <div className={styles.buttonContainer} onClick={() => backToDialogList()}>
+      <div
+        role="button"
+        tabIndex="0"
+        onKeyUp="handleKeyUp(event)"
+        className={styles.buttonContainer}
+        onClick={() => backToDialogListDispatch()}
+      >
         <img src={`${CONSTANTS.STATIC_IMAGES_PATH}arrow-left-thick.png`} alt="back" />
       </div>
       <div className={styles.infoContainer}>
@@ -77,9 +84,25 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  backToDialogList: () => dispatch(backToDialogList()),
+  backToDialogListDispatch: () => dispatch(backToDialogList()),
   changeChatFavorite: (data) => dispatch(changeChatFavorite(data)),
   changeChatBlock: (data) => dispatch(changeChatBlock(data)),
 });
+
+ChatHeader.propTypes = {
+  changeChatFavorite: PropTypes.func.isRequired,
+  changeChatBlock: PropTypes.func.isRequired,
+  backToDialogListDispatch: PropTypes.func.isRequired,
+
+  userId: PropTypes.number.isRequired,
+
+  chatData: PropTypes.shape({
+    participants: PropTypes.arrayOf(PropTypes.number),
+  }).isRequired,
+  interlocutor: PropTypes.shape({
+    avatar: PropTypes.string,
+    firstName: PropTypes.string,
+  }).isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatHeader);
