@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import UpdateUserInfoForm from '../UpdateUserInfoForm/UpdateUserInfoForm';
 import { updateUserData, changeEditModeOnUserProfile } from '../../actions/actionCreator';
@@ -6,7 +7,12 @@ import CONSTANTS from '../../constants';
 import styles from './UserInfo.module.sass';
 
 const UserInfo = (props) => {
-  const updateUserData = (values) => {
+  const { isEdit, changeEditMode, data } = props;
+  const {
+    avatar, firstName, lastName, displayName, email, role, balance,
+  } = data;
+
+  const updateUserHandler = (values) => {
     const formData = new FormData();
     formData.append('file', values.file);
     formData.append('firstName', values.firstName);
@@ -15,13 +21,9 @@ const UserInfo = (props) => {
     props.updateUser(formData);
   };
 
-  const { isEdit, changeEditMode, data } = props;
-  const {
-    avatar, firstName, lastName, displayName, email, role, balance,
-  } = data;
   return (
     <div className={styles.mainContainer}>
-      {isEdit ? <UpdateUserInfoForm onSubmit={updateUserData} />
+      {isEdit ? <UpdateUserInfoForm onSubmit={updateUserHandler} />
         : (
           <div className={styles.infoContainer}>
             <img
@@ -60,6 +62,9 @@ const UserInfo = (props) => {
           </div>
         )}
       <div
+        role="button"
+        tabIndex="0"
+        onKeyUp="handleKeyUp(event)"
         onClick={() => changeEditMode(!isEdit)}
         className={styles.buttonEdit}
       >
@@ -79,5 +84,20 @@ const mapDispatchToProps = (dispatch) => ({
   updateUser: (data) => dispatch(updateUserData(data)),
   changeEditMode: (data) => dispatch(changeEditModeOnUserProfile(data)),
 });
+
+UserInfo.propTypes = {
+  updateUser: PropTypes.func.isRequired,
+  isEdit: PropTypes.bool.isRequired,
+  changeEditMode: PropTypes.func.isRequired,
+  data: PropTypes.shape({
+    avatar: PropTypes.string,
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+    displayName: PropTypes.string,
+    email: PropTypes.string,
+    role: PropTypes.string,
+    balance: PropTypes.number,
+  }).isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserInfo);
