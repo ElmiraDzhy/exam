@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Link, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Header from '../../components/Header/Header';
@@ -68,7 +69,7 @@ const Home = (props) => {
                   <h3>Largest Naming Community</h3>
                   <p>
                     Our unique approach allows you to receive an unmatched breadth of business
-                    name ideas from world's largest community of naming experts.
+                    name ideas from world&rsquo;s largest community of naming experts.
                     With 75,000+ creatives and 15,000+ successful naming projects,
                     Squadhelp is by far the largest naming platform across the globe .
                   </p>
@@ -93,7 +94,8 @@ const Home = (props) => {
                   />
                   <h3>Agency-Level Features</h3>
                   <p>
-                    Squadhelp's high end Audience Testing service allows you to poll your target
+                    Squadhelp&rsquo;s high end Audience
+                    Testing service allows you to poll your target
                     demographics to get unbiased feedback on your favorite names.
                     Also receive Trademark support from our team of Licensed Trademark Attorneys,
                     so you can pick your name with confidence.
@@ -228,5 +230,12 @@ const Home = (props) => {
 };
 
 const mapStateToProps = ({ userStore: { isFetching, data } }) => ({ isFetching, data });
+
+Home.propTypes = {
+  isFetching: PropTypes.bool.isRequired,
+  data: PropTypes.shape({
+    role: PropTypes.string,
+  }).isRequired,
+};
 
 export default connect(mapStateToProps, null)(Home);
