@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
-import { getOffersRequest, confirmOfferRequest, rescindOfferRequest } from '../../actions/actionCreator';
+import {
+  getOffersRequest,
+  confirmOfferRequest,
+  rescindOfferRequest,
+} from '../../actions/actionCreator';
 import OfferForModerator from './OfferForModerator';
 import styles from './ModeratorOfferPage.module.scss';
 
@@ -11,6 +15,9 @@ const ModeratorOfferPage = (props) => {
   const {
     userStore: { data },
     offersReducer: { isFetching, error, offers },
+    getOffers,
+    confirmOffer,
+    rescindOffer,
   } = props;
   const history = useHistory();
 
@@ -18,15 +25,15 @@ const ModeratorOfferPage = (props) => {
     if (!data || data.role !== 'moderator') {
       history.replace('/login');
     }
-    getOffersRequest({ limit: 3 });
+    getOffers({ limit: 3 });
   }, []);
 
   const confirmOfferHandler = (payload) => {
-    confirmOfferRequest(payload);
+    confirmOffer(payload);
   };
 
   const rescindOfferHandler = (payload) => {
-    rescindOfferRequest(payload);
+    rescindOffer(payload);
   };
 
   const scrollToBottom = () => {
@@ -37,7 +44,7 @@ const ModeratorOfferPage = (props) => {
   };
 
   const loadMore = (startFrom) => {
-    getOffersRequest({
+    getOffers({
       limit: 3,
       offset: startFrom,
     });
@@ -94,11 +101,12 @@ const ModeratorOfferPage = (props) => {
 };
 
 const mapStateToProps = ({ userStore, offersReducer }) => ({ userStore, offersReducer });
-const mapDispatchToProps = {
-  getOffersRequest,
-  confirmOfferRequest,
-  rescindOfferRequest,
-};
+
+const mapDispatchToProps = (dispatch) => ({
+  getOffers: (data) => dispatch(getOffersRequest(data)),
+  confirmOffer: (data) => dispatch(confirmOfferRequest(data)),
+  rescindOffer: (data) => dispatch(rescindOfferRequest(data)),
+});
 
 ModeratorOfferPage.propTypes = {
   userStore: PropTypes.shape({
@@ -112,6 +120,10 @@ ModeratorOfferPage.propTypes = {
     error: PropTypes.shape({}),
     offers: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
+
+  getOffers: PropTypes.func.isRequired,
+  confirmOffer: PropTypes.func.isRequired,
+  rescindOffer: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModeratorOfferPage);
