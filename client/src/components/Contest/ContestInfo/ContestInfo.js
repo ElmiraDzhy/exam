@@ -56,7 +56,6 @@ const ContestInfo = (props) => {
               <div
                 role="button"
                 tabIndex="0"
-                onKeyUp="handleKeyUp(event)"
                 onClick={() => changeEditContest(true)}
                 className={styles.editBtn}
               >

@@ -179,7 +179,6 @@ const OfferBox = (props) => {
         <div
           role="button"
           tabIndex="0"
-          onKeyUp="handleKeyUp(event)"
           onClick={resolveOffer}
           className={styles.resolveBtn}
         >
@@ -188,7 +187,6 @@ const OfferBox = (props) => {
         <div
           role="button"
           tabIndex="0"
-          onKeyUp="handleKeyUp(event)"
           onClick={rejectOffer}
           className={styles.rejectBtn}
         >

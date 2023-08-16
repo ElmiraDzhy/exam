@@ -26,7 +26,6 @@ const DialogBox = (props) => {
     <div
       role="button"
       tabIndex="0"
-      onKeyUp="handleKeyUp(event)"
       className={styles.previewChatBox}
       onClick={() => goToExpandedDialog({
         interlocutor,

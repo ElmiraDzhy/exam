@@ -183,7 +183,6 @@ class CreatorDashboard extends React.Component {
             <div
               role="button"
               tabIndex="0"
-              onKeyUp="handleKeyUp(event)"
               onClick={() => this.changePredicate({ name: 'ownEntries', value: !creatorFilter.ownEntries })}
               className={classNames(styles.myEntries,
                 { [styles.activeMyEntries]: creatorFilter.ownEntries })}

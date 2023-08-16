@@ -8,7 +8,6 @@ const ChatError = (props) => {
     <div
       role="button"
       tabIndex="0"
-      onKeyUp="handleKeyUp(event)"
       className={styles.errorContainer}
       onClick={() => getData()}
     >

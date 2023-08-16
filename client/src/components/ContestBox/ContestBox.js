@@ -32,7 +32,6 @@ const ContestBox = (props) => {
     <div
       role="button"
       tabIndex="0"
-      onKeyUp="handleKeyUp(event)"
       className={styles.contestBoxContainer}
       onClick={() => goToExtended(id)}
     >

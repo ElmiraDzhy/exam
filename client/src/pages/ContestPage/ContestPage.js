@@ -176,7 +176,6 @@ class ContestPage extends React.Component {
                   <span
                     role="button"
                     tabIndex="0"
-                    onKeyUp="handleKeyUp(event)"
                     onClick={() => changeContestViewModeDispatch(true)}
                     className={classNames(styles.btn, { [styles.activeBtn]: isBrief })}
                   >
@@ -185,7 +184,6 @@ class ContestPage extends React.Component {
                   <span
                     role="button"
                     tabIndex="0"
-                    onKeyUp="handleKeyUp(event)"
                     onClick={() => changeContestViewModeDispatch(false)}
                     className={classNames(styles.btn, { [styles.activeBtn]: !isBrief })}
                   >

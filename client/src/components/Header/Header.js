@@ -64,7 +64,6 @@ class Header extends React.Component {
                   <span
                     role="button"
                     tabIndex="0"
-                    onKeyUp="handleKeyUp(event)"
                     onClick={this.logOut}
                   >
                     Logout
@@ -208,17 +207,16 @@ class Header extends React.Component {
                 </ul>
               </div>
               {data && data.role !== CONSTANTS.CREATOR
-                        && (
-                        <div
-                          role="button"
-                          tabIndex="0"
-                          onKeyUp="handleKeyUp(event)"
-                          className={styles.startContestBtn}
-                          onClick={this.startContests}
-                        >
-                          START CONTEST
-                        </div>
-                        )}
+                  && (
+                  <div
+                    role="button"
+                    tabIndex="0"
+                    className={styles.startContestBtn}
+                    onClick={this.startContests}
+                  >
+                    START CONTEST
+                  </div>
+                  )}
             </div>
           </div>
         </div>
@@ -242,12 +240,16 @@ Header.propTypes = {
     avatar: PropTypes.string,
     displayName: PropTypes.string,
     role: PropTypes.string,
-  }).isRequired,
+  }),
 
   history: PropTypes.shape({
     replace: PropTypes.func,
     push: PropTypes.func,
   }).isRequired,
+};
+
+Header.defaultProps = {
+  data: {},
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));

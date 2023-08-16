@@ -9,7 +9,6 @@ const NextButton = (props) => {
     <div
       role="button"
       tabIndex="0"
-      onKeyUp="handleKeyUp(event)"
       onClick={submit}
       className={styles.buttonContainer}
     >

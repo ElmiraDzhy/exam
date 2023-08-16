@@ -48,7 +48,6 @@ const BundleBox = (props) => {
     <div
       role="button"
       tabIndex="0"
-      onKeyUp="handleKeyUp(event)"
       onMouseOver={mouseOverHandler}
       onMouseOut={mouseOutHandler}
       onBlur={mouseOutHandler}

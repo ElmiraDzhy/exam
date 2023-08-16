@@ -9,7 +9,6 @@ const Catalog = (props) => {
     <div
       role="button"
       tabIndex="0"
-      onKeyUp="handleKeyUp(event)"
       className={styles.catalogContainer}
       onClick={(event) => goToCatalog(event, props.catalog)}
     >

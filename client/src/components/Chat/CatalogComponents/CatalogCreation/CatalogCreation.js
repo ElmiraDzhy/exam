@@ -35,7 +35,6 @@ class CatalogCreation extends React.Component {
                 <span
                   role="button"
                   tabIndex="0"
-                  onKeyUp="handleKeyUp(event)"
                   onClick={() => changeTypeOfChatAddingDispatch(ADD_CHAT_TO_OLD_CATALOG)}
                   className={classNames({
                     [styles.active]:
@@ -47,7 +46,6 @@ class CatalogCreation extends React.Component {
                 <span
                   role="button"
                   tabIndex="0"
-                  onKeyUp="handleKeyUp(event)"
                   onClick={
                           () => changeTypeOfChatAddingDispatch(CREATE_NEW_CATALOG_AND_ADD_CHAT)
                           }

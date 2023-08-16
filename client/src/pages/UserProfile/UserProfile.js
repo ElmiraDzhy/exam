@@ -33,7 +33,6 @@ const UserProfile = (props) => {
             <div
               role="button"
               tabIndex="0"
-              onKeyUp="handleKeyUp(event)"
               className={classNames(styles.optionContainer,
                 { [styles.currentOption]: profileModeView === CONSTANTS.USER_INFO_MODE })}
               onClick={() => changeProfileModeViewDispatch(CONSTANTS.USER_INFO_MODE)}
@@ -44,7 +43,6 @@ const UserProfile = (props) => {
               <div
                 role="button"
                 tabIndex="0"
-                onKeyUp="handleKeyUp(event)"
                 className={classNames(styles.optionContainer,
                   { [styles.currentOption]: profileModeView === CONSTANTS.CASHOUT_MODE })}
                 onClick={() => changeProfileModeViewDispatch(CONSTANTS.CASHOUT_MODE)}
@@ -55,32 +53,34 @@ const UserProfile = (props) => {
           </div>
         </div>
         {
-                    profileModeView === CONSTANTS.USER_INFO_MODE
-                      ? <UserInfo />
-                      : (
-                        <div className={styles.container}>
-                          {parseInt(balance, 10) === 0
-                            ? (
-                              <span className={styles.notMoney}>
-                                There is no money on your balance
-                              </span>
-                            )
-                            : (
-                              <div>
-                                {error
-                                    && (
-                                    <Error
-                                      data={error.data}
-                                      status={error.status}
-                                      clearError={clearPaymentStoreDispatch}
-                                    />
-                                    )}
-                                <PayForm sendRequest={pay} />
-                              </div>
-                            )}
-                        </div>
-                      )
-                }
+          profileModeView === CONSTANTS.USER_INFO_MODE
+            ? <UserInfo />
+            : (
+              <div className={styles.container}>
+                {parseInt(balance, 10) === 0
+                  ? (
+                    <span className={styles.notMoney}>
+                      There is no money on your balance
+                    </span>
+                  )
+                  : (
+                    <div>
+                      {
+                        error
+                          && (
+                          <Error
+                            data={error.data}
+                            status={error.status}
+                            clearError={clearPaymentStoreDispatch}
+                          />
+                          )
+                      }
+                      <PayForm sendRequest={pay} />
+                    </div>
+                  )}
+              </div>
+            )
+        }
       </div>
     </div>
   );

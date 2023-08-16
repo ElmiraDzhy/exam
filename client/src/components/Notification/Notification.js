@@ -15,7 +15,6 @@ const Notification = (props) => {
             <span
               role="button"
               tabIndex="0"
-              onKeyUp="handleKeyUp(event)"
               onClick={() => history.push(`/contest/${contestId}`)}
               className={styles.goToContest}
             >

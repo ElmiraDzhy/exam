@@ -9,7 +9,6 @@ const TryAgain = (props) => {
       <span
         role="button"
         tabIndex="0"
-        onKeyUp="handleKeyUp(event)"
         onClick={() => getData()}
       >
         Server Error. Try again

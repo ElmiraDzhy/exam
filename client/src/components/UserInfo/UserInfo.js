@@ -64,7 +64,6 @@ const UserInfo = (props) => {
       <div
         role="button"
         tabIndex="0"
-        onKeyUp="handleKeyUp(event)"
         onClick={() => changeEditMode(!isEdit)}
         className={styles.buttonEdit}
       >

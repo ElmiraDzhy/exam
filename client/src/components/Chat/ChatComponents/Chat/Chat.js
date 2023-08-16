@@ -56,7 +56,6 @@ class Chat extends React.Component {
             <span
               role="button"
               tabIndex="0"
-              onKeyUp="handleKeyUp(event)"
               onClick={() => setChatPreviewMode(NORMAL_PREVIEW_CHAT_MODE)}
               className={classNames(styles.button,
                 { [styles.activeButton]: chatMode === NORMAL_PREVIEW_CHAT_MODE })}
@@ -66,7 +65,6 @@ class Chat extends React.Component {
             <span
               role="button"
               tabIndex="0"
-              onKeyUp="handleKeyUp(event)"
               onClick={() => setChatPreviewMode(FAVORITE_PREVIEW_CHAT_MODE)}
               className={classNames(styles.button,
                 { [styles.activeButton]: chatMode === FAVORITE_PREVIEW_CHAT_MODE })}
@@ -76,7 +74,6 @@ class Chat extends React.Component {
             <span
               role="button"
               tabIndex="0"
-              onKeyUp="handleKeyUp(event)"
               onClick={() => setChatPreviewMode(BLOCKED_PREVIEW_CHAT_MODE)}
               className={classNames(styles.button,
                 { [styles.activeButton]: chatMode === BLOCKED_PREVIEW_CHAT_MODE })}
@@ -86,7 +83,6 @@ class Chat extends React.Component {
             <span
               role="button"
               tabIndex="0"
-              onKeyUp="handleKeyUp(event)"
               onClick={() => setChatPreviewMode(CATALOG_PREVIEW_CHAT_MODE)}
               className={classNames(styles.button,
                 { [styles.activeButton]: chatMode === CATALOG_PREVIEW_CHAT_MODE })}
@@ -120,7 +116,6 @@ class Chat extends React.Component {
           <div
             role="button"
             tabIndex="0"
-            onKeyUp="handleKeyUp(event)"
             className={styles.toggleChat}
             onClick={() => changeShow()}
           >
@@ -156,7 +151,7 @@ Chat.propTypes = {
   setChatPreviewMode: PropTypes.func.isRequired,
 
   chatStore: PropTypes.shape({
-    chatMode: PropTypes.bool,
+    chatMode: PropTypes.string,
     isShowChatsInCatalog: PropTypes.bool,
     isExpanded: PropTypes.bool,
     isShow: PropTypes.bool,

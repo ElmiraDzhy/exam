@@ -74,6 +74,7 @@ const PayForm = (props) => {
                     }}
                     type="text"
                     label="sum"
+                    changeFocus={changeFocusOnCardHandler}
                   />
                 </div>
                 )}
@@ -146,7 +147,6 @@ const PayForm = (props) => {
                 <div
                   role="button"
                   tabIndex="0"
-                  onKeyUp="handleKeyUp(event)"
                   onClick={() => props.back()}
                   className={styles.backButton}
                 >

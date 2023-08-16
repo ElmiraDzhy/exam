@@ -79,7 +79,6 @@ class CustomerDashboard extends React.Component {
             <div
               role="button"
               tabIndex="0"
-              onKeyUp="handleKeyUp(event)"
               onClick={() => newFilter(CONSTANTS.CONTEST_STATUS_ACTIVE)}
               className={classNames({
                 [styles.activeFilter]: CONSTANTS.CONTEST_STATUS_ACTIVE === customerFilter,
@@ -91,7 +90,6 @@ class CustomerDashboard extends React.Component {
             <div
               role="button"
               tabIndex="0"
-              onKeyUp="handleKeyUp(event)"
               onClick={() => newFilter(CONSTANTS.CONTEST_STATUS_FINISHED)}
               className={classNames({
                 [styles.activeFilter]: CONSTANTS.CONTEST_STATUS_FINISHED === customerFilter,
@@ -103,7 +101,6 @@ class CustomerDashboard extends React.Component {
             <div
               role="button"
               tabIndex="0"
-              onKeyUp="handleKeyUp(event)"
               onClick={() => newFilter(CONSTANTS.CONTEST_STATUS_PENDING)}
               className={classNames({
                 [styles.activeFilter]: CONSTANTS.CONTEST_STATUS_PENDING === customerFilter,
@@ -115,19 +112,19 @@ class CustomerDashboard extends React.Component {
           </div>
           <div className={styles.contestsContainer}>
             {
-                        error
-                          ? <TryAgain getData={this.tryToGetContest} />
-                          : (
-                            <ContestsContainer
-                              isFetching={isFetching}
-                              loadMore={this.loadMore}
-                              history={history}
-                              haveMore={haveMore}
-                            >
-                              {this.setContestList()}
-                            </ContestsContainer>
-                          )
-                    }
+              error
+                ? <TryAgain getData={this.tryToGetContest} />
+                : (
+                  <ContestsContainer
+                    isFetching={isFetching}
+                    loadMore={this.loadMore}
+                    history={history}
+                    haveMore={haveMore}
+                  >
+                    {this.setContestList()}
+                  </ContestsContainer>
+                )
+            }
           </div>
         </div>
 
