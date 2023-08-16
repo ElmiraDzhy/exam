@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import isEqual from 'lodash/isEqual';
@@ -30,42 +31,55 @@ class ContestPage extends React.Component {
   }
 
   componentWillUnmount() {
-    this.props.changeEditContest(false);
+    const { changeEditContestDispatch } = this.props;
+    changeEditContestDispatch(false);
   }
 
-    getData = () => {
-      const { params } = this.props.match;
-      this.props.getData({ contestId: params.id });
-    };
+  getData = () => {
+    const { match: { params: { id } }, getDataDispatch } = this.props;
+    getDataDispatch({ contestId: id });
+  };
 
     setOffersList = () => {
       const array = [];
-      for (let i = 0; i < this.props.contestByIdStore.offers.length; i++) {
+      const { contestByIdStore: { offers, contestData: { contestType } } } = this.props;
+
+      offers.forEach((offer) => {
         array.push(<OfferBox
-          data={this.props.contestByIdStore.offers[i]}
-          key={this.props.contestByIdStore.offers[i].id}
+          data={offer}
+          key={offer.id}
           needButtons={this.needButtons}
           setOfferStatus={this.setOfferStatus}
-          contestType={this.props.contestByIdStore.contestData.contestType}
+          contestType={contestType}
           date={new Date()}
         />);
-      }
+      });
+
       return array.length !== 0 ? array
         : <div className={styles.notFound}>There is no suggestion at this moment</div>;
     };
 
     needButtons = (offerStatus) => {
-      const contestCreatorId = this.props.contestByIdStore.contestData.User.id;
-      const userId = this.props.userStore.data.id;
-      const contestStatus = this.props.contestByIdStore.contestData.status;
+      const {
+        contestByIdStore: {
+          contestData:
+          {
+            status: contestStatus,
+            User: { id: contestCreatorId },
+          },
+        },
+      } = this.props;
+      const { userStore: { data: { id: userId } } } = this.props;
+
       return (contestCreatorId === userId
           && contestStatus === CONSTANTS.CONTEST_STATUS_ACTIVE
           && offerStatus === CONSTANTS.OFFER_STATUS_PENDING);
     };
 
     setOfferStatus = (creatorId, offerId, command) => {
-      this.props.clearSetOfferStatusError();
-      const { id, orderId, priority } = this.props.contestByIdStore.contestData;
+      const { clearSetOfferStatusErrorDispatch, setOfferStatusDispatch } = this.props;
+      clearSetOfferStatusErrorDispatch();
+      const { contestByIdStore: { contestData: { id, orderId, priority } } } = this.props;
       const obj = {
         command,
         offerId,
@@ -74,98 +88,116 @@ class ContestPage extends React.Component {
         priority,
         contestId: id,
       };
-      this.props.setOfferStatus(obj);
+      setOfferStatusDispatch(obj);
     };
 
     findConversationInfo = (interlocutorId) => {
-      const { messagesPreview } = this.props.chatStore;
-      const { id } = this.props.userStore.data;
+      const { chatStore: { messagesPreview }, userStore: { data: { id } } } = this.props;
       const participants = [id, interlocutorId];
       participants.sort((participant1, participant2) => participant1 - participant2);
-      for (let i = 0; i < messagesPreview.length; i++) {
-        if (isEqual(participants, messagesPreview[i].participants)) {
-          return {
-            participants: messagesPreview[i].participants,
-            id: messagesPreview[i].id,
-            blackList: messagesPreview[i].blackList,
-            favoriteList: messagesPreview[i].favoriteList,
+
+      let foundMessage = null;
+
+      messagesPreview.forEach((messagePreview) => {
+        if (isEqual(participants, messagePreview.participants)) {
+          foundMessage = {
+            participants: messagePreview.participants,
+            id: messagePreview.id,
+            blackList: messagePreview.blackList,
+            favoriteList: messagePreview.favoriteList,
           };
         }
-      }
-      return null;
+      });
+
+      return foundMessage;
     };
 
     goChat = () => {
-      const { User } = this.props.contestByIdStore.contestData;
-      this.props.goToExpandedDialog({
+      const {
+        contestByIdStore: { contestData: { User } },
+        goToExpandedDialogDispatch,
+      } = this.props;
+
+      goToExpandedDialogDispatch({
         interlocutor: User,
         conversationData: this.findConversationInfo(User.id),
       });
     };
 
     render() {
-      if (!this.props.userStore.data?.role) {
-        this.props.history.replace('/login');
-      } else {
-        const { role } = this.props.userStore.data;
-        const {
-          contestByIdStore,
-          changeShowImage,
-          changeContestViewMode,
-          getData,
-          clearSetOfferStatusError,
-        } = this.props;
-        const {
-          isShowOnFull,
-          imagePath,
-          error,
-          isFetching,
-          isBrief,
-          contestData,
-          offers,
-          setOfferStatusError,
-        } = contestByIdStore;
-        return (
-          <div>
-            {/* <Chat/> */}
-            {isShowOnFull && (
+      const { userStore: { data }, history } = this.props;
+      if (!data?.role) {
+        return history.replace('/login');
+      }
+      const { role } = data;
+      const {
+        contestByIdStore,
+        changeShowImageDispatch,
+        changeContestViewModeDispatch,
+        getDataDispatch,
+        clearSetOfferStatusErrorDispatch,
+      } = this.props;
+      const {
+        isShowOnFull,
+        imagePath,
+        error,
+        isFetching,
+        isBrief,
+        contestData,
+        offers,
+        setOfferStatusError,
+      } = contestByIdStore;
+      return (
+        <div>
+          {/* <Chat/> */}
+          {isShowOnFull && (
             <LightBox
               mainSrc={`${imagePath}`}
-              onCloseRequest={() => changeShowImage({ isShowOnFull: false, imagePath: null })}
+              onCloseRequest={() => changeShowImageDispatch(
+                { isShowOnFull: false, imagePath: null },
+              )}
             />
-            )}
-            <Header />
-            {error ? <div className={styles.tryContainer}><TryAgain getData={getData} /></div>
-              : (
-                isFetching
-                  ? (
-                    <div className={styles.containerSpinner}>
-                      <Spinner />
-                    </div>
-                  )
-                  : (
-                    <div className={styles.mainInfoContainer}>
-                      <div className={styles.infoContainer}>
-                        <div className={styles.buttonsContainer}>
-                          <span
-                            onClick={() => changeContestViewMode(true)}
-                            className={classNames(styles.btn, { [styles.activeBtn]: isBrief })}
-                          >
-                            Brief
-                          </span>
-                          <span
-                            onClick={() => changeContestViewMode(false)}
-                            className={classNames(styles.btn, { [styles.activeBtn]: !isBrief })}
-                          >
-                            Offer
-                          </span>
-                        </div>
-                        {
-                          isBrief
-                            ? <Brief contestData={contestData} role={role} goChat={this.goChat} />
-                            : (
-                              <div className={styles.offersContainer}>
-                                {
+          )}
+          <Header />
+          {error && (
+          <div className={styles.tryContainer}>
+            <TryAgain getData={getDataDispatch} />
+          </div>
+          )}
+
+          {isFetching ? (
+            <div className={styles.containerSpinner}>
+              <Spinner />
+            </div>
+          ) : (
+            <div className={styles.mainInfoContainer}>
+              <div className={styles.infoContainer}>
+                <div className={styles.buttonsContainer}>
+                  <span
+                    role="button"
+                    tabIndex="0"
+                    onKeyUp="handleKeyUp(event)"
+                    onClick={() => changeContestViewModeDispatch(true)}
+                    className={classNames(styles.btn, { [styles.activeBtn]: isBrief })}
+                  >
+                    Brief
+                  </span>
+                  <span
+                    role="button"
+                    tabIndex="0"
+                    onKeyUp="handleKeyUp(event)"
+                    onClick={() => changeContestViewModeDispatch(false)}
+                    className={classNames(styles.btn, { [styles.activeBtn]: !isBrief })}
+                  >
+                    Offer
+                  </span>
+                </div>
+                {
+                    isBrief
+                      ? <Brief contestData={contestData} role={role} goChat={this.goChat} />
+                      : (
+                        <div className={styles.offersContainer}>
+                          {
                                   (role === CONSTANTS.CREATOR
                                       && contestData.status === CONSTANTS.CONTEST_STATUS_ACTIVE)
                                   && (
@@ -175,31 +207,30 @@ class ContestPage extends React.Component {
                                     customerId={contestData.User.id}
                                   />
                                   )
-                                }
-                                {setOfferStatusError && (
-                                <Error
-                                  data={setOfferStatusError.data}
-                                  status={setOfferStatusError.status}
-                                  clearError={clearSetOfferStatusError}
-                                />
-                                )}
-                                <div className={styles.offers}>
-                                  {this.setOffersList()}
-                                </div>
-                              </div>
-                            )
-                        }
-                      </div>
-                      <ContestSideBar
-                        contestData={contestData}
-                        totalEntries={offers.length}
-                      />
-                    </div>
-                  )
-              )}
-          </div>
-        );
-      }
+                              }
+                          {setOfferStatusError && (
+                          <Error
+                            data={setOfferStatusError.data}
+                            status={setOfferStatusError.status}
+                            clearError={clearSetOfferStatusErrorDispatch}
+                          />
+                          )}
+                          <div className={styles.offers}>
+                            {this.setOffersList()}
+                          </div>
+                        </div>
+                      )
+                  }
+              </div>
+              <ContestSideBar
+                contestData={contestData}
+                totalEntries={offers.length}
+              />
+            </div>
+          )}
+
+        </div>
+      );
     }
 }
 
@@ -209,13 +240,68 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  getData: (data) => dispatch(getContestById(data)),
-  setOfferStatus: (data) => dispatch(setOfferStatus(data)),
-  clearSetOfferStatusError: () => dispatch(clearSetOfferStatusError()),
-  goToExpandedDialog: (data) => dispatch(goToExpandedDialog(data)),
-  changeEditContest: (data) => dispatch(changeEditContest(data)),
-  changeContestViewMode: (data) => dispatch(changeContestViewMode(data)),
-  changeShowImage: (data) => dispatch(changeShowImage(data)),
+  getDataDispatch: (data) => dispatch(getContestById(data)),
+  setOfferStatusDispatch: (data) => dispatch(setOfferStatus(data)),
+  clearSetOfferStatusErrorDispatch: () => dispatch(clearSetOfferStatusError()),
+  goToExpandedDialogDispatch: (data) => dispatch(goToExpandedDialog(data)),
+  changeEditContestDispatch: (data) => dispatch(changeEditContest(data)),
+  changeContestViewModeDispatch: (data) => dispatch(changeContestViewMode(data)),
+  changeShowImageDispatch: (data) => dispatch(changeShowImage(data)),
 });
+
+ContestPage.propTypes = {
+  changeEditContestDispatch: PropTypes.func.isRequired,
+  getDataDispatch: PropTypes.func.isRequired,
+  goToExpandedDialogDispatch: PropTypes.func.isRequired,
+  history: PropTypes.func.isRequired,
+  changeShowImageDispatch: PropTypes.func.isRequired,
+  changeContestViewModeDispatch: PropTypes.func.isRequired,
+  clearSetOfferStatusErrorDispatch: PropTypes.func.isRequired,
+  setOfferStatusDispatch: PropTypes.func.isRequired,
+
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.number,
+    }),
+  }).isRequired,
+
+  contestByIdStore: PropTypes.shape({
+    offers: PropTypes.arrayOf(PropTypes.object).isRequired,
+    isBrief: PropTypes.bool.isRequired,
+    isFetching: PropTypes.bool.isRequired,
+    error: PropTypes.shape({}).isRequired,
+    imagePath: PropTypes.string.isRequired,
+    isShowOnFull: PropTypes.bool.isRequired,
+
+    contestData: PropTypes.shape({
+      id: PropTypes.number,
+      orderId: PropTypes.number,
+      priority: PropTypes.string,
+      status: PropTypes.string,
+      contestType: PropTypes.string,
+      User: PropTypes.shape({
+        id: PropTypes.number,
+      }),
+    }),
+
+    setOfferStatusError: PropTypes.shape({
+      data: PropTypes.string,
+      status: PropTypes.number,
+    }).isRequired,
+
+  }).isRequired,
+
+  userStore: PropTypes.shape({
+    data: PropTypes.shape({
+      id: PropTypes.number,
+      role: PropTypes.string,
+    }),
+  }).isRequired,
+
+  chatStore: PropTypes.shape({
+    messagesPreview: PropTypes.arrayOf(PropTypes.object).isRequired,
+  }).isRequired,
+
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContestPage);
