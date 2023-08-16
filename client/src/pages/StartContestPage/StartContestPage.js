@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { selectBundle } from '../../actions/actionCreator';
 import BundleBox from '../../components/BundleBox/BundleBox';
@@ -10,17 +11,19 @@ import Header from '../../components/Header/Header';
 import ButtonGroup from '../../components/ButtonGroup';
 
 const StartContestPage = (props) => {
-  if (!props.userStore.data?.role || props.userStore.data.role !== CONSTANTS.CUSTOMER) {
-    props.history.replace('/');
+  const { userStore: { data }, history } = props;
+  if (!data?.role || data.role !== CONSTANTS.CUSTOMER) {
+    history.replace('/');
   }
 
   const setBundle = (bundleStr) => {
     const array = bundleStr.toLowerCase().split('+');
-    const bundleList = {};
-    bundleList.first = array[0];
-    for (let i = 0; i < array.length; i++) {
-      bundleList[array[i]] = i === array.length - 1 ? 'payment' : array[i + 1];
-    }
+    const bundleList = {
+      first: array[0],
+    };
+    array.forEach((item, i) => {
+      bundleList[item] = i === array.length - 1 ? 'payment' : array[i + 1];
+    });
     props.choseBundle(bundleList);
     props.history.push(`/startContest/${bundleList.first}Contest`);
   };
@@ -124,5 +127,20 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
   choseBundle: (bundle) => dispatch(selectBundle(bundle)),
 });
+
+StartContestPage.propTypes = {
+  userStore: PropTypes.shape({
+    data: PropTypes.shape({
+      role: PropTypes.string,
+    }),
+  }).isRequired,
+
+  history: PropTypes.shape({
+    replace: PropTypes.func,
+    push: PropTypes.func,
+  }).isRequired,
+
+  choseBundle: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(StartContestPage);
