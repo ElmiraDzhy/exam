@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Field } from 'formik';
 
 const FieldFileInput = ({ classes, ...rest }) => {
@@ -22,18 +23,18 @@ const FieldFileInput = ({ classes, ...rest }) => {
 
         return (
           <div className={fileUploadContainer}>
-            <label htmlFor="fileInput" className={labelClass}>
-              Choose file
-            </label>
             <span id="fileNameContainer" className={fileNameClass}>
               {getFileName()}
             </span>
-            <input
-              {...field}
-              className={fileInput}
-              id="fileInput"
-              type="file"
-            />
+            <label htmlFor="fileInput" className={labelClass}>
+              Choose file
+              <input
+                {...field}
+                className={fileInput}
+                id="fileInput"
+                type="file"
+              />
+            </label>
           </div>
         );
       }}
@@ -41,4 +42,19 @@ const FieldFileInput = ({ classes, ...rest }) => {
   );
 };
 
+FieldFileInput.propTypes = {
+  classes: PropTypes.shape({
+    fileUploadContainer: PropTypes.string.isRequired,
+    labelClass: PropTypes.string.isRequired,
+    fileNameClass: PropTypes.string.isRequired,
+    fileInput: PropTypes.string.isRequired,
+  }).isRequired,
+
+  field: PropTypes.shape({
+    value: PropTypes.shape({
+      name: PropTypes.string,
+    }),
+  }).isRequired,
+
+};
 export default FieldFileInput;
