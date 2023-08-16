@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getPreviewChat } from '../../../../actions/actionCreator';
 import DialogList from '../DialogList/DialogList';
@@ -19,5 +20,10 @@ const mapStateToProps = (state) => state.chatStore;
 const mapDispatchToProps = (dispatch) => ({
   getChatPreview: () => dispatch(getPreviewChat()),
 });
+
+DialogListContainer.propTypes = {
+  messagesPreview: PropTypes.arrayOf(PropTypes.object).isRequired,
+  userId: PropTypes.number.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(DialogListContainer);
