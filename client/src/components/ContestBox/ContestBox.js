@@ -1,20 +1,26 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import styles from './ContestBox.module.sass';
 import CONSTANTS from '../../constants';
 
 const ContestBox = (props) => {
+  const {
+    data, data: {
+      id, title, contestType, prize, count, goToExtended,
+    },
+  } = props;
   const getTimeStr = () => {
-    const diff = (moment.duration(moment().diff(moment(props.data.createdAt))));
+    const diff = (moment.duration(moment().diff(moment(data.createdAt))));
     let str = '';
-    if (diff._data.days !== 0) str = `${diff._data.days}d `;
-    if (diff._data.hours !== 0) str += `${diff._data.hours}h`;
+    const { _data: diffData } = diff;
+    if (diffData.days !== 0) str = `${diffData.days}d `;
+    if (diffData.hours !== 0) str += `${diffData.hours}h`;
     if (str.length === 0) str = 'less than one hour';
     return str;
   };
 
   const getPreferenceContest = () => {
-    const { data } = props;
     if (data.contestType === CONSTANTS.NAME_CONTEST) return data.typeOfName;
     if (data.contestType === CONSTANTS.LOGO_CONTEST) return data.brandStyle;
     return data.typeOfTagline;
@@ -22,11 +28,14 @@ const ContestBox = (props) => {
 
   const ucFirstLetter = (string) => string.charAt(0).toUpperCase() + string.slice(1);
 
-  const {
-    id, title, contestType, prize, count, goToExtended,
-  } = props.data;
   return (
-    <div className={styles.contestBoxContainer} onClick={() => goToExtended(id)}>
+    <div
+      role="button"
+      tabIndex="0"
+      onKeyUp="handleKeyUp(event)"
+      className={styles.contestBoxContainer}
+      onClick={() => goToExtended(id)}
+    >
       <div className={styles.mainContestInfo}>
         <div className={styles.titleAndIdContainer}>
           <span className={styles.title}>{title}</span>
@@ -36,7 +45,10 @@ const ContestBox = (props) => {
           <span>{`${ucFirstLetter(contestType)} / ${getPreferenceContest()}`}</span>
         </div>
         <div className={styles.contestType}>
-          <span>This is an Invitation Only Contest and is only open to those Creatives who have achieved a Tier A status.</span>
+          <span>
+            This is an Invitation Only Contest and is only open to those
+            Creatives who have achieved a Tier A status.
+          </span>
         </div>
         <div className={styles.prizeContainer}>
           <div className={styles.guaranteedContainer}>
@@ -66,6 +78,23 @@ const ContestBox = (props) => {
       </div>
     </div>
   );
+};
+
+ContestBox.propTypes = {
+  data: PropTypes.shape({
+    id: PropTypes.number,
+    title: PropTypes.string,
+    prize: PropTypes.number,
+    count: PropTypes.number,
+
+    createdAt: PropTypes.string,
+    contestType: PropTypes.string,
+    typeOfName: PropTypes.string,
+    brandStyle: PropTypes.string,
+    typeOfTagline: PropTypes.string,
+
+    goToExtended: PropTypes.func,
+  }).isRequired,
 };
 
 export default ContestBox;
