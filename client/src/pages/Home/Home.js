@@ -232,10 +232,15 @@ const Home = (props) => {
 const mapStateToProps = ({ userStore: { isFetching, data } }) => ({ isFetching, data });
 
 Home.propTypes = {
-  isFetching: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool,
   data: PropTypes.shape({
     role: PropTypes.string,
-  }).isRequired,
+  }),
+};
+
+Home.defaultProps = {
+  isFetching: false,
+  data: null,
 };
 
 export default connect(mapStateToProps, null)(Home);

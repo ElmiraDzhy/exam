@@ -37,12 +37,18 @@ FormInput.propTypes = {
     notValid: PropTypes.string,
     valid: PropTypes.string,
     warning: PropTypes.string,
-  }).isRequired,
-  field: PropTypes.shape({}).isRequired,
+  }),
+  field: PropTypes.shape({}),
   meta: PropTypes.shape({
     touched: PropTypes.bool,
     error: PropTypes.shape({}),
-  }).isRequired,
+  }),
+};
+
+FormInput.defaultProps = {
+  field: {},
+  meta: {},
+  classes: {},
 };
 
 export default FormInput;

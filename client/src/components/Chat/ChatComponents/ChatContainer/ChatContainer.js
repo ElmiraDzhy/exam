@@ -18,7 +18,11 @@ const mapStateToProps = (state) => {
 };
 
 ChatContainer.propTypes = {
-  data: PropTypes.shape({}).isRequired,
+  data: PropTypes.shape({}),
+};
+
+ChatContainer.defaultProps = {
+  data: null,
 };
 
 export default connect(mapStateToProps, null)(ChatContainer);

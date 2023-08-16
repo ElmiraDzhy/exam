@@ -76,12 +76,13 @@ PayInput.propTypes = {
     error: PropTypes.string,
   }).isRequired,
   isInputMask: PropTypes.bool,
-  mask: PropTypes.shape({}).isRequired,
+  mask: PropTypes.shape({}),
   name: PropTypes.string.isRequired,
 };
 
 PayInput.defaultProps = {
   isInputMask: false,
+  mask: null,
 };
 
 export default PayInput;

@@ -113,12 +113,16 @@ DialogList.propTypes = {
   changeChatBlock: PropTypes.func.isRequired,
   changeShowAddChatToCatalogMenu: PropTypes.func.isRequired,
   goToExpandedDialogDispatch: PropTypes.func.isRequired,
-  removeChat: PropTypes.func.isRequired,
+  removeChat: PropTypes.func,
 
   userId: PropTypes.number.isRequired,
   preview: PropTypes.arrayOf(PropTypes.object).isRequired,
   chatMode: PropTypes.string.isRequired,
 
+};
+
+DialogList.defaultProps = {
+  removeChat: null,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DialogList);

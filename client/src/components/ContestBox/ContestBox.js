@@ -83,7 +83,7 @@ ContestBox.propTypes = {
   data: PropTypes.shape({
     id: PropTypes.number,
     title: PropTypes.string,
-    prize: PropTypes.number,
+    prize: PropTypes.string,
     count: PropTypes.number,
 
     createdAt: PropTypes.string,

@@ -81,7 +81,7 @@ const SliderBar = (props) => {
 
 SliderBar.propTypes = {
   carouselType: PropTypes.string.isRequired,
-  images: PropTypes.string.isRequired,
+  images: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default SliderBar;

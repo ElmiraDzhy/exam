@@ -19,10 +19,10 @@ const Dashboard = (props) => {
     <div>
       <Header />
       {
-                role === CONSTANTS.CUSTOMER
-                  ? <CustomerDashboard history={history} match={match} />
-                  : <CreatorDashboard history={history} match={match} />
-            }
+        role === CONSTANTS.CUSTOMER
+          ? <CustomerDashboard history={history} match={match} />
+          : <CreatorDashboard history={history} match={match} />
+      }
     </div>
   );
 };

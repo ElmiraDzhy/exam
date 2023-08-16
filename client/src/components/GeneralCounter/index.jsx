@@ -63,7 +63,7 @@ const GeneralCounter = (props) => {
 };
 
 GeneralCounter.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.element).isRequired,
+  children: PropTypes.shape({}).isRequired,
 };
 
 export default GeneralCounter;

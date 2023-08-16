@@ -95,7 +95,7 @@ const mapDispatchToProps = (dispatch) => (
 LoginForm.propTypes = {
   authClearDispatch: PropTypes.func.isRequired,
   loginRequestDispatch: PropTypes.func.isRequired,
-  submitting: PropTypes.bool.isRequired,
+  submitting: PropTypes.bool,
 
   history: PropTypes.shape({
 
@@ -108,6 +108,10 @@ LoginForm.propTypes = {
     }),
     isFetching: PropTypes.bool,
   }).isRequired,
+};
+
+LoginForm.defaultProps = {
+  submitting: false,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

@@ -83,7 +83,7 @@ DialogBox.propTypes = {
   catalogOperation: PropTypes.func.isRequired,
   goToExpandedDialog: PropTypes.func.isRequired,
 
-  chatMode: PropTypes.bool.isRequired,
+  chatMode: PropTypes.string.isRequired,
   interlocutor: PropTypes.shape({
     avatar: PropTypes.string,
     firstName: PropTypes.string,
@@ -91,7 +91,7 @@ DialogBox.propTypes = {
 
   chatPreview: PropTypes.shape({
     favoriteList: PropTypes.arrayOf(PropTypes.bool),
-    participants: PropTypes.arrayOf(PropTypes.bool),
+    participants: PropTypes.arrayOf(PropTypes.number),
     blackList: PropTypes.arrayOf(PropTypes.bool),
     id: PropTypes.number,
     text: PropTypes.string,
