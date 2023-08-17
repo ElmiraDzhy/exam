@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -10,34 +10,32 @@ import ChatInput from '../../ChatComponents/ChatInut/ChatInput';
 
 const Dialog = (props) => {
   const {
-    interlocutor, messages, getDialog, clearMessageListDispatch,
+    interlocutor, messages, getDialog, clearMessageListDispatch, chatData, userId,
   } = props;
 
-  const messagesEnd = React.createRef();
-
-  const scrollToBottom = () => {
-    messagesEnd.current.scrollIntoView({ behavior: 'smooth' });
-  };
+  const containerRef = useRef(null);
 
   useEffect(() => {
-    getDialog({ interlocutorId: interlocutor.id });
+    // Scroll to the bottom of the container whenever new messages are added
+    containerRef.current.scrollTop = containerRef.current.scrollHeight;
+  }, [messages]);
+
+  useEffect(() => {
+    getDialog({ interlocutorId: interlocutor?.id });
+    containerRef.current.scrollTop = containerRef.current.scrollHeight;
   }, [interlocutor.id]);
 
   useEffect(() => {
-    getDialog({ interlocutorId: interlocutor.id });
-    scrollToBottom();
+    getDialog({ interlocutorId: interlocutor?.id });
+    containerRef.current.scrollTop = containerRef.current.scrollHeight;
+
     return () => {
       clearMessageListDispatch();
     };
   }, []);
 
-  useEffect(() => {
-    if (messagesEnd.current) scrollToBottom();
-  }, [messages]);
-
   const renderMainDialog = () => {
     const messagesArray = [];
-    const { userId } = props;
     let currentTime = moment();
 
     messages.forEach((message) => {
@@ -63,7 +61,6 @@ const Dialog = (props) => {
         >
           <span>{message.body}</span>
           <span className={styles.messageTime}>{moment(message.createdAt).format('HH:mm')}</span>
-          <div ref={messagesEnd} />
         </div>,
       );
     });
@@ -76,7 +73,7 @@ const Dialog = (props) => {
   };
 
   const blockMessage = () => {
-    const { userId, chatData, chatData: { blackList, participants } } = props;
+    const { chatData: { blackList, participants } } = props;
     const userIndex = participants.indexOf(userId);
     let message;
     if (chatData && blackList[userIndex]) {
@@ -89,15 +86,12 @@ const Dialog = (props) => {
     );
   };
 
-  const { chatData, userId } = props;
-
   return (
-    <>
+    <div ref={containerRef}>
       <ChatHeader userId={userId} />
       {renderMainDialog()}
-      <div ref={messagesEnd} />
       {(chatData && chatData.blackList.includes(true)) ? blockMessage() : <ChatInput />}
-    </>
+    </div>
   );
 };
 
