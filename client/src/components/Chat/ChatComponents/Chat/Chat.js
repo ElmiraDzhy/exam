@@ -159,6 +159,10 @@ Chat.propTypes = {
     error: PropTypes.shape({
       message: PropTypes.string,
     }),
+    currentCatalog: PropTypes.shape({
+      id: PropTypes.number,
+      chats: PropTypes.arrayOf(PropTypes.number),
+    }),
   }).isRequired,
 
   changeShow: PropTypes.func.isRequired,
