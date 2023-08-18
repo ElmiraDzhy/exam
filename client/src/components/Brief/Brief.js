@@ -71,7 +71,7 @@ const Brief = (props) => {
     changeEditContestDispatch,
   } = props;
   const { updateContestStore: { error } } = props;
-  const { usersStore: { data: { id } } } = props;
+  const { userStore: { data: { id } } } = props;
   if (!isEditContest) {
     return (
       <ContestInfo
@@ -139,13 +139,12 @@ Brief.propTypes = {
   clearUpdateContestStoreDispatch: PropTypes.func.isRequired,
   updateContestStore: PropTypes.shape({
     error: PropTypes.shape({
-      // eslint-disable-next-line react/forbid-prop-types
-      data: PropTypes.object,
+      data: PropTypes.string,
       status: PropTypes.number,
     }),
   }).isRequired,
 
-  usersStore: PropTypes.shape({
+  userStore: PropTypes.shape({
     data: PropTypes.shape({
       id: PropTypes.number,
     }),
