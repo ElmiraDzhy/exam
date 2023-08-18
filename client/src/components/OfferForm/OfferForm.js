@@ -103,7 +103,11 @@ OfferForm.propTypes = {
   addOfferError: PropTypes.shape({
     data: PropTypes.string,
     status: PropTypes.number,
-  }).isRequired,
+  }),
+};
+
+OfferForm.defaultProps = {
+  addOfferError: null,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(OfferForm);

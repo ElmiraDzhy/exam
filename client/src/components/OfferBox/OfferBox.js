@@ -231,7 +231,7 @@ OfferBox.propTypes = {
     id: PropTypes.number,
     fileName: PropTypes.string,
     text: PropTypes.string,
-    status: PropTypes.bool.isRequired,
+    status: PropTypes.string.isRequired,
     mark: PropTypes.number,
     User: PropTypes.shape({
       id: PropTypes.number,
