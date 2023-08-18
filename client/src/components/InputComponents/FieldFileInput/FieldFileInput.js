@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Field } from 'formik';
+import { Field, useField } from 'formik';
 
 const FieldFileInput = ({ classes, ...rest }) => {
   const {
@@ -9,22 +9,23 @@ const FieldFileInput = ({ classes, ...rest }) => {
 
   return (
     <Field name={rest.name}>
-      {(props) => {
-        const {
-          field,
-        } = props;
+      {() => {
+        const [fileName, setFileName] = useState('');
+        const [field, , helpers] = useField(rest.name);
 
-        const getFileName = () => {
-          if (props.field.value) {
-            return props.field.value.name;
-          }
-          return '';
+        const getFileName = (e) => {
+          const reader = new FileReader();
+          helpers.setValue(e.target.files[0]);
+          reader.onload = () => {
+            setFileName(e.target.files[0].name);
+          };
+          reader.readAsDataURL(e.target.files[0]);
         };
 
         return (
           <div className={fileUploadContainer}>
             <span id="fileNameContainer" className={fileNameClass}>
-              {getFileName()}
+              {fileName}
             </span>
             <label htmlFor="fileInput" className={labelClass}>
               Choose file
@@ -33,6 +34,8 @@ const FieldFileInput = ({ classes, ...rest }) => {
                 className={fileInput}
                 id="fileInput"
                 type="file"
+                value={undefined}
+                onChange={getFileName}
               />
             </label>
           </div>
@@ -55,6 +58,10 @@ FieldFileInput.propTypes = {
       name: PropTypes.string,
     }),
   }).isRequired,
+  name: PropTypes.string.isRequired,
 
+  form: PropTypes.shape({
+    setFieldValue: PropTypes.func,
+  }).isRequired,
 };
 export default FieldFileInput;
