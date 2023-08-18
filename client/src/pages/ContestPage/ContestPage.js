@@ -251,7 +251,9 @@ ContestPage.propTypes = {
   changeEditContestDispatch: PropTypes.func.isRequired,
   getDataDispatch: PropTypes.func.isRequired,
   goToExpandedDialogDispatch: PropTypes.func.isRequired,
-  history: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    replace: PropTypes.func,
+  }).isRequired,
   changeShowImageDispatch: PropTypes.func.isRequired,
   changeContestViewModeDispatch: PropTypes.func.isRequired,
   clearSetOfferStatusErrorDispatch: PropTypes.func.isRequired,
@@ -259,7 +261,7 @@ ContestPage.propTypes = {
 
   match: PropTypes.shape({
     params: PropTypes.shape({
-      id: PropTypes.number,
+      id: PropTypes.string,
     }),
   }).isRequired,
 
@@ -267,14 +269,14 @@ ContestPage.propTypes = {
     offers: PropTypes.arrayOf(PropTypes.object).isRequired,
     isBrief: PropTypes.bool.isRequired,
     isFetching: PropTypes.bool.isRequired,
-    error: PropTypes.shape({}).isRequired,
-    imagePath: PropTypes.string.isRequired,
+    error: PropTypes.shape({}),
+    imagePath: PropTypes.string,
     isShowOnFull: PropTypes.bool.isRequired,
 
     contestData: PropTypes.shape({
       id: PropTypes.number,
-      orderId: PropTypes.number,
-      priority: PropTypes.string,
+      orderId: PropTypes.string,
+      priority: PropTypes.number,
       status: PropTypes.string,
       contestType: PropTypes.string,
       User: PropTypes.shape({
@@ -285,7 +287,7 @@ ContestPage.propTypes = {
     setOfferStatusError: PropTypes.shape({
       data: PropTypes.string,
       status: PropTypes.number,
-    }).isRequired,
+    }),
 
   }).isRequired,
 
