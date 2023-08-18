@@ -1,5 +1,4 @@
 import { put, select } from 'redux-saga/effects';
-import isEqual from 'lodash/isEqual';
 import ACTION from '../actions/actionTypes';
 import * as restController from '../api/rest/restController';
 
@@ -66,7 +65,7 @@ export function* changeChatFavorite(action) {
     const formattedMessagePreviews = messagesPreview.map((preview) => {
       const formattedPreview = { ...preview };
       if (formattedPreview.participants.every((value) => data.participants.includes(value))) {
-        formattedPreview.favoriteList = data.favourite;
+        formattedPreview.favoriteList = data.favoriteList;
       }
 
       return formattedPreview;
@@ -90,7 +89,7 @@ export function* changeChatBlock(action) {
     const formattedMessagePreviews = messagesPreview.map((preview) => {
       const formattedPreview = { ...preview };
 
-      if (isEqual(formattedPreview.participants, data.participants)) {
+      if (formattedPreview.participants.every((value) => data.participants.includes(value))) {
         formattedPreview.blackList = data.blackList;
       }
 
@@ -156,7 +155,7 @@ export function* removeChatFromCatalogSaga(action) {
     const { data } = yield restController.removeChatFromCatalog(action.data);
     const { catalogList } = yield select((state) => state.chatStore);
 
-    const itemToUpdate = catalogList.find((item) => item._id === data._id);
+    const itemToUpdate = catalogList.find((item) => item.id === data.id);
 
     if (itemToUpdate) {
       itemToUpdate.chats = data.chats;
