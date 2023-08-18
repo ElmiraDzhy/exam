@@ -14,13 +14,13 @@ router.post('/registration', validators.validateRegistrationData, hashPass, user
 
 router.post('/login', validators.validateLogin, userController.login);
 
-router.post('/pay', checkToken.checkToken, basicMiddlewares.onlyForCustomer, upload.array('files', 3), basicMiddlewares.parseBody, validators.validateContestCreation, userController.payment);
+router.post('/pay', checkToken.checkToken, upload.array('files', 3), basicMiddlewares.onlyForCustomer, basicMiddlewares.parseBody, validators.validateContestCreation, userController.payment);
 
 router.get('/getUser', checkToken.checkAuth);
 
 router.post('/changeMark', checkToken.checkToken, basicMiddlewares.onlyForCustomer, userController.changeMark);
 
-router.patch('/updateUser', checkToken.checkToken, upload.single('file'), checkImage, userController.updateUser);
+router.put('/updateUser', checkToken.checkToken, upload.single('file'), checkImage, userController.updateUser);
 
 router.post('/cashout', checkToken.checkToken, basicMiddlewares.onlyForCreative, userController.cashout);
 
