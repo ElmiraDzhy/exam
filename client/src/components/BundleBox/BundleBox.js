@@ -26,11 +26,6 @@ const BundleBox = (props) => {
     for (let i = 0; i < element.children[0].children.length; i++) {
       element.children[0].children[i].src = `${defaultPathToImages}blue_${props.path[i]}`;
     }
-
-    element.children[0].children.forEach((child, i) => {
-      // eslint-disable-next-line no-param-reassign
-      child.src = `${defaultPathToImages}blue_${props.path[i]}`;
-    });
   };
 
   const mouseOutHandler = () => {
@@ -71,7 +66,7 @@ const BundleBox = (props) => {
 export default BundleBox;
 
 BundleBox.propTypes = {
-  path: PropTypes.arrayOf(PropTypes.object).isRequired,
+  path: PropTypes.arrayOf(PropTypes.string).isRequired,
   header: PropTypes.string.isRequired,
   setBundle: PropTypes.func.isRequired,
   describe: PropTypes.string.isRequired,
