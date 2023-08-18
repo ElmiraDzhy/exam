@@ -10,29 +10,31 @@ import ChatInput from '../../ChatComponents/ChatInut/ChatInput';
 
 const Dialog = (props) => {
   const {
-    interlocutor, messages, getDialog, clearMessageListDispatch, chatData, userId,
+    interlocutor,
+    messages,
+    getDialog,
+    clearMessageListDispatch,
+    chatData,
+    userId,
   } = props;
 
-  const containerRef = useRef(null);
+  const messagesEnd = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEnd.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   useEffect(() => {
-    // Scroll to the bottom of the container whenever new messages are added
-    containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    scrollToBottom();
   }, [messages]);
 
   useEffect(() => {
     getDialog({ interlocutorId: interlocutor?.id });
-    containerRef.current.scrollTop = containerRef.current.scrollHeight;
-  }, [interlocutor.id]);
-
-  useEffect(() => {
-    getDialog({ interlocutorId: interlocutor?.id });
-    containerRef.current.scrollTop = containerRef.current.scrollHeight;
 
     return () => {
       clearMessageListDispatch();
     };
-  }, []);
+  }, [interlocutor?.id]);
 
   const renderMainDialog = () => {
     const messagesArray = [];
@@ -68,6 +70,7 @@ const Dialog = (props) => {
     return (
       <div className={styles.messageList}>
         {messagesArray}
+        <div ref={messagesEnd} />
       </div>
     );
   };
@@ -87,10 +90,10 @@ const Dialog = (props) => {
   };
 
   return (
-    <div ref={containerRef}>
+    <div>
       <ChatHeader userId={userId} />
       {renderMainDialog()}
-      {(chatData && chatData.blackList.includes(true)) ? blockMessage() : <ChatInput />}
+      {(chatData && chatData.blackList?.includes(true)) ? blockMessage() : <ChatInput />}
     </div>
   );
 };
