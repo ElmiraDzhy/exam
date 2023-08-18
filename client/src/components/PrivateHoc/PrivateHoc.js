@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getUserAction } from '../../actions/actionCreator';
@@ -11,33 +11,35 @@ const PrivateHoc = (Component, props) => {
     getUser: (data) => dispatch(getUserAction(data)),
   });
 
-  class Hoc extends React.Component {
-    componentDidMount() {
-      const { data, getUser, history } = props;
+  const Hoc = (HOCprops) => {
+    useEffect(() => {
+      const { data, getUser, history } = HOCprops;
       if (!data) {
         getUser(history.replace);
       }
-    }
+    }, []);
 
-    render() {
-      const { isFetching, history, match } = this.props;
-      return (
-        <>
-          {isFetching ? <Spinner />
-            : <Component history={history} match={match} {...props} />}
-        </>
-      );
-    }
-  }
+    const { isFetching, history, match } = HOCprops;
+    return (
+      <>
+        {isFetching ? <Spinner />
+          : <Component history={history} match={match} {...props} />}
+      </>
+    );
+  };
 
   Hoc.propTypes = {
     isFetching: PropTypes.bool.isRequired,
-    data: PropTypes.shape({}).isRequired,
-    getUer: PropTypes.func.isRequired,
+    data: PropTypes.shape({}),
+    getUser: PropTypes.func.isRequired,
     history: PropTypes.shape({
       replace: PropTypes.func,
     }).isRequired,
     match: PropTypes.shape({}).isRequired,
+  };
+
+  Hoc.defaultProps = {
+    data: null,
   };
 
   return connect(mapStateToProps, mapDispatchToProps)(Hoc);
