@@ -66,7 +66,7 @@ const mapDispatchToProps = (dispatch) => ({
 AddToCatalog.propTypes = {
   addChatToCatalog: PropTypes.func.isRequired,
   catalogList: PropTypes.arrayOf(PropTypes.object).isRequired,
-  addChatId: PropTypes.func.isRequired,
+  addChatId: PropTypes.number.isRequired,
 
 };
 
