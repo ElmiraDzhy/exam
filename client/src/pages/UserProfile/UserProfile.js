@@ -103,15 +103,19 @@ const mapDispatchToProps = (dispatch) => ({
 
 UserProfile.propTypes = {
   cashOut: PropTypes.func.isRequired,
-  balance: PropTypes.number.isRequired,
+  balance: PropTypes.string.isRequired,
   role: PropTypes.string.isRequired,
   profileModeView: PropTypes.string.isRequired,
   changeProfileModeViewDispatch: PropTypes.func.isRequired,
   error: PropTypes.shape({
     data: PropTypes.string,
     status: PropTypes.number,
-  }).isRequired,
+  }),
   clearPaymentStoreDispatch: PropTypes.func.isRequired,
+};
+
+UserProfile.defaultProps = {
+  error: {},
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);

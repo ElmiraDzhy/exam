@@ -95,7 +95,7 @@ UserInfo.propTypes = {
     displayName: PropTypes.string,
     email: PropTypes.string,
     role: PropTypes.string,
-    balance: PropTypes.number,
+    balance: PropTypes.string,
   }).isRequired,
 };
 
