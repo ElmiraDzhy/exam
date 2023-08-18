@@ -35,14 +35,25 @@ FormTextArea.propTypes = {
     inputStyle: PropTypes.string.isRequired,
     notValid: PropTypes.string.isRequired,
     warning: PropTypes.string.isRequired,
-  }).isRequired,
+  }),
   field: PropTypes.shape({
     name: PropTypes.string,
-  }).isRequired,
+  }),
   meta: PropTypes.shape({
     touched: PropTypes.bool,
     error: PropTypes.shape({}),
-  }).isRequired,
+  }),
+};
+
+FormTextArea.defaultProps = {
+  classes: {
+    container: '',
+    inputStyle: '',
+    notValid: '',
+    warning: '',
+  },
+  field: {},
+  meta: {},
 };
 
 export default FormTextArea;
