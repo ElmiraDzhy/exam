@@ -21,7 +21,12 @@ const TaglineContestSpecialInfo = (props) => {
 };
 
 TaglineContestSpecialInfo.propTypes = {
-  nameVenture: PropTypes.string.isRequired,
+  nameVenture: PropTypes.string,
   typeOfTagline: PropTypes.string.isRequired,
 };
+
+TaglineContestSpecialInfo.defaultProps = {
+  nameVenture: null,
+};
+
 export default TaglineContestSpecialInfo;
