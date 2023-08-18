@@ -53,6 +53,8 @@ CatalogList.propTypes = {
   chatStore: PropTypes.shape({
     catalogList: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number,
+      catalogName: PropTypes.string,
+      chats: PropTypes.arrayOf(PropTypes.number),
     })),
   }).isRequired,
 };

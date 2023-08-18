@@ -27,7 +27,7 @@ Catalog.propTypes = {
   goToCatalog: PropTypes.func.isRequired,
   catalog: PropTypes.shape({
     catalogName: PropTypes.string,
-    chats: PropTypes.arrayOf(PropTypes.object),
+    chats: PropTypes.arrayOf(PropTypes.number),
     id: PropTypes.number,
   }).isRequired,
 };

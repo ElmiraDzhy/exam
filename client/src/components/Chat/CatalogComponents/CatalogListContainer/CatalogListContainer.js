@@ -68,7 +68,7 @@ CatalogListContainer.propTypes = {
   chatStore: PropTypes.shape({
     currentCatalog: PropTypes.shape({
       id: PropTypes.number,
-      chats: PropTypes.arrayOf(PropTypes.object),
+      chats: PropTypes.arrayOf(PropTypes.number),
     }),
     messagesPreview: PropTypes.arrayOf(PropTypes.object),
     isShowChatsInCatalog: PropTypes.bool,
