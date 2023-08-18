@@ -10,6 +10,7 @@ import {
 } from '../../actions/actionCreator';
 import OfferForModerator from './OfferForModerator';
 import styles from './ModeratorOfferPage.module.scss';
+import ModeratorHeader from './ModeratorHeader';
 
 const ModeratorOfferPage = (props) => {
   const {
@@ -53,45 +54,37 @@ const ModeratorOfferPage = (props) => {
 
   return (
     <>
-      <section className={styles['header-container']}>
-        <div className={styles['fixed-header']}>
-          <span
-            className={styles.info}
-          >
-            Squadhelp recognized as one of the Most Innovative Companies by Inc Magazine.
-          </span>
-          <button type="button">Read Announcement</button>
-        </div>
-      </section>
+      <ModeratorHeader />
       {
                  data && data.role !== 'moderator' ? <p>Only for moderator page</p> : (
                    <section className={styles.container}>
                      { isFetching || error || (
                      <>
                        <section>
-                         {
-                               offers.map((offer) => {
-                                 return (
-                                   <OfferForModerator
-                                     key={offer.id}
-                                     offer={offer}
-                                     confirm={confirmOfferHandler}
-                                     rescind={rescindOfferHandler}
-                                   />
-                                 );
-                               })
-                           }
+                         { offers.length === 0 ? <p> No offers to moderate </p>
+                           : offers.map((offer) => {
+                             return (
+                               <OfferForModerator
+                                 key={offer.id}
+                                 offer={offer}
+                                 confirm={confirmOfferHandler}
+                                 rescind={rescindOfferHandler}
+                               />
+                             );
+                           })}
+                         {offers.length === 0 || (
+                         <button
+                           className={styles['load-more-button']}
+                           onClick={() => loadMore(offers.length)}
+                           type="button"
+                         >
+                           Load More
+                           <img src="/staticImages/load-more.svg" alt="load more button" />
+                         </button>
+                         )}
                        </section>
                      </>
                      ) }
-                     <button
-                       className={styles['load-more-button']}
-                       onClick={() => loadMore(offers.length)}
-                       type="button"
-                     >
-                       Load More
-                       <img src="/staticImages/load-more.svg" alt="load more button" />
-                     </button>
                    </section>
                  )
             }
