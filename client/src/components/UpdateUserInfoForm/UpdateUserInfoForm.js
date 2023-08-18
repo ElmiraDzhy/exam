@@ -96,7 +96,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 UpdateUserInfoForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  submitting: PropTypes.bool.isRequired,
+  submitting: PropTypes.bool,
   error: PropTypes.shape({
     data: PropTypes.string,
     status: PropTypes.number,
@@ -109,6 +109,7 @@ UpdateUserInfoForm.propTypes = {
 UpdateUserInfoForm.defaultProps = {
   error: {},
   initialValues: {},
+  submitting: false,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UpdateUserInfoForm);
