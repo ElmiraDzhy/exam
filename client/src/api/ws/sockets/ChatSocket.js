@@ -22,7 +22,10 @@ class ChatSocket extends WebSocket {
 
           return newPreview;
         });
-        this.dispatch(changeBlockStatusInStore({ chatData: message, formattedMessagePreviews }));
+        this.dispatch(changeBlockStatusInStore({
+          chatData: message,
+          messagesPreview: formattedMessagePreviews,
+        }));
       });
     };
 
@@ -30,23 +33,22 @@ class ChatSocket extends WebSocket {
       this.socket.on('newMessage', (data) => {
         const { message } = data.message;
         const { messagesPreview } = this.getState().chatStore;
-        const formattedMessagePreviews = messagesPreview.forEach((preview) => {
+        const formattedMessagePreviews = messagesPreview.map((preview) => {
           const newPreview = { ...preview };
-
           const isPreview = newPreview.participants.every(
             (value) => data.message.preview.participants.includes(value),
           );
 
           if (isPreview) {
             newPreview.text = message.body;
-            newPreview.sender = message.sender;
+            newPreview.sender = data.message.preview.sender;
             newPreview.createAt = message.createdAt;
           }
 
           return newPreview;
         });
 
-        this.dispatch(addMessage({ message, formattedMessagePreviews }));
+        this.dispatch(addMessage({ message, messagesPreview: formattedMessagePreviews }));
       });
     };
 
