@@ -230,7 +230,24 @@ module.exports.blackList = async (req, res, next) => {
     const interlocutorId = req.body.participants.filter((participant) => participant !== req.tokenData.userId)[ 0 ];
     controller.getChatController().emitChangeBlockStatus(interlocutorId, data);
 
-    res.status(200).send(data);
+    const favouriteAndBlock =  await db.ConversationUser.findAll({
+      attributes: ['blocked', 'favourite'],
+      where: {
+        user_id: participants,
+        conversation_id: conversation.conversation_id,
+      },
+      order: [['user_id', 'DESC']],
+      raw: true,
+    });
+
+    const blockedArray = favouriteAndBlock.map(item => item.blocked);
+    const favArray = favouriteAndBlock.map(item => item.favourite);
+
+    data[0].participants = [...participants];
+    data[0].favoriteList = favArray;
+    data[0].blackList = blockedArray;
+
+    res.status(200).send(data[0]);
   }catch(err){
     next(err);
   }
@@ -275,8 +292,8 @@ module.exports.favoriteChat = async (req, res, next) => {
     const favArray = favouriteAndBlock.map(item => item.favourite);
 
     data[0].participants = [...participants];
-    data[0].favourite = favArray;
-    data[0].blocked = blockedArray;
+    data[0].favoriteList = favArray;
+    data[0].blackList = blockedArray;
 
     res.status(200).send(data[0]);
   }catch(err){
@@ -340,9 +357,19 @@ module.exports.addNewChatToCatalog = async (req, res, next) => {
 
 module.exports.removeChatFromCatalog = async (req, res, next) => {
   try{
-    const catalogInstance = await db.Catalog.findByPk(req.body.catalogId);
-    const conversationToRemove = await db.Conversation.findByPk(req.body.chatId);
-    const result = await catalogInstance.removeConversation(conversationToRemove);
+    const catalogInstance = await db.Catalog.findByPk(req.query.catalogId);
+    const conversationToRemove = await db.Conversation.findByPk(req.query.chatId);
+    await catalogInstance.removeConversation(conversationToRemove);
+
+    const result = await db.Catalog.findOne({
+      where: {
+        id: req.query.catalogId,
+      },
+      include: [{ model: db.Conversation }],
+      raw: true,
+    });
+
+    result.chats = [ result['Conversations.id']];
 
     res.status(200).send(result);
   }catch(err){
