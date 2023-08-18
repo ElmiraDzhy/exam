@@ -61,7 +61,7 @@ export default {
     file: yup.mixed(),
   }),
   MessageSchema: yup.object({
-    message: yup.string().test('test-message', 'required', (value) => value && value.trim().length >= 1).required('required'),
+    message: yup.string().test('test-message', '', (value) => value && value.trim().length >= 1).required(''),
   }),
   CatalogSchema: yup.object({
     catalogName: yup.string().test('test-catalogName', 'required', (value) => value && value.trim().length >= 1).required('required'),
