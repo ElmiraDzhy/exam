@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import queryString from 'query-string';
 import classNames from 'classnames';
 import isEqual from 'lodash/isEqual';
+import { v4 as uuidv4 } from 'uuid';
 import {
   getContestsForCreative,
   clearContestList,
@@ -76,7 +77,7 @@ const CreatorDashboard = (props) => {
 
   const renderSelectType = () => {
     const array = [];
-    types.forEach((el, i) => !i || array.push(<option key={array.length} value={el}>{el}</option>));
+    types.forEach((el, i) => !i || array.push(<option key={uuidv4()} value={el}>{el}</option>));
 
     return (
       <select
@@ -101,9 +102,9 @@ const CreatorDashboard = (props) => {
     const array = [];
     const { dataForContest: { data: { industry } } } = props;
 
-    array.push(<option key={0} value={null}>Choose industry</option>);
+    array.push(<option key={uuidv4()} value={null}>Choose industry</option>);
     industry.forEach((industryValue) => array.push(
-      <option key={array.length} value={industryValue}>{industryValue}</option>,
+      <option key={uuidv4()} value={industryValue}>{industryValue}</option>,
     ));
 
     return (
@@ -149,7 +150,7 @@ const CreatorDashboard = (props) => {
     contests.forEach((contest) => {
       array.push(<ContestBox
         data={contest}
-        key={contest.id}
+        key={uuidv4()}
         goToExtended={goToExtended}
       />);
     });
