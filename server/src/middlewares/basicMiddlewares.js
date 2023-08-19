@@ -11,16 +11,15 @@ module.exports.parseBody = (req, res, next) => {
   const HOST = process.env.NODE_HOST || 'http://localhost';
   const PORT = process.env.PORT || 3000;
 
+  const filteredContests = contests.filter(contest => contest.haveFile === true);
 
-  for (let i = 0; i < contests.length; i++) {
-    if (req.body.contests[ i ].haveFile) {
-      const imagePath =  env === 'production'
-        ? `${HOST}:80/images/${files[i].filename}`
-        : `${HOST}:${PORT}/public/images/${files[i].filename}`;
+  for (let i = 0; i < filteredContests.length; i++) {
+    const imagePath =  env === 'production'
+      ? `${HOST}:80/images/${files[i].filename}`
+      : `${HOST}:${PORT}/public/images/${files[i].filename}`;
 
-      req.body.contests[ i ].fileName = imagePath;
-      req.body.contests[ i ].originalFileName = files[i].filename;
-    }
+    filteredContests[i].fileName = imagePath;
+    filteredContests[i].originalFileName = files[i].filename;
   }
   next();
 };
