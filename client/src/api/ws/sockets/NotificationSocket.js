@@ -2,6 +2,7 @@ import React from 'react';
 import { toast } from 'react-toastify';
 import WebSocket from './WebSocket';
 import Notification from '../../../components/Notification/Notification';
+import history from '../../../browserHistory';
 
 class NotificationSocket extends WebSocket {
     anotherSubscribes = () => {
@@ -18,7 +19,11 @@ class NotificationSocket extends WebSocket {
 
     onChangeOfferStatus = () => {
       this.socket.on('changeOfferStatus', (message) => {
-        toast(<Notification message={message.message} contestId={message.contestId} />);
+        toast(<Notification
+          message={message.message}
+          contestId={message.contestId}
+          history={history}
+        />);
       });
     };
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import styles from './Notification.module.sass';
 
 const Notification = (props) => {
@@ -33,4 +32,4 @@ Notification.propTypes = {
   }).isRequired,
 };
 
-export default withRouter(Notification);
+export default Notification;

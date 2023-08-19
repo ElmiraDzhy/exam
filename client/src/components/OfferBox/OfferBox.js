@@ -42,7 +42,7 @@ const OfferBox = (props) => {
     const { setOfferStatus, data } = props;
     confirmAlert({
       title: 'confirm',
-      message: 'Are u sure?',
+      message: 'Are you sure?',
       buttons: [
         {
           label: 'Yes',
@@ -58,7 +58,7 @@ const OfferBox = (props) => {
   const rejectOffer = () => {
     confirmAlert({
       title: 'confirm',
-      message: 'Are u sure?',
+      message: 'Are you sure?',
       buttons: [
         {
           label: 'Yes',
