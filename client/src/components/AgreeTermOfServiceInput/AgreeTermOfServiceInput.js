@@ -34,9 +34,12 @@ const AgreeTermOfServiceInput = ({
 );
 
 AgreeTermOfServiceInput.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  classes: PropTypes.string.isRequired,
+  classes: PropTypes.shape({
+    warning: PropTypes.string,
+    container: PropTypes.string,
+  }).isRequired,
   label: PropTypes.string,
   meta: PropTypes.shape({
     touched: PropTypes.shape({}),

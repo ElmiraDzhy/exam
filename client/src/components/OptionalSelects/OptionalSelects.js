@@ -125,10 +125,10 @@ OptionalSelects.propTypes = {
   contestType: PropTypes.string.isRequired,
   dataForContest: PropTypes.shape({
     data: PropTypes.shape({
-      typeOfName: PropTypes.string,
+      typeOfName: PropTypes.arrayOf(PropTypes.string),
       nameStyle: PropTypes.string,
-      brandStyle: PropTypes.string,
-      typeOfTagline: PropTypes.string,
+      brandStyle: PropTypes.arrayOf(PropTypes.string),
+      typeOfTagline: PropTypes.arrayOf(PropTypes.string),
     }),
   }),
 };

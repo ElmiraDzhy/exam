@@ -7,8 +7,8 @@ import CONSTANTS from '../../constants';
 const ContestBox = (props) => {
   const {
     data, data: {
-      id, title, contestType, prize, count, goToExtended,
-    },
+      id, title, contestType, prize, count,
+    }, goToExtended,
   } = props;
   const getTimeStr = () => {
     const diff = (moment.duration(moment().diff(moment(data.createdAt))));
@@ -91,9 +91,9 @@ ContestBox.propTypes = {
     typeOfName: PropTypes.string,
     brandStyle: PropTypes.string,
     typeOfTagline: PropTypes.string,
-
-    goToExtended: PropTypes.func,
   }).isRequired,
+
+  goToExtended: PropTypes.func.isRequired,
 };
 
 export default ContestBox;

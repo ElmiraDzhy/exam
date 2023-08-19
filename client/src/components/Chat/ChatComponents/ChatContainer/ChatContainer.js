@@ -7,7 +7,7 @@ const ChatContainer = (props) => {
   const { data } = props;
   return (
     <>
-      {data ? <Chat /> : null}
+      {data && data.role !== 'moderator' ? <Chat /> : null}
     </>
   );
 };
@@ -18,7 +18,9 @@ const mapStateToProps = (state) => {
 };
 
 ChatContainer.propTypes = {
-  data: PropTypes.shape({}),
+  data: PropTypes.shape({
+    role: PropTypes.string,
+  }),
 };
 
 ChatContainer.defaultProps = {

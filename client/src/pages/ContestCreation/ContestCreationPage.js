@@ -93,7 +93,7 @@ ContestCreationPage.propTypes = {
   title: PropTypes.string.isRequired,
 
   contestStore: PropTypes.shape({
-    contests: PropTypes.arrayOf(PropTypes.object),
+    contests: PropTypes.shape({}),
   }).isRequired,
 
   bundleStore: PropTypes.shape({

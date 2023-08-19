@@ -26,7 +26,7 @@ TaglineContestSpecialInfo.propTypes = {
 };
 
 TaglineContestSpecialInfo.defaultProps = {
-  nameVenture: null,
+  nameVenture: '',
 };
 
 export default TaglineContestSpecialInfo;

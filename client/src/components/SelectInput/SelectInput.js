@@ -17,8 +17,7 @@ const SelectInput = ({
 
   const getOptionsArray = () => {
     const array = [];
-
-    optionsArray.forEach((option, i) => {
+    optionsArray?.forEach((option, i) => {
       if (valueArray) {
         array.push(
           <option key={array.length} value={valueArray[i]}>
@@ -81,7 +80,7 @@ SelectInput.propTypes = {
     setFieldValue: PropTypes.func,
   }).isRequired,
   meta: PropTypes.shape({
-    initialValue: PropTypes.shape({}),
+    initialValue: PropTypes.string,
   }).isRequired,
   field: PropTypes.shape({
     name: PropTypes.string,
@@ -99,9 +98,14 @@ SelectInputWrapper.propTypes = {
   classes: PropTypes.shape({
     warning: PropTypes.string,
   }).isRequired,
-  optionsArray: PropTypes.arrayOf(PropTypes.string).isRequired,
-  valueArray: PropTypes.arrayOf(PropTypes.string).isRequired,
+  optionsArray: PropTypes.arrayOf(PropTypes.string),
+  valueArray: PropTypes.arrayOf(PropTypes.string),
 
+};
+
+SelectInputWrapper.defaultProps = {
+  optionsArray: [''],
+  valueArray: [''],
 };
 
 export default SelectInputWrapper;

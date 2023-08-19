@@ -21,8 +21,12 @@ const LogoContestSpecialInfo = (props) => {
 };
 
 LogoContestSpecialInfo.propTypes = {
-  nameVenture: PropTypes.string.isRequired,
+  nameVenture: PropTypes.string,
   brandStyle: PropTypes.string.isRequired,
+};
+
+LogoContestSpecialInfo.defaultProps = {
+  nameVenture: '',
 };
 
 export default LogoContestSpecialInfo;
