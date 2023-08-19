@@ -9,7 +9,7 @@ const StatsCard = (props) => {
   return (
     <article className={styles.container}>
       <img className={styles['icon-stats']} src={iconSrc} alt="icon" />
-      <p>{children({ boldStyles, textStyles })}</p>
+      <div>{children({ boldStyles, textStyles })}</div>
     </article>
   );
 };
