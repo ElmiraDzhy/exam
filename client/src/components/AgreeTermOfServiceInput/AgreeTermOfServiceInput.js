@@ -44,12 +44,14 @@ AgreeTermOfServiceInput.propTypes = {
   meta: PropTypes.shape({
     touched: PropTypes.shape({}),
     error: PropTypes.shape({}),
-  }).isRequired,
-  field: PropTypes.func.isRequired,
+  }),
+  field: PropTypes.shape({}),
 };
 
 AgreeTermOfServiceInput.defaultProps = {
   label: '',
+  meta: {},
+  field: {},
 };
 
 export default AgreeTermOfServiceInput;

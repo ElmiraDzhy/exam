@@ -181,7 +181,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 ContestForm.propTypes = {
   getData: PropTypes.func.isRequired,
-  formRef: PropTypes.shape({}).isRequired,
+  formRef: PropTypes.shape({}),
   handleSubmit: PropTypes.func.isRequired,
   contestType: PropTypes.string.isRequired,
 
@@ -196,6 +196,10 @@ ContestForm.propTypes = {
     }),
   }).isRequired,
 
+};
+
+ContestForm.defaultProps = {
+  formRef: {},
 };
 
 export default withRouter(

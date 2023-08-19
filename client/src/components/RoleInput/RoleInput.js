@@ -18,7 +18,7 @@ const RoleInput = ({
 
 RoleInput.propTypes = {
   label: PropTypes.string,
-  id: PropTypes.number.isRequired,
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   strRole: PropTypes.string.isRequired,
   infoRole: PropTypes.string.isRequired,
   field: PropTypes.shape({}).isRequired,

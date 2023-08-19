@@ -165,9 +165,13 @@ const mapDispatchToProps = (dispatch) => ({
 PayForm.propTypes = {
   changeFocusOnCard: PropTypes.func.isRequired,
   back: PropTypes.func.isRequired,
-  focusOnElement: PropTypes.bool.isRequired,
+  focusOnElement: PropTypes.bool,
   isPayForOrder: PropTypes.bool.isRequired,
   sendRequest: PropTypes.func.isRequired,
+};
+
+PayForm.defaultProps = {
+  focusOnElement: false,
 };
 
 export default connect(null, mapDispatchToProps)(PayForm);

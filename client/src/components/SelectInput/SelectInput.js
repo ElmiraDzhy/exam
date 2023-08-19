@@ -74,7 +74,9 @@ const SelectInputWrapper = ({
 SelectInput.propTypes = {
   header: PropTypes.string.isRequired,
   optionsArray: PropTypes.arrayOf(PropTypes.string).isRequired,
-  valueArray: PropTypes.arrayOf(PropTypes.string).isRequired,
+  valueArray: PropTypes.arrayOf(PropTypes.oneOfType(
+    [PropTypes.string, PropTypes.number],
+  )).isRequired,
 
   form: PropTypes.shape({
     setFieldValue: PropTypes.func,
@@ -99,7 +101,7 @@ SelectInputWrapper.propTypes = {
     warning: PropTypes.string,
   }).isRequired,
   optionsArray: PropTypes.arrayOf(PropTypes.string),
-  valueArray: PropTypes.arrayOf(PropTypes.string),
+  valueArray: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
 
 };
 

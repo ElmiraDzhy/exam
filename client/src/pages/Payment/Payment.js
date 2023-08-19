@@ -98,7 +98,7 @@ Payment.propTypes = {
     replace: PropTypes.func,
   }).isRequired,
   contestStore: PropTypes.shape({
-    contests: PropTypes.arrayOf(PropTypes.object),
+    contests: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
   }).isRequired,
   payment: PropTypes.shape({
     error: PropTypes.shape({

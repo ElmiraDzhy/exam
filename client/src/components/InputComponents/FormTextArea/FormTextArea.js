@@ -31,10 +31,10 @@ const FormTextArea = ({
 FormTextArea.propTypes = {
   label: PropTypes.string.isRequired,
   classes: PropTypes.shape({
-    container: PropTypes.string.isRequired,
-    inputStyle: PropTypes.string.isRequired,
-    notValid: PropTypes.string.isRequired,
-    warning: PropTypes.string.isRequired,
+    container: PropTypes.string,
+    inputStyle: PropTypes.string,
+    notValid: PropTypes.string,
+    warning: PropTypes.string,
   }),
   field: PropTypes.shape({
     name: PropTypes.string,

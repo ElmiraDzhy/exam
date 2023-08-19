@@ -76,7 +76,7 @@ PayInput.propTypes = {
     error: PropTypes.string,
   }).isRequired,
   isInputMask: PropTypes.bool,
-  mask: PropTypes.shape({}),
+  mask: PropTypes.string,
   name: PropTypes.string.isRequired,
 };
 
