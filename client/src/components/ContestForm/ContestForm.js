@@ -21,11 +21,11 @@ const variableOptions = {
     typeOfName: '',
   },
   [CONSTANTS.LOGO_CONTEST]: {
-    nameVenture: null,
+    nameVenture: '',
     brandStyle: '',
   },
   [CONSTANTS.TAGLINE_CONTEST]: {
-    nameVenture: null,
+    nameVenture: '',
     typeOfTagline: '',
   },
 };
@@ -181,7 +181,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 ContestForm.propTypes = {
   getData: PropTypes.func.isRequired,
-  formRef: PropTypes.func.isRequired,
+  formRef: PropTypes.shape({}).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   contestType: PropTypes.string.isRequired,
 
