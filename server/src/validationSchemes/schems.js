@@ -16,17 +16,17 @@ module.exports.loginSchem = yup.object().shape({
 
 module.exports.contestSchem = yup.object().shape({
   contestType: yup.string().matches(/(name|logo|tagline)/).required(),
-  fileName: yup.string().min(1),
-  originalFileName: yup.string().min(1),
-  title: yup.string().required().min(1),
-  typeOfName: yup.string().min(1),
-  industry: yup.string().required().min(1),
-  focusOfWork: yup.string().required().min(1),
-  targetCustomer: yup.string().required().min(1),
-  styleName: yup.string().min(1),
-  nameVenture: yup.string().min(1).nullable(),
-  typeOfTagline: yup.string().min(1),
-  brandStyle: yup.string().min(1),
+  fileName: yup.string(),
+  originalFileName: yup.string(),
+  title: yup.string().required(),
+  typeOfName: yup.string(),
+  industry: yup.string().required(),
+  focusOfWork: yup.string().required(),
+  targetCustomer: yup.string().required(),
+  styleName: yup.string(),
+  nameVenture: yup.string().nullable(),
+  typeOfTagline: yup.string(),
+  brandStyle: yup.string(),
 });
 
 
