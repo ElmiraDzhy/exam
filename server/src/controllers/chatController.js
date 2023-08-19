@@ -310,8 +310,9 @@ module.exports.createCatalog = async (req, res, next) => {
     const conversationInstance = await db.Conversation.findByPk(req.body.chatId);
     await newCatalogInstance.addConversation(conversationInstance);
     const chats = await newCatalogInstance.getConversations();
+    newCatalogInstance.chats = chats;
 
-    res.status(201).send({ newCatalogInstance, chats });
+    res.status(201).send(newCatalogInstance);
   }catch(err){
     next(err);
   }
