@@ -56,8 +56,8 @@ const EventsPage = () => {
           onSubmit={onSubmitHandler}
           initialValues={{
             eventName: '',
-            deadlineDate: new Date(),
-            reminderDate: new Date(),
+            deadlineDate: new Date().toISOString().slice(0, 16),
+            reminderDate: new Date().toISOString().slice(0, 16),
           }}
         >
           <Form className={styles['form-container']}>
