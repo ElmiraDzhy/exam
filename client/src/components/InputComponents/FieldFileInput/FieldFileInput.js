@@ -53,15 +53,6 @@ FieldFileInput.propTypes = {
     fileInput: PropTypes.string.isRequired,
   }).isRequired,
 
-  field: PropTypes.shape({
-    value: PropTypes.shape({
-      name: PropTypes.string,
-    }),
-  }).isRequired,
   name: PropTypes.string.isRequired,
-
-  form: PropTypes.shape({
-    setFieldValue: PropTypes.func,
-  }).isRequired,
 };
 export default FieldFileInput;
