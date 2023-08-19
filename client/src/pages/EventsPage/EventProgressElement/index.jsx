@@ -40,7 +40,7 @@ const EventProgressElement = (props) => {
     return () => clearInterval(interval);
   }, [eventDate]);
 
-  const classNameEventContainer = classNames(styles['event-container'], {
+  const classNameFiller = classNames(styles.filler, {
     [styles.expired]: progress === 100 || progress < 0,
   });
 
@@ -59,12 +59,12 @@ const EventProgressElement = (props) => {
 
   return (
     <article className={styles['progress-element-wrapper']}>
-      <div className={classNameEventContainer}>
+      <div className={styles['event-container']}>
         <div className={styles['progress-container']}>
-          <div className={styles.filler} style={{ width: `${progress}%` }}>
+          <div className={classNameFiller} style={{ width: `${progress}%` }}>
             <span className={styles['progress-label']}>{`${eventName}`}</span>
           </div>
-          <span className={styles['progress-time']}>{`${progress === 100 || progress < 0 ? 'expired' : timeLeft}`}</span>
+          <span className={styles['progress-time']}>{`${(progress === 100 || progress < 0) ? 'expired' : timeLeft}`}</span>
         </div>
       </div>
       <button type="button" className={styles['delete-event-btn']} onClick={onClickHandler}>

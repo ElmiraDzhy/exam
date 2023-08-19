@@ -112,6 +112,13 @@
       justify-content: space-evenly;
       overflow-y: auto;
       height: 30vh;
+
+      .not-found{
+        text-align: center;
+        font-size: 26px;
+        font-weight: 500;
+        color: #4e618d;
+      }
     }
 
   }

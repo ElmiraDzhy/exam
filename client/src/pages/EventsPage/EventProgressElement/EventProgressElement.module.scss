@@ -47,6 +47,11 @@
         font-weight: bold;
         color: #80b7ff;
       }
+
+      .expired{
+        border-radius: 3px 0 0 3px;
+        background-color: red;
+      }
     }
   }
 
@@ -61,7 +66,3 @@
   }
 }
 
-.expired{
-  border-radius: 3px 0 0 3px;
-  background-color: red;
-}

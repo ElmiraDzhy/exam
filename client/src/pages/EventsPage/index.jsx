@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Formik } from 'formik';
+import { Field, Form, Formik } from 'formik';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import styles from './EventsPage.module.scss';
@@ -61,18 +61,18 @@ const EventsPage = () => {
           }}
         >
           <Form className={styles['form-container']}>
-            <label htmlFor="eventName">
+            <span>
               Event name:
-              <input className={styles['input-field']} type="text" name="eventName" id="eventName" />
-            </label>
-            <label htmlFor="deadlineDate">
-              Event deadline date
-              <input className={styles['input-field']} type="datetime-local" name="deadlineDate" id="deadlineDate" />
-            </label>
-            <label htmlFor="reminderDate">
-              Event reminder date
-              <input className={styles['input-field']} type="datetime-local" name="reminderDate" id="reminderDate" />
-            </label>
+            </span>
+            <Field className={styles['input-field']} type="text" name="eventName" id="eventName" />
+            <span>
+              Event deadline date:
+            </span>
+            <Field className={styles['input-field']} type="datetime-local" name="deadlineDate" id="deadlineDate" />
+            <span>
+              Event reminder date:
+            </span>
+            <Field className={styles['input-field']} type="datetime-local" name="reminderDate" id="reminderDate" />
             <button className={styles['submit-button']} type="submit">Submit</button>
           </Form>
         </Formik>
@@ -83,7 +83,10 @@ const EventsPage = () => {
             <img className={styles['event-timer-img']} src="/staticImages/event-timer.svg" alt="event timer" />
           </div>
           <div className={styles['progress-elements-container']}>
-            {Object.keys(events).length === 0 ? 'not found' : renderProgressEvents().sort((a, b) => new Date(a.props.eventDate) - new Date(b.props.eventDate))}
+            {Object.keys(events).length === 0
+              ? <p className={styles['not-found']}>There is no active events</p>
+            // eslint-disable-next-line max-len
+              : renderProgressEvents().sort((a, b) => new Date(a.props.eventDate) - new Date(b.props.eventDate))}
           </div>
         </article>
       </section>
