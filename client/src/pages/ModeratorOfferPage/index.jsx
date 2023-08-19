@@ -56,12 +56,12 @@ const ModeratorOfferPage = (props) => {
     <>
       <ModeratorHeader />
       {
-                 data && data.role !== 'moderator' ? <p>Only for moderator page</p> : (
+                 data && data.role !== 'moderator' ? <p className={styles['not-found']}>Only for moderator page</p> : (
                    <section className={styles.container}>
                      { isFetching || error || (
                      <>
                        <section>
-                         { offers.length === 0 ? <p> No offers to moderate </p>
+                         { offers.length === 0 ? <p className={styles['not-found']}> No offers to moderate </p>
                            : offers.map((offer) => {
                              return (
                                <OfferForModerator
