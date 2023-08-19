@@ -126,7 +126,7 @@ OptionalSelects.propTypes = {
   dataForContest: PropTypes.shape({
     data: PropTypes.shape({
       typeOfName: PropTypes.arrayOf(PropTypes.string),
-      nameStyle: PropTypes.string,
+      nameStyle: PropTypes.arrayOf(PropTypes.string),
       brandStyle: PropTypes.arrayOf(PropTypes.string),
       typeOfTagline: PropTypes.arrayOf(PropTypes.string),
     }),
