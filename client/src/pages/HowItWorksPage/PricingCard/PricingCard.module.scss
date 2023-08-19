@@ -29,8 +29,10 @@
   line-height: 1.7;
   margin-top: 10px;
 
-  & > a{
+  & > button{
    color: #377dff;
+    border: none;
+    background-color: transparent;
 
     &:hover{
       color: #0052ea;
