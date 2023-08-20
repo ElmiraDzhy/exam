@@ -362,17 +362,22 @@ module.exports.removeChatFromCatalog = async (req, res, next) => {
     const conversationToRemove = await db.Conversation.findByPk(req.query.chatId);
     await catalogInstance.removeConversation(conversationToRemove);
 
-    const result = await db.Catalog.findOne({
-      where: {
-        id: req.query.catalogId,
-      },
-      include: [{ model: db.Conversation }],
+    const allConversationInCatalog = await db.Conversation.findAll({
+      attributes: ['id'],
+      include: [
+        {
+          model: db.Catalog,
+          through: {},
+          where: { id: req.query.catalogId },
+          attributes: [],
+        },
+      ],
       raw: true,
     });
 
-    result.chats = [ result['Conversations.id']];
+    catalogInstance.dataValues.chats = allConversationInCatalog.map(chat => chat.id);
 
-    res.status(200).send(result);
+    res.status(200).send(catalogInstance.dataValues);
   }catch(err){
     next(err);
   }
