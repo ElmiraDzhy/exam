@@ -227,9 +227,6 @@ module.exports.blackList = async (req, res, next) => {
       },
     );
 
-    const interlocutorId = req.body.participants.filter((participant) => participant !== req.tokenData.userId)[ 0 ];
-    controller.getChatController().emitChangeBlockStatus(interlocutorId, data);
-
     const favouriteAndBlock =  await db.ConversationUser.findAll({
       attributes: ['blocked', 'favourite'],
       where: {
