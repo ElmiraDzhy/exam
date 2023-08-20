@@ -16,7 +16,6 @@ import UserProfile from './pages/UserProfile/UserProfile';
 import 'react-toastify/dist/ReactToastify.css';
 import ContestCreationPage from './pages/ContestCreation/ContestCreationPage';
 import CONSTANTS from './constants';
-import browserHistory from './browserHistory';
 import ChatContainer from './components/Chat/ChatComponents/ChatContainer/ChatContainer';
 import ModeratorOfferPage from './pages/ModeratorOfferPage';
 import HowItWorksPage from './pages/HowItWorksPage';
@@ -25,7 +24,7 @@ import GeneralCounter from './components/GeneralCounter';
 
 const App = () => (
   <GeneralCounter>
-    <Router history={browserHistory}>
+    <Router>
       <ToastContainer
         position="top-center"
         autoClose={5000}
