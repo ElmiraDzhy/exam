@@ -16,7 +16,7 @@ class Header extends React.Component {
 
     logOut = () => {
       const { clearUserStoreDispatch, history } = this.props;
-      localStorage.clear();
+      localStorage.removeItem('accessToken');
       clearUserStoreDispatch();
       history.replace('/login');
     };
