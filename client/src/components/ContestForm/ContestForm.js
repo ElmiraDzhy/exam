@@ -75,7 +75,7 @@ class ContestForm extends React.Component {
             <Formik
               initialValues={{
                 title: '',
-                industry: '',
+                industry: data.industry[0],
                 focusOfWork: '',
                 targetCustomer: '',
                 file: '',
@@ -199,7 +199,7 @@ ContestForm.propTypes = {
 };
 
 ContestForm.defaultProps = {
-  formRef: {},
+  formRef: null,
 };
 
 export default withRouter(
