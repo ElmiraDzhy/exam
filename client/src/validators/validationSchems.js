@@ -23,10 +23,10 @@ export default {
     industry: yup.string().required('industry required'),
     focusOfWork: yup.string().test('test-focusOfWork', 'required', (value) => (value && value.trim().length >= 1)).required('focus of work required'),
     targetCustomer: yup.string().test('test-targetCustomer', 'required', (value) => (value && value.trim().length >= 1)).required('target customers required'),
-    styleName: yup.string().min(1),
-    typeOfName: yup.string().min(1),
+    styleName: yup.string(),
+    typeOfName: yup.string(),
     typeOfTagline: yup.string(),
-    brandStyle: yup.string().min(1),
+    brandStyle: yup.string(),
     file: yup.mixed(),
   }),
   filterSchem: yup.object().shape({
