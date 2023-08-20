@@ -77,7 +77,7 @@ const OfferBox = (props) => {
     changeMark({
       mark: value,
       offerId: props.data.id,
-      isFirst: !props.data.mark,
+      isFirst: !props.data.Rating?.mark,
       creatorId: props.data.User.id,
     });
   };
@@ -100,7 +100,7 @@ const OfferBox = (props) => {
   };
 
   const {
-    data, role, id, contestType, needButtons,
+    data, role, contestType, needButtons,
   } = props;
   const {
     data: {
@@ -156,16 +156,17 @@ const OfferBox = (props) => {
               )
               : <span className={styles.response}>{data.text}</span>
           }
-          {data.User.id !== id && (
-          <Rating
-            fractions={2}
-            fullSymbol={<img src={`${CONSTANTS.STATIC_IMAGES_PATH}star.png`} alt="star" />}
-            placeholderSymbol={<img src={`${CONSTANTS.STATIC_IMAGES_PATH}star.png`} alt="star" />}
-            emptySymbol={<img src={`${CONSTANTS.STATIC_IMAGES_PATH}star-outline.png`} alt="star" />}
-            onClick={changeMarkHandler}
-            placeholderRating={data.mark}
-          />
-          )}
+          {(role === 'customer') ? (
+
+            <Rating
+              fractions={2}
+              fullSymbol={<img src={`${CONSTANTS.STATIC_IMAGES_PATH}star.png`} alt="star" />}
+              placeholderSymbol={<img src={`${CONSTANTS.STATIC_IMAGES_PATH}star.png`} alt="star" />}
+              emptySymbol={<img src={`${CONSTANTS.STATIC_IMAGES_PATH}star-outline.png`} alt="star" />}
+              onClick={changeMarkHandler}
+              placeholderRating={data.Rating?.mark}
+            />
+          ) : <></> }
         </div>
         {role !== CONSTANTS.CREATOR && (
         <i
@@ -232,7 +233,6 @@ OfferBox.propTypes = {
     fileName: PropTypes.string,
     text: PropTypes.string,
     status: PropTypes.string.isRequired,
-    mark: PropTypes.number,
     User: PropTypes.shape({
       id: PropTypes.number,
       avatar: PropTypes.string,
@@ -240,6 +240,10 @@ OfferBox.propTypes = {
       lastName: PropTypes.string,
       email: PropTypes.string,
       rating: PropTypes.number,
+      role: PropTypes.string,
+    }),
+    Rating: PropTypes.shape({
+      mark: PropTypes.number,
     }),
   }).isRequired,
 };
