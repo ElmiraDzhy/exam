@@ -14,7 +14,7 @@ export function* changeMarkSaga(action) {
         newOffer.User.rating = data.rating;
       }
       if (offer.id === action.data.offerId) {
-        newOffer.mark = action.data.mark;
+        newOffer.Rating.mark = action.data.mark;
       }
 
       return newOffer;
