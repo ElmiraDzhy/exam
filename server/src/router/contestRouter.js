@@ -17,7 +17,7 @@ contestRouter.get('/getAllContests', checkToken.checkToken, basicMiddlewares.onl
 
 contestRouter.get('/downloadFile/:fileName', checkToken.checkToken, contestController.downloadFile);
 
-contestRouter.post('/updateContest', checkToken.checkToken, upload.single('file'), contestController.updateContest);
+contestRouter.post('/updateContest', checkToken.checkToken, upload.single('file'), checkImage, contestController.updateContest);
 
 contestRouter.post('/setNewOffer', checkToken.checkToken, upload.single('offerData'), checkImage, basicMiddlewares.canSendOffer, contestController.setNewOffer);
 
