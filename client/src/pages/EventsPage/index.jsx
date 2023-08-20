@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Field, Form, Formik } from 'formik';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import styles from './EventsPage.module.scss';
 import EventProgressElement from './EventProgressElement';
 
-const EventsPage = () => {
+const EventsPage = (props) => {
+  const { userStore: { data: { email } } } = props;
   const [events, setEvents] = useState({});
 
   const addToLocalStorage = (eventData, eventName) => {
@@ -20,6 +23,7 @@ const EventsPage = () => {
     const eventData = {
       deadlineDate,
       reminderDate,
+      email,
     };
     addToLocalStorage(eventData, eventName);
   };
@@ -32,14 +36,16 @@ const EventsPage = () => {
   const renderProgressEvents = () => {
     const eventsArray = [];
     Object.keys(events).forEach((event) => {
-      eventsArray.push(
-        <EventProgressElement
-          eventDate={events[event].deadlineDate}
-          eventName={event}
-          key={eventsArray.length}
-          rerender={() => initEvents()}
-        />,
-      );
+      if (events[event]?.email === email) {
+        eventsArray.push(
+          <EventProgressElement
+            eventDate={events[event].deadlineDate}
+            eventName={event}
+            key={eventsArray.length}
+            rerender={() => initEvents()}
+          />,
+        );
+      }
     });
     return eventsArray;
   };
@@ -95,4 +101,14 @@ const EventsPage = () => {
   );
 };
 
-export default EventsPage;
+EventsPage.propTypes = {
+  userStore: PropTypes.shape({
+    data: PropTypes.shape({
+      email: PropTypes.string,
+    }),
+  }).isRequired,
+};
+
+const mapStateToProps = ({ userStore }) => ({ userStore });
+
+export default connect(mapStateToProps, null)(EventsPage);
