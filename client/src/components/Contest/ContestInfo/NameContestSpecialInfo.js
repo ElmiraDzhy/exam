@@ -19,8 +19,13 @@ const NameContestSpecialInfo = (props) => {
 };
 
 NameContestSpecialInfo.propTypes = {
-  typeOfName: PropTypes.string.isRequired,
-  styleName: PropTypes.string.isRequired,
+  typeOfName: PropTypes.string,
+  styleName: PropTypes.string,
+};
+
+NameContestSpecialInfo.defaultProps = {
+  typeOfName: null,
+  styleName: null,
 };
 
 export default NameContestSpecialInfo;
