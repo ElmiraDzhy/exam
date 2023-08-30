@@ -72,7 +72,7 @@ const ModeratorOfferPage = (props) => {
                                />
                              );
                            })}
-                         {offers.length === 0 || (
+                         {offers.length < 3 || (
                          <button
                            className={styles['load-more-button']}
                            onClick={() => loadMore(offers.length)}
