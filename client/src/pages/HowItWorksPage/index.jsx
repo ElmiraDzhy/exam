@@ -200,11 +200,11 @@ const HowItWorksPage = () => {
               <h3 className={styles['faq-list-header']}>Launching A Contest</h3>
               {
                 faqFirstArticle.map(
-                  (faq) => {
+                  (faq, index) => {
                     return (
                       <OutgoingCard
                         key={faq.id}
-                        id={faq.id}
+                        id={index}
                         answer={faq.answer}
                         question={faq.question}
                       />
@@ -217,11 +217,11 @@ const HowItWorksPage = () => {
               <h3 className={styles['faq-list-header']}>Buying From Marketplace</h3>
               {
                 faqSecondArticle.map(
-                  (faq) => {
+                  (faq, index) => {
                     return (
                       <OutgoingCard
                         key={faq.id}
-                        id={faq.id}
+                        id={index}
                         answer={faq.answer}
                         question={faq.question}
                       />
@@ -234,11 +234,11 @@ const HowItWorksPage = () => {
               <h3 className={styles['faq-list-header']}>Managed Contests</h3>
               {
                 faqThirdArticle.map(
-                  (faq) => {
+                  (faq, index) => {
                     return (
                       <OutgoingCard
                         key={faq.id}
-                        id={faq.id}
+                        id={index}
                         answer={faq.answer}
                         question={faq.question}
                       />
@@ -251,11 +251,11 @@ const HowItWorksPage = () => {
               <h3 className={styles['faq-list-header']}>For Creatives</h3>
               {
                 faqFourthArticle.map(
-                  (faq) => {
+                  (faq, index) => {
                     return (
                       <OutgoingCard
                         key={faq.id}
-                        id={faq.id}
+                        id={index}
                         answer={faq.answer}
                         question={faq.question}
                       />
