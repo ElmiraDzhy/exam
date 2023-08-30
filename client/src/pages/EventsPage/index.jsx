@@ -10,6 +10,7 @@ import EventProgressElement from './EventProgressElement';
 const EventsPage = (props) => {
   const { userStore: { data: { email } } } = props;
   const [events, setEvents] = useState({});
+  const currentDateTime = new Date().toISOString().slice(0, 16);
 
   const addToLocalStorage = (eventData, eventName) => {
     const localStorageEvents = JSON.parse(localStorage.getItem('events'));
@@ -62,8 +63,8 @@ const EventsPage = (props) => {
           onSubmit={onSubmitHandler}
           initialValues={{
             eventName: '',
-            deadlineDate: new Date().toISOString().slice(0, 16),
-            reminderDate: new Date().toISOString().slice(0, 16),
+            deadlineDate: currentDateTime,
+            reminderDate: currentDateTime,
           }}
         >
           <Form className={styles['form-container']}>
@@ -74,11 +75,11 @@ const EventsPage = (props) => {
             <span>
               Event deadline date:
             </span>
-            <Field className={styles['input-field']} type="datetime-local" name="deadlineDate" id="deadlineDate" />
+            <Field className={styles['input-field']} type="datetime-local" name="deadlineDate" id="deadlineDate" min={currentDateTime} />
             <span>
               Event reminder date:
             </span>
-            <Field className={styles['input-field']} type="datetime-local" name="reminderDate" id="reminderDate" />
+            <Field className={styles['input-field']} type="datetime-local" name="reminderDate" id="reminderDate" min={currentDateTime} />
             <button className={styles['submit-button']} type="submit">Submit</button>
           </Form>
         </Formik>
