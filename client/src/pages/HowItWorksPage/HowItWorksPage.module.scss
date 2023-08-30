@@ -67,11 +67,9 @@
   justify-content: center;
   align-items: center;
   width: 155px;
-  padding: 20px;
 
   cursor: pointer;
   border-radius: 6.1875rem;
-  border-color: #377dff;
 
   background-color: #377dff;
   transition: all 0.2s ease-in-out;
@@ -79,6 +77,9 @@
   font-size: 1rem;
   line-height: 1.5;
   color: white;
+
+  border: 1px solid transparent;
+  padding: 0.75rem 1rem;
 
   &:hover{
     box-shadow: 0 4px 11px rgba(55,125,255,.35);
