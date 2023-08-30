@@ -232,6 +232,9 @@ module.exports.getCustomersContests = (req, res, next) => {
     include: [
       {
         model: db.Offer,
+        where: {
+          isModerate: true,
+        },
         required: false,
         attributes: ['id'],
       },
