@@ -189,10 +189,10 @@ const HowItWorksPage = () => {
         <section className={styles['faq-section']}>
           <article className={styles['faq-section-links']}>
             <ul className={styles['links-container']}>
-              <li><a className={styles['link-faq']} href="#contests">Launching A Contest</a></li>
-              <li><a className={styles['link-faq']} href="#marketplace">Buying From Marketplace</a></li>
-              <li><a className={styles['link-faq']} href="#managed">Managed Contests</a></li>
-              <li><a className={styles['link-faq']} href="#creatives">For Creatives</a></li>
+              <li><a className={styles['link-faq']} href="/how-it-works#contests">Launching A Contest</a></li>
+              <li><a className={styles['link-faq']} href="/how-it-works#marketplace">Buying From Marketplace</a></li>
+              <li><a className={styles['link-faq']} href="/how-it-works#managed">Managed Contests</a></li>
+              <li><a className={styles['link-faq']} href="/how-it-works#creatives">For Creatives</a></li>
             </ul>
           </article>
           <div className={styles['faq-list-articles-flex-container']}>
