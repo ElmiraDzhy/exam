@@ -38,11 +38,17 @@
 }
 
 .captionText{
-    vertical-align: center;
+    vertical-align: middle;
+    text-overflow: ellipsis;
+    overflow-y: hidden;
 }
 .captionWrapper {
   display: flex;
   padding: 20px;
+
+  @media screen and (max-width: 540px) {
+    padding: 5%;
+  }
 }
 
 .content {
