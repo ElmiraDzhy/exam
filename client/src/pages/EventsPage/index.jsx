@@ -7,9 +7,18 @@ import Footer from '../../components/Footer/Footer';
 import styles from './EventsPage.module.scss';
 import EventProgressElement from './EventProgressElement';
 
+const now = new Date();
+const year = now.getFullYear();
+const month = String(now.getMonth() + 1).padStart(2, '0');
+const day = String(now.getDate()).padStart(2, '0');
+const hours = String(now.getHours()).padStart(2, '0');
+const minutes = String(now.getMinutes()).padStart(2, '0');
+
+const currentDate = `${year}-${month}-${day}T${hours}:${minutes}`;
 const EventsPage = (props) => {
   const { userStore: { data: { email } } } = props;
   const [events, setEvents] = useState({});
+  const [expiredEvents, setExpiredEvents] = useState(0);
 
   const addToLocalStorage = (eventData, eventName) => {
     const localStorageEvents = JSON.parse(localStorage.getItem('events'));
@@ -26,6 +35,17 @@ const EventsPage = (props) => {
       email,
     };
     addToLocalStorage(eventData, eventName);
+  };
+
+  const countExpired = () => {
+    let expired = 0;
+    Object.keys(events).forEach((event) => {
+      if (events[event]?.email === email
+          && new Date(events[event].deadlineDate) < now) {
+        expired += 1;
+      }
+    });
+    setExpiredEvents(expired);
   };
 
   const initEvents = () => {
@@ -54,6 +74,10 @@ const EventsPage = (props) => {
     initEvents();
   }, []);
 
+  useEffect(() => {
+    countExpired();
+  });
+
   return (
     <>
       <Header />
@@ -62,8 +86,8 @@ const EventsPage = (props) => {
           onSubmit={onSubmitHandler}
           initialValues={{
             eventName: '',
-            deadlineDate: new Date().toISOString().slice(0, 16),
-            reminderDate: new Date().toISOString().slice(0, 16),
+            deadlineDate: currentDate,
+            reminderDate: currentDate,
           }}
         >
           <Form className={styles['form-container']}>
@@ -74,11 +98,11 @@ const EventsPage = (props) => {
             <span>
               Event deadline date:
             </span>
-            <Field className={styles['input-field']} type="datetime-local" name="deadlineDate" id="deadlineDate" />
+            <Field className={styles['input-field']} type="datetime-local" name="deadlineDate" id="deadlineDate" min={currentDate} />
             <span>
               Event reminder date:
             </span>
-            <Field className={styles['input-field']} type="datetime-local" name="reminderDate" id="reminderDate" />
+            <Field className={styles['input-field']} type="datetime-local" name="reminderDate" id="reminderDate" min={currentDate} />
             <button className={styles['submit-button']} type="submit">Submit</button>
           </Form>
         </Formik>
@@ -94,6 +118,13 @@ const EventsPage = (props) => {
             // eslint-disable-next-line max-len
               : renderProgressEvents().sort((a, b) => new Date(a.props.eventDate) - new Date(b.props.eventDate))}
           </div>
+          {expiredEvents > 0
+              && (
+              <>
+                <img className={styles['expired-img']} src="/staticImages/calendar-alert.svg" alt="event timer" />
+                <p className={styles['expired-events']}>{`expired events: ${expiredEvents}`}</p>
+              </>
+              )}
         </article>
       </section>
       <Footer />

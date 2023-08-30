@@ -5,6 +5,7 @@
   justify-content: space-around;
 
   height: 50vh;
+  min-height: 500px;
   padding: 0 10vw;
 
   @media (max-width: 768px) {
@@ -109,17 +110,31 @@
     .progress-elements-container{
       display: flex;
       flex-direction: column;
-      justify-content: space-evenly;
+      justify-content: flex-start;
       overflow-y: auto;
-      height: 30vh;
+      height: 250px;
 
       .not-found{
         text-align: center;
         font-size: 26px;
         font-weight: 500;
         color: #4e618d;
+        margin: auto;
       }
     }
 
+    .expired-img{
+      margin: 0 5px;
+      width: 20px;
+      display: inline-block;
+      color: red;
+    }
+
+    .expired-events{
+      display: inline-block;
+      color: red;
+      font-weight: bold;
+      margin-top: 10px;
+    }
   }
 }
