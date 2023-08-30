@@ -4,7 +4,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-
+  max-width: 33.33333%;
+  flex: 0 0 33.33333%;
   height: 150px;
   padding: 20px;
 }
